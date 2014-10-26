@@ -1,0 +1,12 @@
+{
+  "name": "kancroxy",
+  "version": "0.0.1",
+  "main": "index.html",
+  "window": {
+    "resizable": false,
+    "toolbar": false,
+    "position": "center",
+    "width": 500,
+    "height": 640
+  }
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>KanCroxy</title>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="javascript" href="assets/js/amazeui.min.js">
+    <link rel="javascript" href="assets/js/jquery.min.js">
+    <script src="assets/js/jquery-2.1.1.min.js"></script>
+    <script src="assets/js/coffee-script.js"></script>
+  </head>
+  <body>
+    <div class="header fixed-top">
+      <center class="am-g">
+        <div class="am-btn-group am-btn-group-justify">
+          <button type="button" class="am-btn am-btn-primary" id="btn-main">概览</button>
+          <button type="button" class="am-btn am-btn-success" id="btn-ship">舰队</button>
+          <button type="button" class="am-btn am-btn-danger" id="btn-factory">工厂</button>
+          <button type="button" class="am-btn am-btn-secondary" id="btn-calc">经验</button>
+          <button type="button" class="am-btn am-btn-warning" id="btn-about">关于</button>
+        <div>
+      </center>
+    </div>
+    <center id="sections" class="am-g">
+      <div id="sec-main" class="mg-section" style="display: block;">
+        <p>Main</p>
+      </div>
+      <div id="sec-ship" class="mg-section" style="display: none;">
+        <p>Ship</p>
+      </div>
+      <div id="sec-factory" class="mg-section" style="display: none;">
+        <p>Factory</p>
+      </div>
+      <div id="sec-calc" class="mg-section" style="display: none;">
+        <p>Calc</p>
+      </div>
+      <div id="sec-about" class="mg-section" style="display: none;">
+        <p>About</p>
+      </div>
+    </div>
+  </body>
+  <script src="assets/js/app.coffee" type="text/coffeescript"></script>
+</html>
