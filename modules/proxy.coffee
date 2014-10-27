@@ -36,7 +36,7 @@ sendHTTPProxyRequest = (options, counter, callback) ->
       if counter < 100
         setTimeout ->
           sendHTTPProxyRequest(options, counter + 1, callback)
-        , 3000
+        , config.retryDelay
       else
         callback {err: true}
     else
@@ -46,7 +46,7 @@ sendHTTPProxyRequest = (options, counter, callback) ->
     if counter < 100
       setTimeout ->
         sendHTTPProxyRequest(options, counter + 1, callback)
-      , 3000
+      , config.retryDelay
     else
       callback {err: true}
   request.end()
