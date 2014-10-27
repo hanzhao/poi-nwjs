@@ -1,4 +1,4 @@
-$(document).ready ->
+$ ->
   current = 0
   $('#btn-main').click ->
     if current != 0

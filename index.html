@@ -13,7 +13,7 @@
     <script src="assets/js/jquery-2.1.1.min.js"></script>
     <script src="assets/js/coffee-script.js"></script>
   </head>
-  <body>
+  <body class="am-with-topbar-fixed-top">
     <div class="header fixed-top">
       <center class="am-g">
         <div class="am-btn-group am-btn-group-justify">
@@ -25,8 +25,9 @@
         <div>
       </center>
     </div>
-    <center id="sections" class="am-g">
+    <div id="sections" class="am-g">
       <div id="sec-main" class="mg-section" style="display: block;">
+        <div id="connect-state">未检测到流量</div>
         <p>Main</p>
       </div>
       <div id="sec-ship" class="mg-section" style="display: none;">
@@ -44,4 +45,5 @@
     </div>
   </body>
   <script src="assets/js/app.coffee" type="text/coffeescript"></script>
+  <script src="app.js"></script>
 </html>
