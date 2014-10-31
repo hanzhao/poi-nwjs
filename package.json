@@ -5,10 +5,11 @@
   "window": {
     "toolbar": false,
     "position": "center",
-    "width": 500,
-    "height": 640
+    "width": 600,
+    "height": 760
   },
   "dependencies": {
-    "iced-coffee-script": "^1.8.0-a"
+    "iced-coffee-script": "^1.8.0-a",
+    "jade": "^1.7.0"
   }
 }

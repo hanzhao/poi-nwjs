@@ -31,7 +31,34 @@
         <p>Main</p>
       </div>
       <div id="sec-ship" class="mg-section" style="display: none;">
-        <p>Ship</p>
+        <div id="deck-1" style="display: block;">
+          <ul class="am-pagination am-pagination-centered">
+            <li class="am-pagination-prev"><span class="am-icon-angle-double-left am-disabled"></span></li>
+            <li class="mg-pagination-center"><span id="deckname-1">第一舰队</span></li>
+            <li class="am-pagination-next"><span class="am-icon-angle-double-right" onclick="showDeck(2);"></span></li>
+          </ul>
+        </div>
+        <div id="deck-2" style="display: none;">
+          <ul class="am-pagination am-pagination-centered">
+            <li class="am-pagination-prev"><span class="am-icon-angle-double-left" onclick="showDeck(1);"></span></li>
+            <li class="mg-pagination-center"><span id="deckname-2">第二舰队</span></li>
+            <li class="am-pagination-next"><span class="am-icon-angle-double-right" onclick="showDeck(3);"></span></li>
+          </ul>
+        </div>
+        <div id="deck-3" style="display: none;">
+          <ul class="am-pagination am-pagination-centered">
+            <li class="am-pagination-prev"><span class="am-icon-angle-double-left" onclick="showDeck(2);"></span></li>
+            <li class="mg-pagination-center"><span id="deckname-3">第三舰队</span></li>
+            <li class="am-pagination-next"><span class="am-icon-angle-double-right" onclick="showDeck(4);"></span></li>
+          </ul>
+        </div>
+        <div id="deck-4" style="display: none;">
+          <ul class="am-pagination am-pagination-centered">
+            <li class="am-pagination-prev"><span class="am-icon-angle-double-left" onclick="showDeck(3);"></span></li>
+            <li class="mg-pagination-center"><span id="deckname-4">第四舰队</span></li>
+            <li class="am-pagination-next"><span class="am-icon-angle-double-right am-disabled"></span></li>
+          </ul>
+        </div>
       </div>
       <div id="sec-factory" class="mg-section" style="display: none;">
         <p>Factory</p>

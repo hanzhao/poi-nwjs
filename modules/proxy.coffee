@@ -1,6 +1,8 @@
 http = require('http')
-Buffer = require('buffer').Buffer
+fs = require('fs')
 config = require('./config')
+Buffer = require('buffer').Buffer
+processor = require('./processor')
 
 exports.createServer = ->
   server = http.createServer (req, res) ->
@@ -28,10 +30,15 @@ exports.createServer = ->
           result.on 'data', (chunk) ->
             buffers.push chunk
           result.on 'end', ->
+            data = Buffer.concat buffers
             result.removeAllListeners 'data'
             result.removeAllListeners 'end'
+            # Get response data
+            fs.appendFile 'data.log', "Url: #{options.path}\nMethod: #{options.method}\nPostData: #{options.postData}\nReceiveData: #{data}\n", (err) ->
+              console.log err if err?
+            processor.processData req, data unless req.indexOf('/kcsapi') == -1
             res.writeHead result.statusCode, result.headers
-            res.write Buffer.concat buffers
+            res.write data
             res.end()
   server.listen config.listenPort
   console.log "Proxy listening at 127.0.0.1:#{config.listenPort}"
