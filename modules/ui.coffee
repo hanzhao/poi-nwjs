@@ -50,3 +50,11 @@ exports.updateMaterials = (api_material) ->
 exports.updateDecks = (api_deck_port) ->
   decks = []
   decks[deck.api_id] = deck for deck in api_deck_port
+  for deck in api_deck_port
+    decks[deck.api_id] = deck
+    $("#deckname-#{deck.api_id}").text deck.api_name
+    for shipId, i in deck.api_ship
+      if shipId != -1
+        ship = ownShips[shipId]
+        $("#ship-#{deck.api_id}#{i + 1}-name").text ships[ship.api_ship_id].api_name
+        $("#ship-#{deck.api_id}#{i + 1}-cond").text ship.api_cond

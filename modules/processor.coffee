@@ -1,9 +1,12 @@
 ui = require('./ui')
 url = require('url')
+fs = require('fs')
 
 exports.processData = (req, data) ->
   data = data.toString()
-  data = data.substring(7) if data.indexOf('/svdata=') == 0
+  data = data.substring(7) if data.indexOf('svdata=') == 0
+  fs.appendFile 'data.log', "Url: #{req.url}\nMethod: #{req.method}\nPostData: #{req.postData}\nReceiveData: #{data}\n", (err) ->
+    console.log err if err?
   data = JSON.parse data
   position = url.parse(req.url).pathname.replace '/kcsapi', ''
   switch position

@@ -13,13 +13,14 @@ exports.createServer = ->
       method:   req.method
       path:     req.url
       headers:  req.headers
+    console.log(req.url)
     # Post Data
     postData = ""
     req.setEncoding 'utf8'
     req.addListener 'data', (chunk) ->
       postData += chunk
     req.addListener 'end', ->
-      options.postData = postData
+      options.postData = req.postData = postData
       sendHTTPProxyRequest options, 0, (result) ->
         if result.err
           res.writeHead 500, {"Content-Type": "text/html"}
@@ -33,10 +34,7 @@ exports.createServer = ->
             data = Buffer.concat buffers
             result.removeAllListeners 'data'
             result.removeAllListeners 'end'
-            # Get response data
-            fs.appendFile 'data.log', "Url: #{options.path}\nMethod: #{options.method}\nPostData: #{options.postData}\nReceiveData: #{data}\n", (err) ->
-              console.log err if err?
-            processor.processData req, data unless req.indexOf('/kcsapi') == -1
+            processor.processData req, data unless req.url.indexOf('/kcsapi') == -1
             res.writeHead result.statusCode, result.headers
             res.write data
             res.end()

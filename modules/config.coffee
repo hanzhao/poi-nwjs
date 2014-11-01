@@ -3,4 +3,4 @@ module.exports =
   httpProxyPort:  8118
   listenPort:     8787
   retryDelay:     10000
-  retryTime:      0
+  retryTime:      50
