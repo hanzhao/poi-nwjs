@@ -56,5 +56,9 @@ exports.updateDecks = (api_deck_port) ->
     for shipId, i in deck.api_ship
       if shipId != -1
         ship = ownShips[shipId]
+        $("#ship-#{deck.api_id}#{i + 1}-type").text stypes[ships[ship.api_ship_id].api_stype].api_name
+        $("#ship-#{deck.api_id}#{i + 1}-exp").text "Next: #{ship.api_exp[1]}"
+        $("#ship-#{deck.api_id}#{i + 1}-hp").text "HP: #{ship.api_nowhp} / #{ship.api_maxhp}"
         $("#ship-#{deck.api_id}#{i + 1}-name").text ships[ship.api_ship_id].api_name
+        $("#ship-#{deck.api_id}#{i + 1}-lv").text "Lv. #{ship.api_lv}"
         $("#ship-#{deck.api_id}#{i + 1}-cond").text ship.api_cond
