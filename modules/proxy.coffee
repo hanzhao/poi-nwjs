@@ -34,7 +34,7 @@ exports.createServer = ->
             data = Buffer.concat buffers
             result.removeAllListeners 'data'
             result.removeAllListeners 'end'
-            processor.processData req, data unless req.url.indexOf('/kcsapi') == -1
+            processor.processData req, data if req.url.indexOf('/kcsapi') != -1
             res.writeHead result.statusCode, result.headers
             res.write data
             res.end()

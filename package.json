@@ -6,7 +6,7 @@
     "toolbar": false,
     "position": "center",
     "width": 600,
-    "height": 760
+    "height": 764
   },
   "dependencies": {
     "iced-coffee-script": "^1.8.0-a",

@@ -8,27 +8,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="assets/css/amazeui.min.css">
     <link rel="stylesheet" href="assets/css/app.css">
-    <link rel="javascript" href="assets/js/amazeui.min.js">
-    <link rel="javascript" href="assets/js/jquery.min.js">
-    <script src="assets/js/jquery-2.1.1.min.js"></script>
-    <script src="assets/js/coffee-script.js"></script>
   </head>
   <body class="am-with-topbar-fixed-top">
     <div class="header fixed-top">
       <center class="am-g">
         <div class="am-btn-group am-btn-group-justify">
-          <button type="button" class="am-btn am-btn-primary" id="btn-main">概览</button>
-          <button type="button" class="am-btn am-btn-success" id="btn-ship">舰队</button>
-          <button type="button" class="am-btn am-btn-danger" id="btn-factory">工厂</button>
-          <button type="button" class="am-btn am-btn-secondary" id="btn-calc">经验</button>
-          <button type="button" class="am-btn am-btn-warning" id="btn-about">关于</button>
+          <button type="button" id="btn-main" class="am-btn am-btn-primary">概览</button>
+          <button type="button" id="btn-ship" class="am-btn am-btn-success">舰队</button>
+          <button type="button" id="btn-factory" class="am-btn am-btn-danger">工厂</button>
+          <button type="button" id="btn-calc" class="am-btn am-btn-secondary">经验</button>
+          <button type="button" id="btn-about" class="am-btn am-btn-warning">关于</button>
         <div>
       </center>
     </div>
     <div id="sections" class="am-g">
       <div id="sec-main" class="mg-section" style="display: block;">
-        <div id="connect-state">未检测到流量</div>
-        <p>Main</p>
+        <div id="state-panel" class="am-panel am-panel-primary" style="display: block;">
+          <div id="state-panel-title" class="am-panel-hd">运行状态</div>
+          <div id="state-panel-content" class="am-panel-bd">没有检测到流量</div>
+        </div>
+        <div id="user-panel" class="am-panel am-panel-success" style="display: none;">
+          <div id="user-panel-title" class="am-panel-hd">提督</div>
+          <div id="user-panel-content" class="am-panel-bd"></div>
+        </div>
+        <div id="resource-panel" class="am-panel am-panel-primary" style="display: none;">
+          <div id="resource-panel-title" class="am-panel-hd">资源</div>
+          <div id="resource-panel-content" class="am-panel-bd"></div>
+        </div>
       </div>
       <div id="sec-ship" class="mg-section" style="display: none;">
         <div id="deck-1" style="display: block;">
@@ -37,79 +43,79 @@
             <li class="mg-pagination-center"><span id="deckname-1">第1舰队</span></li>
             <li class="am-pagination-next"><span class="am-icon-angle-double-right" onclick="showDeck(2);"></span></li>
           </ul>
-          <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover">
+          <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
             <tbody>
             <tr class="mg-ship-short">
               <td id="ship-11-type"></td>
               <td id="ship-11-exp"></td>
               <td id="ship-11-hp"></td>
-              <td>condition</td>
+              <td id="ship-11-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-11-name"></td>
               <td id="ship-11-lv"></td>
               <td id="ship-11-hpline"></td>
-              <td id="ship-11-cond"></td>
+              <td id="ship-11-equip"></td>
             </tr>
             <tr class="mg-ship-short">
               <td id="ship-12-type"></td>
               <td id="ship-12-exp"></td>
               <td id="ship-12-hp"></td>
-              <td>condition</td>
+              <td id="ship-12-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-12-name"></td>
               <td id="ship-12-lv"></td>
               <td id="ship-12-hpline"></td>
-              <td id="ship-12-cond"></td>
+              <td id="ship-12-equip"></td>
             </tr>
             <tr class="mg-ship-short">
               <td id="ship-13-type"></td>
               <td id="ship-13-exp"></td>
               <td id="ship-13-hp"></td>
-              <td>condition</td>
+              <td id="ship-13-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-13-name"></td>
               <td id="ship-13-lv"></td>
               <td id="ship-13-hpline"></td>
-              <td id="ship-13-cond"></td>
+              <td id="ship-13-equip"></td>
             </tr>
             <tr class="mg-ship-short">
               <td id="ship-14-type"></td>
               <td id="ship-14-exp"></td>
               <td id="ship-14-hp"></td>
-              <td>condition</td>
+              <td id="ship-14-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-14-name"></td>
               <td id="ship-14-lv"></td>
               <td id="ship-14-hpline"></td>
-              <td id="ship-14-cond"></td>
+              <td id="ship-14-equip"></td>
             </tr>
             <tr class="mg-ship-short">
               <td id="ship-15-type"></td>
               <td id="ship-15-exp"></td>
               <td id="ship-15-hp"></td>
-              <td>condition</td>
+              <td id="ship-15-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-15-name"></td>
               <td id="ship-15-lv"></td>
               <td id="ship-15-hpline"></td>
-              <td id="ship-15-cond"></td>
+              <td id="ship-15-equip"></td>
             </tr>
             <tr class="mg-ship-short">
               <td id="ship-16-type"></td>
               <td id="ship-16-exp"></td>
               <td id="ship-16-hp"></td>
-              <td>condition</td>
+              <td id="ship-16-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-16-name"></td>
               <td id="ship-16-lv"></td>
               <td id="ship-16-hpline"></td>
-              <td id="ship-16-cond"></td>
+              <td id="ship-16-equip"></td>
             </tr>
             </tbody>
           </table>
@@ -120,79 +126,79 @@
             <li class="mg-pagination-center"><span id="deckname-2">第2舰队</span></li>
             <li class="am-pagination-next"><span class="am-icon-angle-double-right" onclick="showDeck(3);"></span></li>
           </ul>
-          <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover">
+          <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
             <tbody>
             <tr class="mg-ship-short">
               <td id="ship-21-type"></td>
               <td id="ship-21-exp"></td>
               <td id="ship-21-hp"></td>
-              <td>condition</td>
+              <td id="ship-21-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-21-name"></td>
               <td id="ship-21-lv"></td>
               <td id="ship-21-hpline"></td>
-              <td id="ship-21-cond"></td>
+              <td id="ship-21-equip"></td>
             </tr>
             <tr class="mg-ship-short">
               <td id="ship-22-type"></td>
               <td id="ship-22-exp"></td>
               <td id="ship-22-hp"></td>
-              <td>condition</td>
+              <td id="ship-22-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-22-name"></td>
               <td id="ship-22-lv"></td>
               <td id="ship-22-hpline"></td>
-              <td id="ship-22-cond"></td>
+              <td id="ship-22-equip"></td>
             </tr>
             <tr class="mg-ship-short">
               <td id="ship-23-type"></td>
               <td id="ship-23-exp"></td>
               <td id="ship-23-hp"></td>
-              <td>condition</td>
+              <td id="ship-23-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-23-name"></td>
               <td id="ship-23-lv"></td>
               <td id="ship-23-hpline"></td>
-              <td id="ship-23-cond"></td>
+              <td id="ship-23-equip"></td>
             </tr>
             <tr class="mg-ship-short">
               <td id="ship-24-type"></td>
               <td id="ship-24-exp"></td>
               <td id="ship-24-hp"></td>
-              <td>condition</td>
+              <td id="ship-24-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-24-name"></td>
               <td id="ship-24-lv"></td>
               <td id="ship-24-hpline"></td>
-              <td id="ship-24-cond"></td>
+              <td id="ship-24-equip"></td>
             </tr>
             <tr class="mg-ship-short">
               <td id="ship-25-type"></td>
               <td id="ship-25-exp"></td>
               <td id="ship-25-hp"></td>
-              <td>condition</td>
+              <td id="ship-25-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-25-name"></td>
               <td id="ship-25-lv"></td>
               <td id="ship-25-hpline"></td>
-              <td id="ship-25-cond"></td>
+              <td id="ship-25-equip"></td>
             </tr>
             <tr class="mg-ship-short">
               <td id="ship-26-type"></td>
               <td id="ship-26-exp"></td>
               <td id="ship-26-hp"></td>
-              <td>condition</td>
+              <td id="ship-26-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-26-name"></td>
               <td id="ship-26-lv"></td>
               <td id="ship-26-hpline"></td>
-              <td id="ship-26-cond"></td>
+              <td id="ship-26-equip"></td>
             </tr>
             </tbody>
           </table>
@@ -203,79 +209,79 @@
             <li class="mg-pagination-center"><span id="deckname-3">第3舰队</span></li>
             <li class="am-pagination-next"><span class="am-icon-angle-double-right" onclick="showDeck(4);"></span></li>
           </ul>
-          <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover">
+          <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
             <tbody>
             <tr class="mg-ship-short">
               <td id="ship-31-type"></td>
               <td id="ship-31-exp"></td>
               <td id="ship-31-hp"></td>
-              <td>condition</td>
+              <td id="ship-31-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-31-name"></td>
               <td id="ship-31-lv"></td>
               <td id="ship-31-hpline"></td>
-              <td id="ship-31-cond"></td>
+              <td id="ship-31-equip"></td>
             </tr>
             <tr class="mg-ship-short">
               <td id="ship-32-type"></td>
               <td id="ship-32-exp"></td>
               <td id="ship-32-hp"></td>
-              <td>condition</td>
+              <td id="ship-32-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-32-name"></td>
               <td id="ship-32-lv"></td>
               <td id="ship-32-hpline"></td>
-              <td id="ship-32-cond"></td>
+              <td id="ship-32-equip"></td>
             </tr>
             <tr class="mg-ship-short">
               <td id="ship-33-type"></td>
               <td id="ship-33-exp"></td>
               <td id="ship-33-hp"></td>
-              <td>condition</td>
+              <td id="ship-33-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-33-name"></td>
               <td id="ship-33-lv"></td>
               <td id="ship-33-hpline"></td>
-              <td id="ship-33-cond"></td>
+              <td id="ship-33-equip"></td>
             </tr>
             <tr class="mg-ship-short">
               <td id="ship-34-type"></td>
               <td id="ship-34-exp"></td>
               <td id="ship-34-hp"></td>
-              <td>condition</td>
+              <td id="ship-34-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-34-name"></td>
               <td id="ship-34-lv"></td>
               <td id="ship-34-hpline"></td>
-              <td id="ship-34-cond"></td>
+              <td id="ship-34-equip"></td>
             </tr>
             <tr class="mg-ship-short">
               <td id="ship-35-type"></td>
               <td id="ship-35-exp"></td>
               <td id="ship-35-hp"></td>
-              <td>condition</td>
+              <td id="ship-35-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-35-name"></td>
               <td id="ship-35-lv"></td>
               <td id="ship-35-hpline"></td>
-              <td id="ship-35-cond"></td>
+              <td id="ship-35-equip"></td>
             </tr>
             <tr class="mg-ship-short">
               <td id="ship-36-type"></td>
               <td id="ship-36-exp"></td>
               <td id="ship-36-hp"></td>
-              <td>condition</td>
+              <td id="ship-36-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-36-name"></td>
               <td id="ship-36-lv"></td>
               <td id="ship-36-hpline"></td>
-              <td id="ship-36-cond"></td>
+              <td id="ship-36-equip"></td>
             </tr>
             </tbody>
           </table>
@@ -286,79 +292,79 @@
             <li class="mg-pagination-center"><span id="deckname-4">第4舰队</span></li>
             <li class="am-pagination-next"><span class="am-icon-angle-double-right am-disabled"></span></li>
           </ul>
-          <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover">
+          <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
             <tbody>
             <tr class="mg-ship-short">
               <td id="ship-41-type"></td>
               <td id="ship-41-exp"></td>
               <td id="ship-41-hp"></td>
-              <td>condition</td>
+              <td id="ship-41-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-41-name"></td>
               <td id="ship-41-lv"></td>
               <td id="ship-41-hpline"></td>
-              <td id="ship-41-cond"></td>
+              <td id="ship-41-equip"></td>
             </tr>
             <tr class="mg-ship-short">
               <td id="ship-42-type"></td>
               <td id="ship-42-exp"></td>
               <td id="ship-42-hp"></td>
-              <td>condition</td>
+              <td id="ship-42-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-42-name"></td>
               <td id="ship-42-lv"></td>
               <td id="ship-42-hpline"></td>
-              <td id="ship-42-cond"></td>
+              <td id="ship-42-equip"></td>
             </tr>
             <tr class="mg-ship-short">
               <td id="ship-43-type"></td>
               <td id="ship-43-exp"></td>
               <td id="ship-43-hp"></td>
-              <td>condition</td>
+              <td id="ship-43-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-43-name"></td>
               <td id="ship-43-lv"></td>
               <td id="ship-43-hpline"></td>
-              <td id="ship-43-cond"></td>
+              <td id="ship-43-equip"></td>
             </tr>
             <tr class="mg-ship-short">
               <td id="ship-44-type"></td>
               <td id="ship-44-exp"></td>
               <td id="ship-44-hp"></td>
-              <td>condition</td>
+              <td id="ship-44-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-44-name"></td>
               <td id="ship-44-lv"></td>
               <td id="ship-44-hpline"></td>
-              <td id="ship-44-cond"></td>
+              <td id="ship-44-equip"></td>
             </tr>
             <tr class="mg-ship-short">
               <td id="ship-45-type"></td>
               <td id="ship-45-exp"></td>
               <td id="ship-45-hp"></td>
-              <td>condition</td>
+              <td id="ship-45-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-45-name"></td>
               <td id="ship-45-lv"></td>
               <td id="ship-45-hpline"></td>
-              <td id="ship-45-cond"></td>
+              <td id="ship-45-equip"></td>
             </tr>
             <tr class="mg-ship-short">
               <td id="ship-46-type"></td>
               <td id="ship-46-exp"></td>
               <td id="ship-46-hp"></td>
-              <td>condition</td>
+              <td id="ship-46-cond"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-46-name"></td>
               <td id="ship-46-lv"></td>
               <td id="ship-46-hpline"></td>
-              <td id="ship-46-cond"></td>
+              <td id="ship-46-equip"></td>
             </tr>
             </tbody>
           </table>
@@ -374,7 +380,11 @@
         <p>About</p>
       </div>
     </div>
+    <script src="assets/js/zepto.min.js"></script>
+    <script src="assets/js/amazeui.min.js"></script>
+    <script src="assets/js/jquery-2.1.1.min.js"></script>
+    <script src="assets/js/coffee-script.js"></script>
+    <script src="assets/js/app.coffee" type="text/coffeescript"></script>
+    <script src="app.js"></script>
   </body>
-  <script src="assets/js/app.coffee" type="text/coffeescript"></script>
-  <script src="app.js"></script>
 </html>

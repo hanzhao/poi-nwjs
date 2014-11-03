@@ -3,6 +3,7 @@ url = require('url')
 fs = require('fs')
 
 exports.processData = (req, data) ->
+  ui.turnOn()
   data = data.toString()
   data = data.substring(7) if data.indexOf('svdata=') == 0
   fs.appendFile 'data.log', "Url: #{req.url}\nMethod: #{req.method}\nPostData: #{req.postData}\nReceiveData: #{data}\n", (err) ->
@@ -10,12 +11,18 @@ exports.processData = (req, data) ->
   data = JSON.parse data
   position = url.parse(req.url).pathname.replace '/kcsapi', ''
   switch position
+    when '/api_get_member/basic'
+      updateUserData req, data
     when '/api_start2'
       updateGameData req, data
     when '/api_get_member/slot_item'
       updateSlotitemData req, data
     when '/api_port/port'
       updatePortData req, data
+
+updateUserData = (req, data) ->
+  return unless data.api_result == 1
+  ui.updateUserinfo data.api_data
 
 updateGameData = (req, data) ->
   return unless data.api_result == 1
