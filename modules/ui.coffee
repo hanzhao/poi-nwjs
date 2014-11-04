@@ -15,7 +15,7 @@ ownSlotitems = []
 materials = []
 decks = []
 
-exports.turnOn = () ->
+exports.turnOn = ->
   if !state
     state = true
     $("#state-panel-content").text "正常运行中"
@@ -23,7 +23,7 @@ exports.turnOn = () ->
     $("#user-panel").fadeIn()
     $("#resource-panel").fadeIn()
 
-exports.turnOff = () ->
+exports.turnOff = ->
   if state
     state = false
     $("#state-panel-content").text "没有检测到流量"

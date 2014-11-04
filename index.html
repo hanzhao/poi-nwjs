@@ -17,7 +17,7 @@
           <button type="button" id="btn-ship" class="am-btn am-btn-success">舰队</button>
           <button type="button" id="btn-factory" class="am-btn am-btn-danger">工厂</button>
           <button type="button" id="btn-calc" class="am-btn am-btn-secondary">经验</button>
-          <button type="button" id="btn-about" class="am-btn am-btn-warning">关于</button>
+          <button type="button" id="btn-settings" class="am-btn am-btn-warning">设置</button>
         <div>
       </center>
     </div>
@@ -376,12 +376,51 @@
       <div id="sec-calc" class="mg-section" style="display: none;">
         <p>Calc</p>
       </div>
-      <div id="sec-about" class="mg-section" style="display: none;">
-        <p>About</p>
+      <div id="sec-settings" class="mg-section" style="display: none;">
+        <div class="am-panel-group" id="panel-group-settings">
+          <div class="am-panel am-panel-primary">
+            <div class="am-panel-hd" data-am-collapse="{parent: '#panel-group-settings', target: '#panel-proxy'}">
+              <span class="am-panel-title">代理设置</span>
+            </div>
+            <div id="panel-proxy" class="am-panel-collapse am-collapse">
+              <div class="am-panel-bd">
+                <div id="proxy-tabs" class="am-tabs" data-am-tabs>
+                  <ul class="am-tabs-nav am-nav am-nav-tabs">
+                    <span id="current-proxy" class="mg-unshown">Shadowsocks</span>
+                    <li class="am-active"><a href="#shadowsocks-tab">Shadowsocks</a></li>
+                    <li><a href="#http-tab">HTTP代理</a></li>
+                    <li><a href="#socks-tab">Socks5代理</a></li>
+                  </ul>
+                  <div class="am-tabs-bd">
+                    <div id="shadowsocks-tab" class="am-tab-panel am-active am-fade">
+                      ...
+                    </div>
+                    <div id="http-tab" class="am-tab-panel am-fade">...</div>
+                    <div id="socks-tab" class="am-tab-panel am-fade">...</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="am-panel am-panel-secondary">
+            <div class="am-panel-hd" data-am-collapse="{parent: '#panel-group-settings', target: '#panel-about'}">
+              <span class="am-panel-title">关于</span>
+            </div>
+            <div id="panel-about" class="am-panel-collapse am-collapse am-in">
+              <div class="am-panel-bd">
+                <div>Author / Developer: <a id="about-weibo" href="#">@Magica</a></div>
+                <div>Project source available on <a id="about-github" href="#">Github</a> under <a id="about-license" href="#">The MIT License</a>.</div>
+                <div>Powered by <a id="about-nw" href="#">node-webkit</a>.</div>
+                <div>Copyright &copy; 2014 Magica</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <script src="assets/js/zepto.min.js"></script>
     <script src="assets/js/amazeui.min.js"></script>
+    <script src="assets/js/capture-zepto.js"></script>
     <script src="assets/js/jquery-2.1.1.min.js"></script>
     <script src="assets/js/coffee-script.js"></script>
     <script src="assets/js/app.coffee" type="text/coffeescript"></script>
