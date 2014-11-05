@@ -39,9 +39,9 @@
       <div id="sec-ship" class="mg-section" style="display: none;">
         <div id="deck-1" style="display: block;">
           <ul class="am-pagination am-pagination-centered">
-            <li class="am-pagination-prev"><span class="am-icon-angle-double-left am-disabled"></span></li>
+            <li class="am-pagination-prev am-disabled"><a href="#">&laquo;</a></li>
             <li class="mg-pagination-center"><span id="deckname-1">第1舰队</span></li>
-            <li class="am-pagination-next"><span class="am-icon-angle-double-right" onclick="showDeck(2);"></span></li>
+            <li class="am-pagination-next"><a href="#" onclick="showDeck(2);">&raquo;</a></li>
           </ul>
           <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
             <tbody>
@@ -122,9 +122,9 @@
         </div>
         <div id="deck-2" style="display: none;">
           <ul class="am-pagination am-pagination-centered">
-            <li class="am-pagination-prev"><span class="am-icon-angle-double-left" onclick="showDeck(1);"></span></li>
+            <li class="am-pagination-prev"><a href="#" onclick="showDeck(1);">&laquo;</a></li>
             <li class="mg-pagination-center"><span id="deckname-2">第2舰队</span></li>
-            <li class="am-pagination-next"><span class="am-icon-angle-double-right" onclick="showDeck(3);"></span></li>
+            <li class="am-pagination-next"><a href="#" onclick="showDeck(3);">&raquo;</a></li>
           </ul>
           <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
             <tbody>
@@ -205,9 +205,9 @@
         </div>
         <div id="deck-3" style="display: none;">
           <ul class="am-pagination am-pagination-centered">
-            <li class="am-pagination-prev"><span class="am-icon-angle-double-left" onclick="showDeck(2);"></span></li>
+            <li class="am-pagination-prev"><a href="#" onclick="showDeck(2);">&laquo;</a></li>
             <li class="mg-pagination-center"><span id="deckname-3">第3舰队</span></li>
-            <li class="am-pagination-next"><span class="am-icon-angle-double-right" onclick="showDeck(4);"></span></li>
+            <li class="am-pagination-next"><a href="#" onclick="showDeck(4);">&raquo;</a></li>
           </ul>
           <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
             <tbody>
@@ -288,9 +288,9 @@
         </div>
         <div id="deck-4" style="display: none;">
           <ul class="am-pagination am-pagination-centered">
-            <li class="am-pagination-prev"><span class="am-icon-angle-double-left" onclick="showDeck(3);"></span></li>
+            <li class="am-pagination-prev"><a href="#" onclick="showDeck(3);">&laquo;</a></li>
             <li class="mg-pagination-center"><span id="deckname-4">第4舰队</span></li>
-            <li class="am-pagination-next"><span class="am-icon-angle-double-right am-disabled"></span></li>
+            <li class="am-pagination-next am-disabled"><a href="#">&raquo;</a></li>
           </ul>
           <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
             <tbody>
@@ -430,7 +430,7 @@
                                 <option value="aes-256-cfb" selected>AES-256-CFB</option>
                                 <option value="aes-192-cfb">AES-192-CFB</option>
                                 <option value="aes-128-cfb">AES-128-CFB</option>
-                                <option value="bf-cfb">BF-CFB (Blowfish)</option>
+                                <option value="bf-cfb">BF-CFB</option>
                                 <option value="camellia-256-cfb">CAMEL-256-CFB</option>
                                 <option value="camellia-192-cfb">CAMEL-192-CFB</option>
                                 <option value="camellia-128-cfb">CAMEL-128-CFB</option>
