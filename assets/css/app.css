@@ -1,1 +1,81 @@
-@font-face {  font-family: 'Ubuntu';  font-style: normal;  font-weight: 300;  src: local('Ubuntu Light'), local('Ubuntu-Light'), url("../fonts/ubuntu-light.woff") format('woff');}html, body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {  font-family: "Ubuntu", "Monaco", "WenQuanYi Micro Hei", "Microsoft YaHei" !important;}::-webkit-scrollbar {  width: 0px;}.fixed-top {  position: fixed;  left: 0px;  right: 0px;  top: 0px;  z-index: 1030;}.am-table > tbody > tr > td {  vertical-align: middle;}.am-progress {  margin-bottom: auto;}.mg-unshown {  display: none;}.mg-section {  margin-left: 10px;  margin-right: 10px;}.mg-pagination-center {  width: 70%;}.mg-vertical-center {  vertical-align: middle;}.mg-ship-short {  height: 35px;  font-size: 13px;}.mg-ship-long {  height: 65px;  line-height: 65px;}
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Ubuntu Light'), local('Ubuntu-Light'), url("../fonts/ubuntu-light.woff") format('woff');
+}
+html, body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: "Ubuntu", "Monaco", "WenQuanYi Micro Hei", "Microsoft YaHei" !important;
+}
+::-webkit-scrollbar {
+  width: 0px;
+}
+.fixed-top {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  z-index: 1030;
+}
+.am-table > tbody > tr > td {
+  vertical-align: middle;
+}
+.am-progress {
+  margin-bottom: auto;
+}
+.am-form-label {
+  font-size: 15px;
+}
+.am-tabs-bd .am-tab-panel {
+  padding-bottom: 10px;
+}
+.am-form-group {
+  margin-top: 0.7rem;
+  margin-bottom: 0.7rem;
+}
+.mg-unshown {
+  display: none;
+}
+.mg-section {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.mg-button-container {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+.mg-pagination-center {
+  width: 70%;
+}
+.mg-vertical-center {
+  vertical-align: middle;
+}
+.mg-label-container {
+  text-align: right;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.mg-deck-green {
+  background-color: #5EB95E;
+  color: #FFF;
+}
+.mg-deck-blue {
+  background-color: #0A6999;
+  color: #FFF;
+}
+.mg-deck-red {
+  background-color: #DD514C;
+  color: #FFF;
+}
+.mg-deck-orange {
+  background-color: #C85E0B;
+  color: #FFF;
+}
+.mg-ship-short {
+  height: 35px;
+  font-size: 13px;
+}
+.mg-ship-long {
+  height: 65px;
+  line-height: 65px;
+}

@@ -9,7 +9,7 @@ processor = require('./processor')
 
 exports.createShadowsocksServer = ->
   return unless config.proxy.useShadowsocks
-  local.createServer config.proxy.shadowsocks.server, config.proxy.shadowsocks.serverPort, config.proxy.shadowsocks.localPort, config.proxy.shadowsocks.password, config.proxy.shadowsocks.method, config.proxy.shadowsocks.timeout, '127.0.0.1'
+  local.createServer config.proxy.shadowsocks.serverIp, config.proxy.shadowsocks.serverPort, config.proxy.shadowsocks.localPort, config.proxy.shadowsocks.password, config.proxy.shadowsocks.method, config.proxy.shadowsocks.timeout, '127.0.0.1'
   console.log "Shadowsocks listening at 127.0.0.1:#{config.proxy.shadowsocks.localPort}"
 
 exports.createServer = ->
@@ -64,7 +64,7 @@ serverWithShadowsocks = (req, res) ->
           res.end()
 
 serverWithSocksProxy = (req, res) ->
-  console.log "Get Request #{req.url} using Socks"
+  console.log "Get Request #{req.url} using Socks Proxy"
   # Socks
   parsed = url.parse req.url
   options =

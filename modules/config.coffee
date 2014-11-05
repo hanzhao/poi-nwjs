@@ -6,7 +6,7 @@ exports.config = defaultConfig =
   proxy:
     useShadowsocks:   true
     shadowsocks:
-      server:         '0u0.moe'
+      serverIp:       '106.186.30.188'
       serverPort:     3388
       localPort:      8788
       method:         'aes-256-cfb'
@@ -41,4 +41,8 @@ exports.loadConfig = ->
 
 exports.updateConfig = (conf) ->
   exports.config = conf
-  saveConfig()
+  try
+    saveConfig()
+  catch
+    return false
+  return true

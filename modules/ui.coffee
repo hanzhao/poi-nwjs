@@ -1,6 +1,9 @@
-$ = global.$
+proxy = require('./config').config.proxy
 
-materialsName = ["", "油", "弹", "钢", "铝", "高速建造", "高速修复", "开发资材", "改修资材"]
+$ = global.$
+$$ = global.$$
+
+materialsName = ['', '油', '弹', '钢', '铝', '高速建造', '高速修复', '开发资材', '改修资材']
 
 state = false
 
@@ -14,6 +17,53 @@ ownShips = []
 ownSlotitems = []
 materials = []
 decks = []
+
+exports.initConfig = ->
+  # Update tab state
+  if proxy.useShadowsocks
+    $('#current-proxy').text 'shadowsocks'
+    $('#shadowsocks-tab-li').addClass 'am-active'
+    $('#shadowsocks-tab').addClass 'am-in am-active'
+  else if proxy.useHttpProxy
+    $('#current-proxy').text 'http'
+    $('#http-tab-li').addClass 'am-active'
+    $('#http-tab').addClass 'am-in am-active'
+  else if proxy.useSocksProxy
+    $('#current-proxy').text 'socks'
+    $('#socks-tab-li').addClass 'am-active'
+    $('#socks-tab').addClass 'am-in am-active'
+  # Shadowsocks
+  $('#shadowsocks-server-ip')[0].value = proxy.shadowsocks.serverIp
+  $('#shadowsocks-server-port')[0].value = proxy.shadowsocks.serverPort
+  $('#shadowsocks-password')[0].value = proxy.shadowsocks.password
+  $('#shadowsocks-method')[0].value = proxy.shadowsocks.method
+  # HTTP Proxy
+  $('#httpproxy-ip')[0].value = proxy.httpProxy.httpProxyIp
+  $('#httpproxy-port')[0].value = proxy.httpProxy.httpProxyPort
+  # Socks Proxy
+  $('#socksproxy-ip')[0].value = proxy.socksProxy.socksProxyIp
+  $('#socksproxy-port')[0].value = proxy.socksProxy.socksProxyPort
+
+exports.saveConfig = ->
+  conf = require('./config').config
+  # Shadowsocks
+  conf.proxy.useShadowsocks = $('#current-proxy').text() == 'shadowsocks'
+  conf.proxy.shadowsocks.serverIp = $('#shadowsocks-server-ip')[0].value
+  conf.proxy.shadowsocks.serverPort = $('#shadowsocks-server-port')[0].value
+  conf.proxy.shadowsocks.password = $('#shadowsocks-password')[0].value
+  conf.proxy.shadowsocks.method = $('#shadowsocks-method')[0].value
+  # HTTP
+  conf.proxy.useHttpProxy = $('#current-proxy').text() == 'http'
+  conf.proxy.httpProxy.httpProxyIp = $('#httpproxy-ip')[0].value
+  conf.proxy.httpProxy.httpProxyPort = $('#httpproxy-port')[0].value
+  # Socks
+  conf.proxy.useSocksProxy = $('#current-proxy').text() == 'socks'
+  conf.proxy.socksProxy.socksProxyIp = $('#socksproxy-ip')[0].value
+  conf.proxy.socksProxy.socksProxyPort = $('#socksproxy-port')[0].value
+  if require('./config').updateConfig conf
+    $$('#save-ok-modal').modal()
+  else
+    $$('#save-error-modal').modal()
 
 exports.turnOn = ->
   if !state
@@ -81,7 +131,9 @@ exports.updateDecks = (api_deck_port) ->
   decks[deck.api_id] = deck for deck in api_deck_port
   for deck in api_deck_port
     decks[deck.api_id] = deck
+    # Deckname
     $("#deckname-#{deck.api_id}").text deck.api_name
+    # Mission
     for shipId, i in deck.api_ship
       if shipId != -1
         ship = ownShips[shipId]
