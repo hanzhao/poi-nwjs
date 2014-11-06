@@ -44,6 +44,16 @@ html, body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-top: 1.5rem;
   text-align: center;
 }
+.mg-text-container {
+  height: 30px;
+  background: none repeat scroll 0% 0% #0F9AE0;
+  text-align: center;
+  color: #FFF;
+  width: 100%;
+  vertical-align: middle;
+  border-radius: 2px;
+  font-size: 16px;
+}
 .mg-pagination-center {
   width: 70%;
 }
@@ -76,6 +86,6 @@ html, body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-size: 13px;
 }
 .mg-ship-long {
-  height: 65px;
-  line-height: 65px;
+  height: 60px;
+  line-height: 60px;
 }

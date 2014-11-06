@@ -32,6 +32,10 @@ exports.initConfig = ->
     $('#current-proxy').text 'socks'
     $('#socks-tab-li').addClass 'am-active'
     $('#socks-tab').addClass 'am-in am-active'
+  else
+    $('#current-proxy').text 'none'
+    $('#none-tab-li').addClass 'am-active'
+    $('#none-tab').addClass 'am-in am-active'
   # Shadowsocks
   $('#shadowsocks-server-ip')[0].value = proxy.shadowsocks.serverIp
   $('#shadowsocks-server-port')[0].value = proxy.shadowsocks.serverPort
@@ -61,9 +65,13 @@ exports.saveConfig = ->
   conf.proxy.socksProxy.socksProxyIp = $('#socksproxy-ip')[0].value
   conf.proxy.socksProxy.socksProxyPort = $('#socksproxy-port')[0].value
   if require('./config').updateConfig conf
-    $$('#save-ok-modal').modal()
+    $('#modal-message-title').text '保存设置'
+    $('#modal-message-content').text '保存成功，重新启动软件后生效。'
+    $$('#modal-message').modal()
   else
-    $$('#save-error-modal').modal()
+    $('#modal-message-title').text '保存设置'
+    $('#modal-message-content').text '保存失败'
+    $$('#modal-message').modal()
 
 exports.turnOn = ->
   if !state
@@ -128,15 +136,16 @@ exports.updateMaterials = (api_material) ->
 
 exports.updateDecks = (api_deck_port) ->
   decks = []
-  decks[deck.api_id] = deck for deck in api_deck_port
   for deck in api_deck_port
     decks[deck.api_id] = deck
+    totalLv = 0
     # Deckname
     $("#deckname-#{deck.api_id}").text deck.api_name
     # Mission
     for shipId, i in deck.api_ship
       if shipId != -1
         ship = ownShips[shipId]
+        totalLv += ship.api_lv
         $("#ship-#{deck.api_id}#{i + 1}-type").text stypes[ships[ship.api_ship_id].api_stype].api_name
         $("#ship-#{deck.api_id}#{i + 1}-exp").text "Next: #{ship.api_exp[1]}"
         $("#ship-#{deck.api_id}#{i + 1}-hp").text "HP: #{ship.api_nowhp} / #{ship.api_maxhp}"
@@ -155,3 +164,13 @@ exports.updateDecks = (api_deck_port) ->
 
         # Equipment
         # $("#ship-#{deck.api_id}#{i + 1}-equip")
+      else
+        $("#ship-#{deck.api_id}#{i + 1}-type").text ''
+        $("#ship-#{deck.api_id}#{i + 1}-exp").text ''
+        $("#ship-#{deck.api_id}#{i + 1}-hp").text ''
+        $("#ship-#{deck.api_id}#{i + 1}-cond").text ''
+
+        $("#ship-#{deck.api_id}#{i + 1}-name").text ''
+        $("#ship-#{deck.api_id}#{i + 1}-lv").text ''
+        $("#ship-#{deck.api_id}#{i + 1}-hpline").html ''
+    $("#deck-#{deck.api_id}-info").text "总计Lv. #{totalLv}"

@@ -66,6 +66,8 @@ $ ->
           $('#current-proxy').text 'socks'
       when 'H'
         $('#current-proxy').text 'http'
+      else
+        $('#current-proxy').text 'none'
   $('#shadowsocks-server-ip').bind 'input', ->
     if isValidIp $('#shadowsocks-server-ip')[0].value
       $('#shadowsocks-server-ip-container').attr 'class', 'am-form-success'

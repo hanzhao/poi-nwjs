@@ -10,6 +10,15 @@
     <link rel="stylesheet" href="assets/css/app.css">
   </head>
   <body class="am-with-topbar-fixed-top">
+    <div class="am-modal am-modal-no-btn" tabindex="-1" id="modal-message">
+      <div class="am-modal-dialog">
+        <div class="am-modal-hd"><span id="modal-message-title"></span>
+          <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+        </div>
+        <div id="modal-message-content" class="am-modal-bd">
+        </div>
+      </div>
+    </div>
     <div class="header fixed-top">
       <center class="am-g">
         <div class="am-btn-group am-btn-group-justify">
@@ -119,6 +128,8 @@
             </tr>
             </tbody>
           </table>
+          <div id="deck-1-info" class="mg-text-container">
+          </div>
         </div>
         <div id="deck-2" style="display: none;">
           <ul class="am-pagination am-pagination-centered">
@@ -202,6 +213,8 @@
             </tr>
             </tbody>
           </table>
+          <div id="deck-2-info" class="mg-text-container">
+          </div>
         </div>
         <div id="deck-3" style="display: none;">
           <ul class="am-pagination am-pagination-centered">
@@ -285,6 +298,8 @@
             </tr>
             </tbody>
           </table>
+          <div id="deck-3-info" class="mg-text-container">
+          </div>
         </div>
         <div id="deck-4" style="display: none;">
           <ul class="am-pagination am-pagination-centered">
@@ -368,6 +383,8 @@
             </tr>
             </tbody>
           </table>
+          <div id="deck-4-info" class="mg-text-container">
+          </div>
         </div>
       </div>
       <div id="sec-factory" class="mg-section" style="display: none;">
@@ -390,6 +407,7 @@
                     <li id="shadowsocks-tab-li"><a href="#shadowsocks-tab">Shadowsocks</a></li>
                     <li id="http-tab-li"><a href="#http-tab">HTTP代理</a></li>
                     <li id="socks-tab-li"><a href="#socks-tab">Socks代理</a></li>
+                    <li id="none-tab-li"><a href="#none-tab">不使用代理</a></li>
                   </ul>
                   <div class="am-tabs-bd">
                     <div id="shadowsocks-tab" class="am-tab-panel am-fade">
@@ -492,30 +510,15 @@
                         </div>
                       </div>
                     </div>
+                    <div id="none-tab" class="am-tab-panel am-fade">
+                      <div class="am-form am-form-horizontal" role="form">
+                        <span>将会使用系统默认的连接方式或全局VPN来连接网络。</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="mg-button-container">
                   <button id="save-proxy-settings" class="am-btn am-btn-warning">保存设置</button>
-                </div>
-                <div class="am-modal am-modal-no-btn" tabindex="-1" id="save-ok-modal">
-                  <div class="am-modal-dialog">
-                    <div class="am-modal-hd">保存设置
-                      <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
-                    </div>
-                    <div class="am-modal-bd">
-                      保存成功，重新启动后生效。
-                    </div>
-                  </div>
-                </div>
-                <div class="am-modal am-modal-no-btn" tabindex="-1" id="save-error-modal">
-                  <div class="am-modal-dialog">
-                    <div class="am-modal-hd">保存设置
-                      <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
-                    </div>
-                    <div class="am-modal-bd">
-                      保存失败。
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
