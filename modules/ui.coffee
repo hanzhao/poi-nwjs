@@ -150,6 +150,14 @@ exports.updateDecks = (api_deck_port) ->
         $("#ship-#{deck.api_id}#{i + 1}-exp").text "Next: #{ship.api_exp[1]}"
         $("#ship-#{deck.api_id}#{i + 1}-hp").text "HP: #{ship.api_nowhp} / #{ship.api_maxhp}"
         $("#ship-#{deck.api_id}#{i + 1}-cond").text "Cond. #{ship.api_cond}"
+        if ship.api_cond < 20
+          $("#ship-#{deck.api_id}#{i + 1}-cond").attr 'class', 'mg-red'
+        else if ship.api_cond < 30
+          $("#ship-#{deck.api_id}#{i + 1}-cond").attr 'class', 'mg-orange'
+        else if ship.api_cond > 49
+          $("#ship-#{deck.api_id}#{i + 1}-cond").attr 'class', 'mg-yellow'
+        else
+          $("#ship-#{deck.api_id}#{i + 1}-cond").attr 'class', ''
 
         $("#ship-#{deck.api_id}#{i + 1}-name").text ships[ship.api_ship_id].api_name
         $("#ship-#{deck.api_id}#{i + 1}-lv").text "Lv. #{ship.api_lv}"
@@ -169,6 +177,7 @@ exports.updateDecks = (api_deck_port) ->
         $("#ship-#{deck.api_id}#{i + 1}-exp").text ''
         $("#ship-#{deck.api_id}#{i + 1}-hp").text ''
         $("#ship-#{deck.api_id}#{i + 1}-cond").text ''
+        $("#ship-#{deck.api_id}#{i + 1}-cond").attr 'class', ''
 
         $("#ship-#{deck.api_id}#{i + 1}-name").text ''
         $("#ship-#{deck.api_id}#{i + 1}-lv").text ''

@@ -65,12 +65,27 @@ html, body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
+.mg-green {
+  color: #5EB95E;
+}
+.mg-blue {
+  color: #0E90D2;
+}
+.mg-red {
+  color: #DD514C;
+}
+.mg-orange {
+  color: #F37B1D;
+}
+.mg-yellow {
+  color: #C3C31D;
+}
 .mg-deck-green {
   background-color: #5EB95E;
   color: #FFF;
 }
 .mg-deck-blue {
-  background-color: #0A6999;
+  background-color: #0E90D2;
   color: #FFF;
 }
 .mg-deck-red {
@@ -78,7 +93,11 @@ html, body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   color: #FFF;
 }
 .mg-deck-orange {
-  background-color: #C85E0B;
+  background-color: #F37B1D;
+  color: #FFF;
+}
+.mg-deck-yellow {
+  background-color: #C3C31D;
   color: #FFF;
 }
 .mg-ship-short {
