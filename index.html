@@ -388,7 +388,69 @@
         </div>
       </div>
       <div id="sec-factory" class="mg-section" style="display: none;">
-        <p>Factory</p>
+        <!--<p>Factory</p> mark factory-->
+        <div id="ndocks" style="display: block;">
+          <ul class="am-pagination am-pagination-centered">
+            <li class="am-pagination-prev am-disabled"><a href="#">&laquo;</a></li>
+            <li class="mg-pagination-center">入渠</li>
+            <li class="am-pagination-next"><a href="#" onclick="showDeck(2);">&raquo;</a></li>
+          </ul>
+          <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
+            <tbody>
+            <tr class="mg-ndocks-short">
+              <td></td>
+              <td>修理中的舰娘</td>
+              <td>完成时间</td>
+              <td>剩余时间</td>
+            </tr>
+            <tr class="mg-ndocks-long">
+              <td id="ndock-1-open"></td>
+              <td id="ndock-1-name"></td>
+              <td id="ndock-1-endtime"></td>
+              <td id="ndock-1-resttime"></td>
+            </tr>
+            <tr class="mg-ndocks-long">
+              <td id="ndock-2-open"></td>
+              <td id="ndock-2-name"></td>
+              <td id="ndock-2-endtime"></td>
+              <td id="ndock-2-resttime"></td>
+            </tr>
+            <tr class="mg-ndocks-long">
+              <td id="ndock-3-open"></td>
+              <td id="ndock-3-name"></td>
+              <td id="ndock-3-endtime"></td>
+              <td id="ndock-3-resttime"></td>
+            </tr>
+            <tr class="mg-ndocks-long">
+              <td id="ndock-4-open"></td>
+              <td id="ndock-4-name"></td>
+              <td id="ndock-4-endtime"></td>
+              <td id="ndock-4-resttime"></td>
+            </tr>
+            </tbody>
+          </table>
+          <div id="deck-1-info" class="mg-text-container">
+          </div>
+        </div>
+        <div id="cdocks" style="display: none;">
+          <ul class="am-pagination am-pagination-centered">
+            <li class="am-pagination-prev"><a href="#" onclick="showDeck(1);">&laquo;</a></li>
+            <li class="mg-pagination-center"><span id="deckname-2">建造</span></li>
+            <li class="am-pagination-next" "am-disabled"><a href="#">&raquo;</a></li>
+          </ul>
+          <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
+            <tbody>
+            
+            </tbody>
+          </table>
+          <div id="deck-2-info" class="mg-text-container">
+          </div>
+        </div>
+        
+        
+        <!-- mark over-->
+
+
       </div>
       <div id="sec-calc" class="mg-section" style="display: none;">
         <p>Calc</p>

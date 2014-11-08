@@ -108,3 +108,11 @@ html, body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   height: 60px;
   line-height: 60px;
 }
+.mg-ndocks-short {
+  height: 35px;
+  font-size: 13px;
+}
+.mg-ndocks-long {
+  height: 60px;
+  line-height: 60px; 
+}

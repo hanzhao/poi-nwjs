@@ -6,8 +6,8 @@ exports.processData = (req, data) ->
   ui.turnOn()
   data = data.toString()
   data = data.substring(7) if data.indexOf('svdata=') == 0
-  # fs.appendFile 'data.log', "Url: #{req.url}\nMethod: #{req.method}\nPostData: #{req.postData}\nReceiveData: #{data}\n", (err) ->
-  #   console.log err if err?
+  fs.appendFile 'data.log', "Url: #{req.url}\nMethod: #{req.method}\nPostData: #{req.postData}\nReceiveData: #{data}\n", (err) ->
+    console.log err if err?
   data = JSON.parse data
   position = url.parse(req.url).pathname.replace '/kcsapi', ''
   switch position
@@ -42,3 +42,4 @@ updatePortData = (req, data) ->
   ui.updateMaterials data.api_data.api_material
   ui.updateOwnShips data.api_data.api_ship
   ui.updateDecks data.api_data.api_deck_port
+  ui.updateNdocks data.api_data.api_ndock

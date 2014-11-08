@@ -17,6 +17,7 @@ ownShips = []
 ownSlotitems = []
 materials = []
 decks = []
+ndocks = []
 
 exports.initConfig = ->
   # Update tab state
@@ -183,3 +184,24 @@ exports.updateDecks = (api_deck_port) ->
         $("#ship-#{deck.api_id}#{i + 1}-lv").text ''
         $("#ship-#{deck.api_id}#{i + 1}-hpline").html ''
     $("#deck-#{deck.api_id}-info").text "总计Lv. #{totalLv}"
+
+exports.updateNdocks = (api_ndock) ->
+  ndocks = []
+  for ndock in api_ndock
+    ndocks[ndock.api_id] = ndock
+    if ndocks[ndock.api_id].api_state == -1
+      $("#ndock-#{ndock.api_id}-open").text "被锁定"
+      $("#ndock-#{ndock.api_id}-name").text ""
+      $("#ndock-#{ndock.api_id}-endtime").text ""
+      $("#ndock-#{ndock.api_id}-resttime").text ""
+    if ndocks[ndock.api_id].api_state == 0
+      $("#ndock-#{ndock.api_id}-open").text "未使用"
+      $("#ndock-#{ndock.api_id}-name").text ""
+      $("#ndock-#{ndock.api_id}-endtime").text ""
+      $("#ndock-#{ndock.api_id}-resttime").text ""
+    if ndocks[ndock.api_id].api_state == 1
+      ship = ownShips[ndock.api_ship_id]
+      $("#ndock-#{ndock.api_id}-open").text ndock.api_id
+      $("#ndock-#{ndock.api_id}-name").text ships[ship.api_ship_id].api_name
+      $("#ndock-#{ndock.api_id}-endtime").text ndock.api_complete_time_str
+      $("#ndock-#{ndock.api_id}-resttime").text ""
