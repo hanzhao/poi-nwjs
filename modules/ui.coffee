@@ -86,6 +86,7 @@ exports.turnOn = ->
     $("#mission-panel").fadeIn()
     $("#ndocks-panel").fadeIn()
     $("#kdocks-panel").fadeIn()
+    $("#anticat-panel").fadeIn()
 
 exports.turnOff = ->
   if state
@@ -96,11 +97,13 @@ exports.turnOff = ->
     $("#mission-panel").hide()
     $("#ndocks-panel").hide()
     $("#kdocks-panel").hide()
+    $("#anticat-panel").hide()
     $("#state-panel").fadeIn()
 
 exports.addAntiCatCounter = ->
   antiCatCounter += 1
-  $("anticat-panel-content").text "一共抵御了#{antiCatCounter}次猫神的袭击……"
+  $("#anticat-panel-content").text "一共抵御了#{antiCatCounter}次猫神的袭击……"
+
 exports.updateUserinfo = (api_data) ->
   html = ''
   html += "<li>Lv. #{api_data.api_level} #{api_data.api_nickname}</li>"

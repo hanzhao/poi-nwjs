@@ -171,7 +171,6 @@ serverWithoutProxy = (req, res) ->
 
 sendSocksProxyRequest = (options, counter, callback) ->
   request = shttp.request options, (result) ->
-    console.log result.statusCode
     if (options.path.indexOf('/kcsapi/') != -1 || options.path.indexOf('/kcs/') != -1) && (result.statusCode == 500 || result.statusCode == 502 || result.statusCode == 503)
       console.log "Code #{result.statusCode}, retried for the #{counter} time."
       if counter != config.antiCat.retryTime
