@@ -7,7 +7,7 @@
     "resizable": false,
     "position": "center",
     "width": 600,
-    "height": 735
+    "height": 725
   },
   "dependencies": {
     "iced-coffee-script": "^1.8.0-a",
