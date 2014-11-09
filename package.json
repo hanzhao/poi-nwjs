@@ -12,6 +12,6 @@
   "dependencies": {
     "iced-coffee-script": "^1.8.0-a",
     "shadowsocks": "^1.5.3",
-    "socks5-http-client": "^0.1.6"
+    "socksv5": "^0.0.4"
   }
 }

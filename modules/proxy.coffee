@@ -1,5 +1,5 @@
 http = require('http')
-shttp = require('socks5-http-client')
+socks = require('socksv5')
 fs = require('fs')
 url = require('url')
 local = require('shadowsocks')
@@ -30,6 +30,10 @@ serverWithShadowsocks = (req, res) ->
   console.log "Get Request #{req.url} using Shadowsocks"
   # Shadowsocks
   parsed = url.parse req.url
+  socksConfig =
+    proxyHost:  '127.0.0.1'
+    proxyPort:  config.proxy.shadowsocks.localPort
+    auths:      [ socks.auth.None() ]
   options =
     host:       parsed.host || '127.0.0.1'
     hostname:   parsed.hostname || '127.0.0.1'
@@ -37,8 +41,7 @@ serverWithShadowsocks = (req, res) ->
     method:     req.method
     path:       parsed.path || '/'
     headers:    req.headers
-    socksHost:  '127.0.0.1'
-    socksPort:  config.proxy.shadowsocks.localPort
+    agent:      new socks.HttpAgent(socksConfig)
   # Post Data
   postData = ''
   req.setEncoding 'utf8'
@@ -49,7 +52,7 @@ serverWithShadowsocks = (req, res) ->
     sendSocksProxyRequest options, 0, (result) ->
       if result.err
         res.writeHead 500, {'Content-Type': 'text/html'}
-        res.write '<DOCTYPE html><html><body><h1>Network Error</h1></body></html>'
+        res.write '<!DOCTYPE html><html><body><h1>Network Error</h1></body></html>'
         res.end()
       else
         buffers = []
@@ -68,6 +71,10 @@ serverWithSocksProxy = (req, res) ->
   console.log "Get Request #{req.url} using Socks Proxy"
   # Socks
   parsed = url.parse req.url
+  socksConfig =
+    proxyHost:  config.proxy.socksProxy.socksProxyIp
+    proxyPort:  config.proxy.socksProxy.socksProxyPort
+    auths:      [ socks.auth.None() ]
   options =
     host:       parsed.host || '127.0.0.1'
     hostname:   parsed.hostname || '127.0.0.1'
@@ -75,8 +82,7 @@ serverWithSocksProxy = (req, res) ->
     method:     req.method
     path:       parsed.path || '/'
     headers:    req.headers
-    socksHost:  config.proxy.socksProxy.socksProxyIp
-    socksPort:  config.proxy.socksProxy.socksProxyPort
+    agent:      new socks.HttpAgent(socksConfig)
   # Post Data
   postData = ''
   req.setEncoding 'utf8'
@@ -87,7 +93,7 @@ serverWithSocksProxy = (req, res) ->
     sendSocksProxyRequest options, 0, (result) ->
       if result.err
         res.writeHead 500, {'Content-Type': 'text/html'}
-        res.write '<DOCTYPE html><html><body><h1>Network Error</h1></body></html>'
+        res.write '<!DOCTYPE html><html><body><h1>Network Error</h1></body></html>'
         res.end()
       else
         buffers = []
@@ -121,7 +127,7 @@ serverWithHttpProxy = (req, res) ->
     sendHttpRequest options, 0, (result) ->
       if result.err
         res.writeHead 500, {'Content-Type': 'text/html'}
-        res.write '<DOCTYPE html><html><body><h1>Network Error</h1></body></html>'
+        res.write '<!DOCTYPE html><html><body><h1>Network Error</h1></body></html>'
         res.end()
       else
         buffers = []
@@ -154,7 +160,7 @@ serverWithoutProxy = (req, res) ->
     sendHttpRequest req, 0, (result) ->
       if result.err
         res.writeHead 500, {'Content-Type': 'text/html'}
-        res.write '<DOCTYPE html><html><body><h1>Network Error</h1></body></html>'
+        res.write '<!DOCTYPE html><html><body><h1>Network Error</h1></body></html>'
         res.end()
       else
         buffers = []
@@ -170,7 +176,7 @@ serverWithoutProxy = (req, res) ->
           res.end()
 
 sendSocksProxyRequest = (options, counter, callback) ->
-  request = shttp.request options, (result) ->
+  request = http.request options, (result) ->
     if (options.path.indexOf('/kcsapi/') != -1 || options.path.indexOf('/kcs/') != -1) && (result.statusCode == 500 || result.statusCode == 502 || result.statusCode == 503)
       console.log "Code #{result.statusCode}, retried for the #{counter} time."
       if counter != config.antiCat.retryTime
