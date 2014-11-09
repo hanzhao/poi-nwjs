@@ -7,6 +7,8 @@ materialsName = ['', '油', '弹', '钢', '铝', '高速建造', '高速修复',
 
 state = false
 
+antiCatCounter = 0
+
 ships = []
 stypes = []
 mapareas = []
@@ -81,6 +83,9 @@ exports.turnOn = ->
     $("#state-panel").hide()
     $("#user-panel").fadeIn()
     $("#resource-panel").fadeIn()
+    $("#mission-panel").fadeIn()
+    $("#ndocks-panel").fadeIn()
+    $("#kdocks-panel").fadeIn()
 
 exports.turnOff = ->
   if state
@@ -88,8 +93,14 @@ exports.turnOff = ->
     $("#state-panel-content").text "没有检测到流量"
     $("#user-panel").hide()
     $("#resource-panel").hide()
+    $("#mission-panel").hide()
+    $("#ndocks-panel").hide()
+    $("#kdocks-panel").hide()
     $("#state-panel").fadeIn()
 
+exports.addAntiCatCounter = ->
+  antiCatCounter += 1
+  $("anticat-panel-content").text "一共抵御了#{antiCatCounter}次猫神的袭击……"
 exports.updateUserinfo = (api_data) ->
   html = ''
   html += "<li>Lv. #{api_data.api_level} #{api_data.api_nickname}</li>"
@@ -189,19 +200,20 @@ exports.updateNdocks = (api_ndock) ->
   ndocks = []
   for ndock in api_ndock
     ndocks[ndock.api_id] = ndock
-    if ndocks[ndock.api_id].api_state == -1
-      $("#ndock-#{ndock.api_id}-open").text "被锁定"
-      $("#ndock-#{ndock.api_id}-name").text ""
-      $("#ndock-#{ndock.api_id}-endtime").text ""
-      $("#ndock-#{ndock.api_id}-resttime").text ""
-    if ndocks[ndock.api_id].api_state == 0
-      $("#ndock-#{ndock.api_id}-open").text "未使用"
-      $("#ndock-#{ndock.api_id}-name").text ""
-      $("#ndock-#{ndock.api_id}-endtime").text ""
-      $("#ndock-#{ndock.api_id}-resttime").text ""
-    if ndocks[ndock.api_id].api_state == 1
-      ship = ownShips[ndock.api_ship_id]
-      $("#ndock-#{ndock.api_id}-open").text ndock.api_id
-      $("#ndock-#{ndock.api_id}-name").text ships[ship.api_ship_id].api_name
-      $("#ndock-#{ndock.api_id}-endtime").text ndock.api_complete_time_str
-      $("#ndock-#{ndock.api_id}-resttime").text ""
+    switch ndocks[ndock.api_id].api_state
+      when -1
+        $("#ndock-#{ndock.api_id}-open").text "被锁定"
+        $("#ndock-#{ndock.api_id}-name").text ""
+        $("#ndock-#{ndock.api_id}-endtime").text ""
+        $("#ndock-#{ndock.api_id}-resttime").text ""
+      when 0
+        $("#ndock-#{ndock.api_id}-open").text "未使用"
+        $("#ndock-#{ndock.api_id}-name").text ""
+        $("#ndock-#{ndock.api_id}-endtime").text ""
+        $("#ndock-#{ndock.api_id}-resttime").text ""
+      when 1
+        ship = ownShips[ndock.api_ship_id]
+        $("#ndock-#{ndock.api_id}-open").text ndock.api_id
+        $("#ndock-#{ndock.api_id}-name").text ships[ship.api_ship_id].api_name
+        $("#ndock-#{ndock.api_id}-endtime").text ndock.api_complete_time_str
+        $("#ndock-#{ndock.api_id}-resttime").text ""

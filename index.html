@@ -36,13 +36,29 @@
           <div id="state-panel-title" class="am-panel-hd">运行状态</div>
           <div id="state-panel-content" class="am-panel-bd">没有检测到流量</div>
         </div>
-        <div id="user-panel" class="am-panel am-panel-success" style="display: none;">
+        <div id="user-panel" class="am-panel am-panel-primary" style="display: none;">
           <div id="user-panel-title" class="am-panel-hd">提督</div>
           <div id="user-panel-content" class="am-panel-bd"></div>
         </div>
-        <div id="resource-panel" class="am-panel am-panel-primary" style="display: none;">
+        <div id="resource-panel" class="am-panel am-panel-secondary" style="display: none;">
           <div id="resource-panel-title" class="am-panel-hd">资源</div>
           <div id="resource-panel-content" class="am-panel-bd"></div>
+        </div>
+        <div id="mission-panel" class="am-panel am-panel-warning mg-panel-sm" style="display: none;">
+          <div id="mission-panel-title" class="am-panel-hd">远征</div>
+          <div id="mission-panel-content" class="am-panel-bd"></div>
+        </div>
+        <div id="ndocks-panel" class="am-panel am-panel-success mg-panel-sm mg-panel-mid" style="display: none;">
+          <div id="ndocks-panel-title" class="am-panel-hd">入渠</div>
+          <div id="ndocks-panel-content" class="am-panel-bd"></div>
+        </div>
+        <div id="kdocks-panel" class="am-panel am-panel-danger mg-panel-sm" style="display: none;">
+          <div id="kdocks-panel-title" class="am-panel-hd">建造</div>
+          <div id="kdocks-panel-content" class="am-panel-bd"></div>
+        </div>
+        <div id="anticat-panel" class="am-panel am-panel-danger" style="display: none;">
+          <div id="anticat-panel-title" class="am-panel-hd">防猫计数</div>
+          <div id="anticat-panel-content" class="am-panel-bd">一共抵御了0次猫神的袭击……</div>
         </div>
       </div>
       <div id="sec-ship" class="mg-section" style="display: none;">
@@ -393,7 +409,7 @@
           <ul class="am-pagination am-pagination-centered">
             <li class="am-pagination-prev am-disabled"><a href="#">&laquo;</a></li>
             <li class="mg-pagination-center">入渠</li>
-            <li class="am-pagination-next"><a href="#" onclick="showDeck(2);">&raquo;</a></li>
+            <li class="am-pagination-next"><a href="#">&raquo;</a></li>
           </ul>
           <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
             <tbody>
@@ -429,12 +445,10 @@
             </tr>
             </tbody>
           </table>
-          <div id="deck-1-info" class="mg-text-container">
-          </div>
         </div>
         <div id="cdocks" style="display: none;">
           <ul class="am-pagination am-pagination-centered">
-            <li class="am-pagination-prev"><a href="#" onclick="showDeck(1);">&laquo;</a></li>
+            <li class="am-pagination-prev"><a href="#">&laquo;</a></li>
             <li class="mg-pagination-center"><span id="deckname-2">建造</span></li>
             <li class="am-pagination-next" "am-disabled"><a href="#">&raquo;</a></li>
           </ul>
@@ -443,14 +457,8 @@
             
             </tbody>
           </table>
-          <div id="deck-2-info" class="mg-text-container">
-          </div>
         </div>
-        
-        
         <!-- mark over-->
-
-
       </div>
       <div id="sec-calc" class="mg-section" style="display: none;">
         <p>Calc</p>

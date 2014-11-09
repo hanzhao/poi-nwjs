@@ -6,6 +6,7 @@ local = require('shadowsocks')
 config = require('./config').config
 Buffer = require('buffer').Buffer
 processor = require('./processor')
+ui = require('./ui')
 
 exports.createShadowsocksServer = ->
   return unless config.proxy.useShadowsocks
@@ -170,9 +171,11 @@ serverWithoutProxy = (req, res) ->
 
 sendSocksProxyRequest = (options, counter, callback) ->
   request = shttp.request options, (result) ->
-    if result.statusCode == 500 || result.statusCode == 502 || result.statusCode == 404 || result.statusCode == 503
+    console.log result.statusCode
+    if (options.path.indexOf('/kcsapi/') != -1 || options.path.indexOf('/kcs/') != -1) && (result.statusCode == 500 || result.statusCode == 502 || result.statusCode == 503)
       console.log "Code #{result.statusCode}, retried for the #{counter} time."
       if counter != config.antiCat.retryTime
+        ui.addAntiCatCounter()
         setTimeout ->
           sendSocksProxyRequest(options, counter + 1, callback)
         , config.antiCat.retryDelay
@@ -183,8 +186,10 @@ sendSocksProxyRequest = (options, counter, callback) ->
   if options.method == "POST" && options.postData
     request.write options.postData
   request.on 'error', (e) ->
+    return unless options.path.indexOf('/kcsapi/') != -1 || options.path.indexOf('/kcs/') != -1
     console.log "#{e}, retried for the #{counter} time."
     if counter != config.antiCat.retryTime
+      ui.addAntiCatCounter()
       setTimeout ->
         sendSocksProxyRequest(options, counter + 1, callback)
       , config.antiCat.retryDelay
@@ -194,9 +199,10 @@ sendSocksProxyRequest = (options, counter, callback) ->
 
 sendHttpRequest = (options, counter, callback) ->
   request = http.request options, (result) ->
-    if result.statusCode == 500 || result.statusCode == 502 || result.statusCode == 404 || result.statusCode == 503
+   if (options.path.indexOf('/kcsapi/') != -1 || options.path.indexOf('/kcs/') != -1) && (result.statusCode == 500 || result.statusCode == 502 || result.statusCode == 503)
       console.log "Code #{result.statusCode}, retried for the #{counter} time."
       if counter != config.antiCat.retryTime
+        ui.addAntiCatCounter()
         setTimeout ->
           sendHttpRequest(options, counter + 1, callback)
         , config.antiCat.retryDelay
@@ -207,8 +213,10 @@ sendHttpRequest = (options, counter, callback) ->
   if options.method == "POST" && options.postData
     request.write options.postData
   request.on 'error', (e) ->
+    return unless options.path.indexOf('/kcsapi/') != -1 || options.path.indexOf('/kcs/') != -1
     console.log "#{e}, retried for the #{counter} time."
     if counter != config.antiCat.retryTime
+      ui.addAntiCatCounter()
       setTimeout ->
         sendHttpRequest(options, counter + 1, callback)
       , config.antiCat.retryDelay

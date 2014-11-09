@@ -80,6 +80,14 @@ html, body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .mg-yellow {
   color: #C3C31D;
 }
+.mg-panel-sm {
+  width: 32.66666666%;
+  float: left;
+}
+.mg-panel-mid {
+  margin-left: 1%;
+  margin-right: 1%;
+}
 .mg-deck-green {
   background-color: #5EB95E;
   color: #FFF;
