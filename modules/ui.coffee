@@ -262,4 +262,4 @@ exports.updateNdocks = (api_ndock) ->
         $("#ndock-#{ndock.api_id}-endtime").text ndock.api_complete_time_str
         $("#ndock-#{ndock.api_id}-resttime").text ""
         $("#ndock-name-#{ndock.api_id}").text ships[ship.api_ship_id].api_name
-        ndockTimer[ndock.api_id] = Math.floor((deck.api_complete_time - new Date()) / 1000)
+        ndockTimer[ndock.api_id] = Math.floor((ndock.api_complete_time - new Date()) / 1000)
