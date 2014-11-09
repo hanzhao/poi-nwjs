@@ -68,8 +68,8 @@ html, body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   vertical-align: middle;
 }
 .mg-table-long {
-  height: 35px;
-  line-height: 35px;
+  height: 50px;
+  line-height: 50px;
 }
 .mg-label-container {
   text-align: right;
@@ -104,6 +104,9 @@ html, body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .mg-panel-sm {
   width: 32.66666666%;
   float: left;
+}
+.mg-font-sm {
+  font-size: 14px;
 }
 .mg-panel-mid {
   margin-left: 1%;
