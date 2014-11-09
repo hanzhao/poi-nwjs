@@ -67,10 +67,24 @@ html, body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .mg-vertical-center {
   vertical-align: middle;
 }
+.mg-table-long {
+  height: 35px;
+  line-height: 35px;
+}
 .mg-label-container {
   text-align: right;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+}
+.mg-deck-locked {
+  background-color: #DD514C;
+  color: #FFF;
+}
+.mg-clear-padding {
+  padding: 0rem;
+}
+.mg-clear-margin {
+  margin: 0rem;
 }
 .mg-green {
   color: #5EB95E;
