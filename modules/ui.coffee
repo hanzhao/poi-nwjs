@@ -33,6 +33,7 @@ exports.showNotification = showNotification = (title, body) ->
     notification.close()
 
 formatTime = (time) ->
+
   hour = Math.floor(time / 3600)
   time -= hour * 3600
   minute = Math.floor(time / 60)
@@ -53,9 +54,11 @@ timer = ->
     ndockTimer[i] -= 1 if ndockTimer[i] > 0
     if ndockTimer[i] >= 0
       $("#ndock-timer-#{i}").text formatTime ndockTimer[i]
+      $("#ndock-#{i}-resttime").text formatTime ndockTimer[i] 
       showNotification "Poi", "#{$("#ndock-name-#{i}").text()}修复完成" if missionTimer[i] == 1
     else
       $("#ndock-timer-#{i}").text ''
+      $("#ndock-#{i}-resttime").text ''
     kdockTimer[i] -= 1 if kdockTimer[i] > 0
     if kdockTimer[i] >= 0
       $("#kdock-timer-#{i}").text formatTime kdockTimer[i]
@@ -255,21 +258,28 @@ exports.updateNdocks = (api_ndock) ->
     switch ndocks[ndock.api_id].api_state
       when -1
         $("#ndock-#{ndock.api_id}-open").text "被锁定"
-        $("#ndock-#{ndock.api_id}-name").text ""
-        $("#ndock-#{ndock.api_id}-endtime").text ""
-        $("#ndock-#{ndock.api_id}-resttime").text ""
+        $("#ndock-#{ndock.api_id}-name").text ''
+        $("#ndock-#{ndock.api_id}-endtime").text ''
+        $("#ndock-#{ndock.api_id}-resttime").text ''
       when 0
         $("#ndock-#{ndock.api_id}-open").text "未使用"
-        $("#ndock-#{ndock.api_id}-name").text ""
-        $("#ndock-#{ndock.api_id}-endtime").text ""
-        $("#ndock-#{ndock.api_id}-resttime").text ""
+        $("#ndock-#{ndock.api_id}-name").text ''
+        $("#ndock-#{ndock.api_id}-endtime").text ''
+        $("#ndock-#{ndock.api_id}-resttime").text ''
         $("#ndock-name-#{ndock.api_id}").text ''
         ndockTimer[ndock.api_id] = -1
       when 1
         ship = ownShips[ndock.api_ship_id]
         $("#ndock-#{ndock.api_id}-open").text ndock.api_id
         $("#ndock-#{ndock.api_id}-name").text ships[ship.api_ship_id].api_name
-        $("#ndock-#{ndock.api_id}-endtime").text ndock.api_complete_time_str
-        $("#ndock-#{ndock.api_id}-resttime").text ""
+        dateNow = new Date(ndock.api_complete_time)
+        month = dateNow.getMonth() + 1
+        day = dateNow.getDate()
+        hours = dateNow.getHours()
+        minutes = dateNow.getMinutes()
+        seconds = dateNow.getSeconds()
+        dateNowStr = month + '/' + day + ' ' + hours + ':' + minutes + ':' + seconds 
+        $("#ndock-#{ndock.api_id}-endtime").text dateNowStr
+        #$("#ndock-#{ndock.api_id}-resttime").text <-upate in function timer
         $("#ndock-name-#{ndock.api_id}").text ships[ship.api_ship_id].api_name
         ndockTimer[ndock.api_id] = Math.floor((ndock.api_complete_time - new Date()) / 1000)
