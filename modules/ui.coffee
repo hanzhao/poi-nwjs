@@ -281,6 +281,11 @@ exports.updateNdocks = (api_ndock) ->
         hours = dateNow.getHours()
         minutes = dateNow.getMinutes()
         seconds = dateNow.getSeconds()
+        month = '0'+ month if month < 10
+        day = '0' + day if day < 10
+        hours = '0' + hours if hours < 10
+        minutes = '0' + minutes if minutes < 10
+        seconds = '0' + seconds if seconds < 10
         dateNowStr = month + '/' + day + ' ' + hours + ':' + minutes + ':' + seconds 
         $("#ndock-#{ndock.api_id}-endtime").text dateNowStr
         #$("#ndock-#{ndock.api_id}-resttime").text <-upate in function timer
@@ -313,6 +318,11 @@ exports.updateKdocks = (api_kdock) ->
         hours = dateNow.getHours()
         minutes = dateNow.getMinutes()
         seconds = dateNow.getSeconds()
+        month = '0'+ month if month < 10
+        day = '0' + day if day < 10
+        hours = '0' + hours if hours < 10
+        minutes = '0' + minutes if minutes < 10
+        seconds = '0' + seconds if seconds < 10
         dateNowStr = month + '/' + day + ' ' + hours + ':' + minutes + ':' + seconds 
         $("#kdock-#{kdock.api_id}-endtime").text dateNowStr
         $("#kdock-name-#{kdock.api_id}").text ships[kdock.api_created_ship_id].api_name
@@ -327,6 +337,11 @@ exports.updateKdocks = (api_kdock) ->
         hours = dateNow.getHours()
         minutes = dateNow.getMinutes()
         seconds = dateNow.getSeconds()
+        month = '0'+ month if month < 10
+        day = '0' + day if day < 10
+        hours = '0' + hours if hours < 10
+        minutes = '0' + minutes if minutes < 10
+        seconds = '0' + seconds if seconds < 10
         dateNowStr = month + '/' + day + ' ' + hours + ':' + minutes + ':' + seconds 
         $("#kdock-#{kdock.api_id}-endtime").text dateNowStr
         $("#kdock-name-#{kdock.api_id}").text ships[kdock.api_created_ship_id].api_name
