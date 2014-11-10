@@ -21,6 +21,8 @@ exports.processData = (req, data) ->
       updatePortData req, data
     when '/api_get_member/kdock'
       updateKdockData req, data
+    when '/api_req_kousyou/getship'
+      updateKdockDataInGetship req, data
 
 updateUserData = (req, data) ->
   return unless data.api_result == 1
@@ -49,3 +51,7 @@ updatePortData = (req, data) ->
 updateKdockData = (req, data) ->
   return unless data.api_result == 1
   ui.updateKdocks data.api_data
+
+updateKdockDataInGetship = (req, data) ->
+  return unless data.api_result == 1
+  ui.updateKdocks data.api_data.api_kdock
