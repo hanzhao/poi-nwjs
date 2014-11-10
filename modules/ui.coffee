@@ -66,6 +66,7 @@ timer = ->
       showNotification "Poi", "#{$("#kdock-name-#{i}").text()}建造完成" if missionTimer[i] == 1
     else
       $("#kdock-timer-#{i}").text ''
+      $("#kdock-#{i}-resttime").text ''
 
 exports.initConfig = ->
   # Update tab state
@@ -320,7 +321,7 @@ exports.updateKdocks = (api_kdock) ->
         $("#kdock-#{kdock.api_id}-open").text kdock.api_id
         $("#kdock-#{kdock.api_id}-name").text ships[kdock.api_created_ship_id].api_name
         dateNow = new Date(kdock.api_complete_time)
-        
+
         month = dateNow.getMonth() + 1
         day = dateNow.getDate()
         hours = dateNow.getHours()
