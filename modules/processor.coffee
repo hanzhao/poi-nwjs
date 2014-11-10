@@ -6,8 +6,8 @@ exports.processData = (req, data) ->
   ui.turnOn()
   data = data.toString()
   data = data.substring(7) if data.indexOf('svdata=') == 0
-  # fs.appendFile 'data.log', "Url: #{req.url}\nMethod: #{req.method}\nPostData: #{req.postData}\nReceiveData: #{data}\n", (err) ->
-  #   console.log err if err?
+  #fs.appendFile 'data.log', "Url: #{req.url}\nMethod: #{req.method}\nPostData: #{req.postData}\nReceiveData: #{data}\n", (err) ->
+  #  console.log err if err?
   data = JSON.parse data
   position = url.parse(req.url).pathname.replace '/kcsapi', ''
   switch position
@@ -19,6 +19,8 @@ exports.processData = (req, data) ->
       updateSlotitemData req, data
     when '/api_port/port'
       updatePortData req, data
+    when '/api_get_member/kdock'
+      updateKdockData req, data
 
 updateUserData = (req, data) ->
   return unless data.api_result == 1
@@ -43,3 +45,7 @@ updatePortData = (req, data) ->
   ui.updateOwnShips data.api_data.api_ship
   ui.updateDecks data.api_data.api_deck_port
   ui.updateNdocks data.api_data.api_ndock
+
+updateKdockData = (req, data) ->
+  return unless data.api_result == 1
+  ui.updateKdocks data.api_data

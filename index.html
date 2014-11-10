@@ -478,48 +478,51 @@
       </div>
       <div id="sec-factory" class="mg-section" style="display: none;">
         <!--<p>Factory</p> mark factory-->
-        <div id="ndocks" style="display: block;">
-          <ul class="am-pagination am-pagination-centered">
+        <div id="ndocks" class="am-panel am-panel-success"style="display: block;">
+          <div id="ndocks-title" class="am-panel-hd">入渠</div>
+          <div id="ndocks-content" class="am-panel-bd mg-clear-padding">
+          <!--ul class="am-pagination am-pagination-centered">
             <li class="am-pagination-prev am-disabled"><a href="#">&laquo;</a></li>
             <li class="mg-pagination-center">入渠</li>
             <li class="am-pagination-next"><a href="#">&raquo;</a></li>
-          </ul>
-          <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
-            <tbody>
-            <tr class="mg-ndocks-short">
-              <td></td>
-              <td>修理中的舰娘</td>
-              <td>完成时间</td>
-              <td>剩余时间</td>
-            </tr>
-            <tr class="mg-ndocks-long">
-              <td id="ndock-1-open"></td>
-              <td id="ndock-1-name"></td>
-              <td id="ndock-1-endtime"></td>
-              <td id="ndock-1-resttime"></td>
-            </tr>
-            <tr class="mg-ndocks-long">
-              <td id="ndock-2-open"></td>
-              <td id="ndock-2-name"></td>
-              <td id="ndock-2-endtime"></td>
-              <td id="ndock-2-resttime"></td>
-            </tr>
-            <tr class="mg-ndocks-long">
-              <td id="ndock-3-open"></td>
-              <td id="ndock-3-name"></td>
-              <td id="ndock-3-endtime"></td>
-              <td id="ndock-3-resttime"></td>
-            </tr>
-            <tr class="mg-ndocks-long">
-              <td id="ndock-4-open"></td>
-              <td id="ndock-4-name"></td>
-              <td id="ndock-4-endtime"></td>
-              <td id="ndock-4-resttime"></td>
-            </tr>
-            </tbody>
-          </table>
+          </ul-->
+            <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
+              <tbody>
+              <tr class="mg-ndocks-short">
+                <td></td>
+                <td>修理中的舰娘</td>
+                <td>完成时间</td>
+                <td>剩余时间</td>
+              </tr>
+              <tr class="mg-ndocks-long">
+                <td id="ndock-1-open"></td>
+                <td id="ndock-1-name"></td>
+                <td id="ndock-1-endtime"></td>
+                <td id="ndock-1-resttime"></td>
+              </tr>
+              <tr class="mg-ndocks-long">
+                <td id="ndock-2-open"></td>
+                <td id="ndock-2-name"></td>
+                <td id="ndock-2-endtime"></td>
+                <td id="ndock-2-resttime"></td>
+              </tr>
+              <tr class="mg-ndocks-long">
+                <td id="ndock-3-open"></td>
+                <td id="ndock-3-name"></td>
+                <td id="ndock-3-endtime"></td>
+                <td id="ndock-3-resttime"></td>
+              </tr>
+              <tr class="mg-ndocks-long">
+                <td id="ndock-4-open"></td>
+                <td id="ndock-4-name"></td>
+                <td id="ndock-4-endtime"></td>
+                <td id="ndock-4-resttime"></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        <div id="cdocks" style="display: none;">
+        <!--div id="cdocks" style="display: none;">
           <ul class="am-pagination am-pagination-centered">
             <li class="am-pagination-prev"><a href="#">&laquo;</a></li>
             <li class="mg-pagination-center"><span id="deckname-2">建造</span></li>
@@ -530,6 +533,45 @@
             
             </tbody>
           </table>
+        </div-->
+        <div id="kdocks" class="am-panel am-panel-danger"style="display: block;">
+          <div id="kdocks-title" class="am-panel-hd">建造</div>
+          <div id="kdocks-content" class="am-panel-bd mg-clear-padding">
+            <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
+              <tbody>
+              <tr class="mg-kdocks-short">
+                <td></td>
+                <td>建造中的舰娘</td>
+                <td>完成时间</td>
+                <td>剩余时间</td>
+              </tr>
+              <tr class="mg-kdocks-long">
+                <td id="kdock-1-open"></td>
+                <td id="kdock-1-name"></td>
+                <td id="kdock-1-endtime"></td>
+                <td id="kdock-1-resttime"></td>
+              </tr>
+              <tr class="mg-kdocks-long">
+                <td id="kdock-2-open"></td>
+                <td id="kdock-2-name"></td>
+                <td id="kdock-2-endtime"></td>
+                <td id="kdock-2-resttime"></td>
+              </tr>
+              <tr class="mg-kdocks-long">
+                <td id="kdock-3-open"></td>
+                <td id="kdock-3-name"></td>
+                <td id="kdock-3-endtime"></td>
+                <td id="kdock-3-resttime"></td>
+              </tr>
+              <tr class="mg-kdocks-long">
+                <td id="kdock-4-open"></td>
+                <td id="kdock-4-name"></td>
+                <td id="kdock-4-endtime"></td>
+                <td id="kdock-4-resttime"></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <!-- mark over-->
       </div>
