@@ -40,20 +40,20 @@ timer = ->
     missionTimer[i] -= 1 if missionTimer[i] > 0
     if missionTimer[i] >= 0
       $("#mission-timer-#{i}").text util.formatTime missionTimer[i]
-      showNotification "Poi", "#{$("#mission-name-#{i}").text()}远征归来" if missionTimer[i] == 50
+      showNotification "#{$("#mission-name-#{i}").text()}远征归来" if missionTimer[i] == 50
     else
       $("#mission-timer-#{i}").text ''
     ndockTimer[i] -= 1 if ndockTimer[i] > 0
     if ndockTimer[i] >= 0
       $("#ndock-timer-#{i}").text util.formatTime ndockTimer[i]
-      showNotification "Poi", "#{$("#ndock-name-#{i}").text()}修复完成" if missionTimer[i] == 50
+      showNotification "#{$("#ndock-name-#{i}").text()}修复完成" if missionTimer[i] == 50
     else
       $("#ndock-timer-#{i}").text ''
     kdockTimer[i] -= 1 if kdockTimer[i] > 0
     if kdockTimer[i] >= 0
       $("#kdock-timer-#{i}").text util.formatTime kdockTimer[i]
       $("#kdock-#{i}-remaining").text util.formatTime kdockTimer[i]
-      showNotification "Poi", "#{$("#kdock-name-#{i}").text()}建造完成" if missionTimer[i] == 50
+      showNotification "#{$("#kdock-name-#{i}").text()}建造完成" if missionTimer[i] == 50
     else
       $("#kdock-timer-#{i}").text ''
       $("#kdock-#{i}-remaining").text ''
