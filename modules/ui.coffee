@@ -16,6 +16,7 @@ missionTimer = [-1, -1, -1, -1, -1]
 ndockTimer = [-1, -1, -1, -1, -1]
 kdockTimer = [-1, -1, -1, -1, -1]
 
+user = null
 ships = []
 stypes = []
 mapareas = []
@@ -30,7 +31,7 @@ ndocks = []
 kdocks = []
 
 exports.updatePacPath = (path) ->
-  $('#pac-path').attr 'value', "file://#{path}"
+  $('#pac-path')[0].value = "file://#{path}"
 
 exports.showNotification = showNotification = (body) ->
   notification = new Notification 'Poi',
@@ -142,56 +143,59 @@ exports.turnOff = ->
     $('#state-panel').fadeIn()
 
 exports.addAntiCatCounter = ->
-  antiCatCounter += 1
-  $('#anticat-panel-content').text "一共抵御了#{antiCatCounter}次猫神的袭击……"
+  $('#anticat-panel-content').text "一共抵御了#{antiCatCounter += 1}次猫神的袭击……"
 
-exports.updateUserinfo = (api_data) ->
-  html = ''
-  html += "<li>Lv. #{api_data.api_level} #{api_data.api_nickname}</li>"
+################################################################################
+
+exports.updateGameData = (api_data) ->
+  ships = []
+  ships[ship.api_id] = ship for ship in api_data.api_mst_ship
+  stypes = []
+  stypes[stype.api_id] = stype for stype in api_data.api_mst_stype
+  slotitems = []
+  slotitems[slotitem.api_id] = slotitem for slotitem in api_data.api_mst_slotitem
+  mapareas = []
+  mapareas[maparea.api_id] = maparea for maparea in api_data.api_mst_maparea
+  maps = []
+  maps[map.api_id] = map for map in api_data.api_mst_mapinfo
+  missions = []
+  missions[mission.api_id] = mission for mission in api_data.api_mst_mission
+
+exports.updateUserData = (api_data) ->
+  user = api_data
+
+exports.updateSlotitemData = (api_data) ->
+  ownSlotitems = []
+  ownSlotitems[slotitem.api_id] = slotitem for slotitem in api_data
+
+exports.updatePortData = (api_data) ->
+  material = []
+  materials[material.api_id] = material for material in api_data.api_material
+  ownShips = []
+  ownShips[ship.api_id] = ship for ship in api_data.api_ship
+  decks = []
+  decks[deck.api_id] = deck for deck in api_data.api_deck_port
+  ndocks = []
+  ndocks[ndock.api_id] = ndock for ndock in api_data.api_ndock
+
+exports.updateKdocksData = (api_data) ->
+  kdocks = []
+  kdocks[kdock.api_id] = kdock for kdock in api_data
+
+###############################################################################
+
+exports.refreshUser = ->
+  html = "<li>Lv. #{user.api_level} #{user.api_nickname}</li>"
   $('#user-panel-content').html html
 
-exports.updateShips = (api_mst_ship) ->
-  ships = []
-  ships[ship.api_id] = ship for ship in api_mst_ship
+exports.refreshMaterials = ->
+  for material in materials
+    continue unless material
+    $("#material-#{material.api_id}").text "#{materialsName[material.api_id]}: #{material.api_value}"
 
-exports.updateShiptypes = (api_mst_stype) ->
-  stypes = []
-  stypes[stype.api_id] = stype for stype in api_mst_stype
-
-exports.updateSlotitems = (api_mst_slotitem) ->
-  slotitems = []
-  slotitems[slotitem.api_id] = slotitem for slotitem in api_mst_slotitem
-
-exports.updateMapareas = (api_mst_maparea) ->
-  mapareas = []
-  mapareas[maparea.api_id] = maparea for maparea in api_mst_maparea
-
-exports.updateMaps = (api_mst_mapinfo) ->
-  maps = []
-  maps[map.api_id] = map for map in api_mst_mapinfo
-
-exports.updateMissions = (api_mst_mission) ->
-  missions = []
-  missions[mission.api_id] = mission for mission in api_mst_mission
-
-exports.updateOwnSlotitems = (api_slotitem) ->
-  ownSlotitems = []
-  ownSlotitems[slotitem.api_id] = slotitem for slotitem in api_slotitem
-
-exports.updateOwnShips = (api_ship) ->
-  ownShips = []
-  ownShips[ship.api_id] = ship for ship in api_ship
-
-exports.updateMaterials = (api_material) ->
-  material = []
-  materials[material.api_id] = material for material in api_material
-  for i in [1, 2, 3, 4, 5, 6, 7, 8]
-    $("#material-#{i}").text "#{materialsName[i]}: #{materials[i].api_value}"
-
-exports.updateDecks = (api_deck_port) ->
-  decks = []
-  for deck in api_deck_port
-    decks[deck.api_id] = deck
+exports.refreshDecks = ->
+  for deck in decks
+    continue unless deck?
     totalLv = 0
     # Deckname
     $("#deckname-#{deck.api_id}").text deck.api_name
@@ -246,11 +250,10 @@ exports.updateDecks = (api_deck_port) ->
         $("#ship-#{deck.api_id}#{i + 1}-hpline").html ''
     $("#deck-#{deck.api_id}-info").text "总计Lv. #{totalLv}"
 
-exports.updateNdocks = (api_ndock) ->
-  ndocks = []
-  for ndock in api_ndock
-    ndocks[ndock.api_id] = ndock
-    switch ndocks[ndock.api_id].api_state
+exports.refreshNdocks = ->
+  for ndock in ndocks
+    continue unless ndock
+    switch ndock.api_state
       when -1
         $("#ndock-name-#{ndock.api_id}").text '未解锁'
       when 0
@@ -261,11 +264,10 @@ exports.updateNdocks = (api_ndock) ->
         $("#ndock-name-#{ndock.api_id}").text ships[ship.api_ship_id].api_name
         ndockTimer[ndock.api_id] = Math.floor((ndock.api_complete_time - new Date()) / 1000)
 
-exports.updateKdocks = (api_kdock) ->
-  kdocks = []
-  for kdock in api_kdock
-    kdocks[kdock.api_id] = kdock
-    switch kdocks[kdock.api_id].api_state
+exports.refreshKdocks = ->
+  for kdock in kdocks
+    continue unless kdock
+    switch kdock.api_state
       when -1
         $("#kdock-#{kdock.api_id}-name").text '未解锁'
         $("#kdock-name-#{kdock.api_id}").text '未解锁'

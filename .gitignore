@@ -1,3 +1,4 @@
 .last
 *.log
 kcs/*
+kcsapi/*
