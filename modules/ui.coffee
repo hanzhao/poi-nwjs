@@ -54,11 +54,11 @@ timer = ->
     ndockTimer[i] -= 1 if ndockTimer[i] > 0
     if ndockTimer[i] >= 0
       $("#ndock-timer-#{i}").text formatTime ndockTimer[i]
-      $("#ndock-#{i}-resttime").text formatTime ndockTimer[i] 
+      #$("#ndock-#{i}-resttime").text formatTime ndockTimer[i] 
       showNotification "Poi", "#{$("#ndock-name-#{i}").text()}修复完成" if missionTimer[i] == 1
     else
       $("#ndock-timer-#{i}").text ''
-      $("#ndock-#{i}-resttime").text ''
+      #$("#ndock-#{i}-resttime").text ''
     kdockTimer[i] -= 1 if kdockTimer[i] > 0
     if kdockTimer[i] >= 0
       $("#kdock-timer-#{i}").text formatTime kdockTimer[i]
@@ -259,92 +259,47 @@ exports.updateNdocks = (api_ndock) ->
     ndocks[ndock.api_id] = ndock
     switch ndocks[ndock.api_id].api_state
       when -1
-        $("#ndock-#{ndock.api_id}-open").text "未解锁"
-        $("#ndock-#{ndock.api_id}-name").text ''
-        $("#ndock-#{ndock.api_id}-endtime").text ''
-        $("#ndock-#{ndock.api_id}-resttime").text ''
+        $("#ndock-name-#{ndock.api_id}").text "未解锁"
       when 0
-        $("#ndock-#{ndock.api_id}-open").text "未使用"
-        $("#ndock-#{ndock.api_id}-name").text ''
-        $("#ndock-#{ndock.api_id}-endtime").text ''
-        $("#ndock-#{ndock.api_id}-resttime").text ''
-        $("#ndock-name-#{ndock.api_id}").text ''
+        $("#ndock-name-#{ndock.api_id}").text "未使用"
         ndockTimer[ndock.api_id] = -1
       when 1
         ship = ownShips[ndock.api_ship_id]
-        $("#ndock-#{ndock.api_id}-open").text ndock.api_id
-        $("#ndock-#{ndock.api_id}-name").text ships[ship.api_ship_id].api_name
-
-        dateNow = new Date(ndock.api_complete_time)
-        month = dateNow.getMonth() + 1
-        day = dateNow.getDate()
-        hours = dateNow.getHours()
-        minutes = dateNow.getMinutes()
-        seconds = dateNow.getSeconds()
-        month = '0'+ month if month < 10
-        day = '0' + day if day < 10
-        hours = '0' + hours if hours < 10
-        minutes = '0' + minutes if minutes < 10
-        seconds = '0' + seconds if seconds < 10
-        dateNowStr = month + '/' + day + ' ' + hours + ':' + minutes + ':' + seconds 
-        $("#ndock-#{ndock.api_id}-endtime").text dateNowStr
         #$("#ndock-#{ndock.api_id}-resttime").text <-upate in function timer
         $("#ndock-name-#{ndock.api_id}").text ships[ship.api_ship_id].api_name
         ndockTimer[ndock.api_id] = Math.floor((ndock.api_complete_time - new Date()) / 1000)
+
 exports.updateKdocks = (api_kdock) ->
   kdocks = []
   for kdock in api_kdock
     kdocks[kdock.api_id] = kdock
     switch kdocks[kdock.api_id].api_state
       when -1
-        $("#kdock-#{kdock.api_id}-open").text "未解锁"
-        $("#kdock-#{kdock.api_id}-name").text ''
-        $("#kdock-#{kdock.api_id}-endtime").text ''
+        $("#kdock-#{kdock.api_id}-name").text "未解锁"
+        $("#kdock-name-#{kdock.api_id}").text "未解锁"
         $("#kdock-#{kdock.api_id}-resttime").text ''
       when 0
-        $("#kdock-#{kdock.api_id}-open").text "未使用"
-        $("#kdock-#{kdock.api_id}-name").text ''
-        $("#kdock-#{kdock.api_id}-endtime").text ''
+        $("#kdock-#{kdock.api_id}-name").text "未使用"
+        $("#kdock-name-#{kdock.api_id}").text "未使用"
         $("#kdock-#{kdock.api_id}-resttime").text ''
         $("#kdock-name-#{kdock.api_id}").text ''
         kdockTimer[kdock.api_id] = -1
+        $("#kdock-#{kdock.api_id}-material").text ''
       when 1 #大建中
-        $("#kdock-#{kdock.api_id}-open").text kdock.api_id
         $("#kdock-#{kdock.api_id}-name").text ships[kdock.api_created_ship_id].api_name
-        dateNow = new Date(kdock.api_complete_time)
-
-        month = dateNow.getMonth() + 1
-        day = dateNow.getDate()
-        hours = dateNow.getHours()
-        minutes = dateNow.getMinutes()
-        seconds = dateNow.getSeconds()
-        month = '0'+ month if month < 10
-        day = '0' + day if day < 10
-        hours = '0' + hours if hours < 10
-        minutes = '0' + minutes if minutes < 10
-        seconds = '0' + seconds if seconds < 10
-        dateNowStr = month + '/' + day + ' ' + hours + ':' + minutes + ':' + seconds 
-        $("#kdock-#{kdock.api_id}-endtime").text dateNowStr
         $("#kdock-name-#{kdock.api_id}").text ships[kdock.api_created_ship_id].api_name
         kdockTimer[kdock.api_id] = Math.floor((kdock.api_complete_time - new Date()) / 1000)
+        materialStr = "油 " + kdock.api_item1 + " 钢 " + kdock.api_item3 + "弹 " + kdock.api_item2 + " 铝 " + kdock.api_item4 + " 资 " + kdock.api_item5
+        $("#kdock-#{kdock.api_id}-material").text materialStr
       when 2 #普建中
-        $("#kdock-#{kdock.api_id}-open").text kdock.api_id
         $("#kdock-#{kdock.api_id}-name").text ships[kdock.api_created_ship_id].api_name
-        dateNow = new Date(kdock.api_complete_time)
-
-        month = dateNow.getMonth() + 1
-        day = dateNow.getDate()
-        hours = dateNow.getHours()
-        minutes = dateNow.getMinutes()
-        seconds = dateNow.getSeconds()
-        month = '0'+ month if month < 10
-        day = '0' + day if day < 10
-        hours = '0' + hours if hours < 10
-        minutes = '0' + minutes if minutes < 10
-        seconds = '0' + seconds if seconds < 10
-        dateNowStr = month + '/' + day + ' ' + hours + ':' + minutes + ':' + seconds 
-        $("#kdock-#{kdock.api_id}-endtime").text dateNowStr
         $("#kdock-name-#{kdock.api_id}").text ships[kdock.api_created_ship_id].api_name
         kdockTimer[kdock.api_id] = Math.floor((kdock.api_complete_time - new Date()) / 1000)
+        materialStr = "油 " + kdock.api_item1 + " 钢 " + kdock.api_item3 + "弹 " + kdock.api_item2 + " 铝 " + kdock.api_item4 + " 资 " + kdock.api_item5
+        $("#kdock-#{kdock.api_id}-material").text materialStr
       when 3
-        $("#kdock-#{kdock.api_id}-open").text "建造完成"
+        $("#kdock-#{kdock.api_id}-name").text ships[kdock.api_created_ship_id].api_name
+        $("#kdock-name-#{kdock.api_id}").text ships[kdock.api_created_ship_id].api_name
+        kdockTimer[kdock.api_id] = 0
+        materialStr = "油 " + kdock.api_item1 + " 钢 " + kdock.api_item3 + "弹 " + kdock.api_item2 + " 铝 " + kdock.api_item4 + " 资 " + kdock.api_item5
+        $("#kdock-#{kdock.api_id}-material").text materialStr
