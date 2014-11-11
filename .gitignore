@@ -1,4 +1,3 @@
 .last
 *.log
-kcs/*
-kcsapi/*
+cache/*
