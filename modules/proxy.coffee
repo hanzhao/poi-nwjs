@@ -7,6 +7,7 @@ config = require('./config').config
 Buffer = require('buffer').Buffer
 processor = require('./processor')
 ui = require('./ui')
+util = require('./util')
 
 exports.createShadowsocksServer = ->
   return unless config.proxy.useShadowsocks
@@ -252,17 +253,15 @@ sendHttpRequest = (options, counter, callback) ->
 loadCacheSwfFile = (req, res, callback) ->
   # These two swf files are source code files, not resource files
   # Caching these files may cause illegal logic error I guess?
-  if (req.url.indexOf('/kcs/Core.swf') != -1) || (req.url.indexOf('/kcs/mainD2.swf') != -1)
+  if req.url.indexOf('/kcs/Core.swf') != -1 || req.url.indexOf('/kcs/mainD2.swf') != -1
     callback true
     return
-
   if req.url.indexOf('/kcs/') != -1
     # Get FilePath
     filePath = url.parse(req.url).pathname.substr 1
-
     # Get FileSize
     fs.stat filePath, (err, stat) ->
-      if !err
+      if !err?
         fileSize = stat.size
         # Read File
         fs.readFile filePath, (err, data) ->
@@ -293,16 +292,14 @@ loadCacheSwfFile = (req, res, callback) ->
 
 # Save File To Cache
 saveCacheSwfFile = (req, data) ->
-  if (req.url.indexOf('/kcs/Core.swf') != -1) || (req.url.indexOf('/kcs/mainD2.swf') != -1)
-    return
-
+  return if req.url.indexOf('/kcs/Core.swf') != -1 || req.url.indexOf('/kcs/mainD2.swf') != -1
   if req.url.indexOf('/kcs/') != -1
     # Get FilePath
     filePath = url.parse(req.url).pathname.substr 1
-    fileDir = path.dirname filePath
-    fs.mkdir fileDir, (err) ->
-      console.log err if err?
-      # Save File
-      fs.writeFile filePath, data, (err) ->
-        console.log err if err
+    util.guaranteeFilePath filePath
+    # Save File
+    fs.writeFile filePath, data, (err) ->
+      if err?
+        console.log err
+      else
         console.log "Save Cache File: #{filePath}" if !err

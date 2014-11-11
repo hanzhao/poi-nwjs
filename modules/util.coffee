@@ -1,4 +1,5 @@
 fs = require('fs')
+path = require('path')
 
 exports.formatTime = (time) ->
   hour = Math.floor(time / 3600)
@@ -10,13 +11,14 @@ exports.formatTime = (time) ->
   time = '0' + time if time < 10
   return "#{hour}:#{minute}:#{time}"
 
-guranteeDirPath = (dirname) ->
+guaranteeDirPath = (dirname) ->
   dir = path.dirname dirname
   unless fs.existsSync dir
-    guranteeDirPath dir
-    fs.mkdirSync dirname
+    guaranteeDirPath dir
+  fs.mkdirSync dirname
 
 exports.guaranteeFilePath = guranteeFilePath = (filename) ->
+  console.log "Guarantee #{filename}"
   dir = path.dirname filename
   unless fs.existsSync dir
     guaranteeDirPath dir
