@@ -267,9 +267,10 @@ loadCacheSwfFile = (req, res, callback) ->
         # Read File
         fs.readFile filePath, (err, data) ->
           if !err
-            console.log "Load File From Cache: #{filePath}, Size: #{fileSize}"
+            date = new Date().toGMTString()
+            console.log "Load File From Cache: #{filePath}, Size: #{fileSize}, Date: #{date}"
             res.writeHead 200, "{
-                                  \"date\":\"Mon, 10 Nov 2014 03:08:22 GMT\",
+                                  \"date\":\"#{date}\",
                                   \"server\":\"Apache\",
                                   \"last-modified\":\"Wed, 23 Apr 2014 05:46:42 GMT\",
                                   \"accept-ranges\":\"bytes\",
@@ -298,7 +299,10 @@ saveCacheSwfFile = (req, data) ->
   if req.url.indexOf('/kcs/') != -1
     # Get FilePath
     filePath = url.parse(req.url).pathname.substr 1
-    # Save File
-    fs.writeFile filePath, data, (err) ->
-      console.log err if err
-      console.log "Save Cache File: #{filePath}" if !err
+    fileDir = path.dirname filePath
+    fs.mkdir fileDir, (err) ->
+      console.log err if err?
+      # Save File
+      fs.writeFile filePath, data, (err) ->
+        console.log err if err
+        console.log "Save Cache File: #{filePath}" if !err

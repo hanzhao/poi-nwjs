@@ -1,13 +1,25 @@
 ui = require('./ui')
 url = require('url')
 fs = require('fs')
+path = require('path')
+
+bRecordAPI = false
 
 exports.processData = (req, data) ->
   ui.turnOn()
   data = data.toString()
+  ############################
+  # Record API Information
+  if (bRecordAPI)
+    filePath = url.parse(req.url).pathname.substr 1
+    fileDir = path.dirname filePath
+    fs.mkdir fileDir, (err) ->
+      console.log err if err?
+      d = JSON.stringify(data)
+      fs.appendFile "#{filePath}.log", "Url: #{req.url}\nMethod: #{req.method}\nPostData: #{req.postData}\nReceiveData: #{d}\n\n\n", (err) ->
+        console.log err if err?
+  ############################
   data = data.substring(7) if data.indexOf('svdata=') == 0
-  #fs.appendFile 'data.log', "Url: #{req.url}\nMethod: #{req.method}\nPostData: #{req.postData}\nReceiveData: #{data}\n", (err) ->
-  #  console.log err if err?
   data = JSON.parse data
   position = url.parse(req.url).pathname.replace '/kcsapi', ''
   switch position
