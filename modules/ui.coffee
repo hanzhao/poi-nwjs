@@ -1,4 +1,6 @@
-proxy = require('./config').config.proxy
+config = require('./config')
+proxy = config.config.proxy
+util = require('./util')
 
 $ = global.$
 $$ = global.$$
@@ -27,42 +29,32 @@ decks = []
 ndocks = []
 kdocks = []
 
-exports.showNotification = showNotification = (title, body) ->
-  notification = new Notification title,
+exports.showNotification = showNotification = (body) ->
+  notification = new Notification 'Poi',
     body: body
   notification.onclick = ->
     notification.close()
-
-formatTime = (time) ->
-  hour = Math.floor(time / 3600)
-  time -= hour * 3600
-  minute = Math.floor(time / 60)
-  time -= minute * 60
-  hour = '0' + hour if hour < 10
-  minute = '0' + minute if minute < 10
-  time = '0' + time if time < 10
-  return "#{hour}:#{minute}:#{time}"
 
 timer = ->
   for i in [1, 2, 3, 4]
     missionTimer[i] -= 1 if missionTimer[i] > 0
     if missionTimer[i] >= 0
-      $("#mission-timer-#{i}").text formatTime missionTimer[i]
+      $("#mission-timer-#{i}").text util.formatTime missionTimer[i]
       showNotification "Poi", "#{$("#mission-name-#{i}").text()}远征归来" if missionTimer[i] == 1
     else
       $("#mission-timer-#{i}").text ''
     ndockTimer[i] -= 1 if ndockTimer[i] > 0
     if ndockTimer[i] >= 0
-      $("#ndock-timer-#{i}").text formatTime ndockTimer[i]
-      #$("#ndock-#{i}-resttime").text formatTime ndockTimer[i] 
+      $("#ndock-timer-#{i}").text util.formatTime ndockTimer[i]
+      #$("#ndock-#{i}-resttime").text formatTime ndockTimer[i]
       showNotification "Poi", "#{$("#ndock-name-#{i}").text()}修复完成" if missionTimer[i] == 1
     else
       $("#ndock-timer-#{i}").text ''
       #$("#ndock-#{i}-resttime").text ''
     kdockTimer[i] -= 1 if kdockTimer[i] > 0
     if kdockTimer[i] >= 0
-      $("#kdock-timer-#{i}").text formatTime kdockTimer[i]
-      $("#kdock-#{i}-resttime").text formatTime kdockTimer[i] 
+      $("#kdock-timer-#{i}").text util.formatTime kdockTimer[i]
+      $("#kdock-#{i}-resttime").text util.formatTime kdockTimer[i]
       showNotification "Poi", "#{$("#kdock-name-#{i}").text()}建造完成" if missionTimer[i] == 1
     else
       $("#kdock-timer-#{i}").text ''
@@ -99,7 +91,7 @@ exports.initConfig = ->
   $('#socksproxy-port')[0].value = proxy.socksProxy.socksProxyPort
 
 exports.saveConfig = ->
-  conf = require('./config').config
+  conf = config.config
   # Shadowsocks
   conf.proxy.useShadowsocks = $('#current-proxy').text() == 'shadowsocks'
   conf.proxy.shadowsocks.serverIp = $('#shadowsocks-server-ip')[0].value
@@ -114,7 +106,7 @@ exports.saveConfig = ->
   conf.proxy.useSocksProxy = $('#current-proxy').text() == 'socks'
   conf.proxy.socksProxy.socksProxyIp = $('#socksproxy-ip')[0].value
   conf.proxy.socksProxy.socksProxyPort = $('#socksproxy-port')[0].value
-  if require('./config').updateConfig conf
+  if config.updateConfig conf
     $('#modal-message-title').text '保存设置'
     $('#modal-message-content').text '保存成功，重新启动软件后生效。'
     $$('#modal-message').modal()
@@ -126,36 +118,36 @@ exports.saveConfig = ->
 exports.turnOn = ->
   if !state
     state = true
-    $("#state-panel-content").text "正常运行中"
-    $("#state-panel").hide()
-    $("#user-panel").fadeIn()
-    $("#resource-panel").fadeIn()
-    $("#mission-panel").fadeIn()
-    $("#ndocks-panel").fadeIn()
-    $("#kdocks-panel").fadeIn()
-    $("#anticat-panel").fadeIn()
+    $('#state-panel-content').text '正常运行中'
+    $('#state-panel').hide()
+    $('#user-panel').fadeIn()
+    $('#resource-panel').fadeIn()
+    $('#mission-panel').fadeIn()
+    $('#ndocks-panel').fadeIn()
+    $('#kdocks-panel').fadeIn()
+    $('#anticat-panel').fadeIn()
     setInterval timer, 1000
 
 exports.turnOff = ->
   if state
     state = false
-    $("#state-panel-content").text "没有检测到流量"
-    $("#user-panel").hide()
-    $("#resource-panel").hide()
-    $("#mission-panel").hide()
-    $("#ndocks-panel").hide()
-    $("#kdocks-panel").hide()
-    $("#anticat-panel").hide()
-    $("#state-panel").fadeIn()
+    $('#state-panel-content').text '没有检测到流量'
+    $('#user-panel').hide()
+    $('#resource-panel').hide()
+    $('#mission-panel').hide()
+    $('#ndocks-panel').hide()
+    $('#kdocks-panel').hide()
+    $('#anticat-panel').hide()
+    $('#state-panel').fadeIn()
 
 exports.addAntiCatCounter = ->
   antiCatCounter += 1
-  $("#anticat-panel-content").text "一共抵御了#{antiCatCounter}次猫神的袭击……"
+  $('#anticat-panel-content').text "一共抵御了#{antiCatCounter}次猫神的袭击……"
 
 exports.updateUserinfo = (api_data) ->
   html = ''
   html += "<li>Lv. #{api_data.api_level} #{api_data.api_nickname}</li>"
-  $("#user-panel-content").html html
+  $('#user-panel-content').html html
 
 exports.updateShips = (api_mst_ship) ->
   ships = []
@@ -233,10 +225,10 @@ exports.updateDecks = (api_deck_port) ->
 
         # HP Line
         hpPercent = ship.api_nowhp * 100 / ship.api_maxhp
-        currentState = "am-progress-bar-success"
-        currentState = "am-progress-bar-secondary" if hpPercent < 75
-        currentState = "am-progress-bar-warning" if hpPercent < 50
-        currentState = "am-progress-bar-danger" if hpPercent < 25
+        currentState = 'am-progress-bar-success'
+        currentState = 'am-progress-bar-secondary' if hpPercent < 75
+        currentState = 'am-progress-bar-warning' if hpPercent < 50
+        currentState = 'am-progress-bar-danger' if hpPercent < 25
         $("#ship-#{deck.api_id}#{i + 1}-hpline").html "<div class=\"am-progress am-progress-striped\"><div class=\"am-progress-bar #{currentState}\" style=\"width: #{hpPercent}%\"></div></div>"
 
         # Equipment
@@ -259,9 +251,9 @@ exports.updateNdocks = (api_ndock) ->
     ndocks[ndock.api_id] = ndock
     switch ndocks[ndock.api_id].api_state
       when -1
-        $("#ndock-name-#{ndock.api_id}").text "未解锁"
+        $("#ndock-name-#{ndock.api_id}").text '未解锁'
       when 0
-        $("#ndock-name-#{ndock.api_id}").text "未使用"
+        $("#ndock-name-#{ndock.api_id}").text '未使用'
         ndockTimer[ndock.api_id] = -1
       when 1
         ship = ownShips[ndock.api_ship_id]
@@ -275,12 +267,12 @@ exports.updateKdocks = (api_kdock) ->
     kdocks[kdock.api_id] = kdock
     switch kdocks[kdock.api_id].api_state
       when -1
-        $("#kdock-#{kdock.api_id}-name").text "未解锁"
-        $("#kdock-name-#{kdock.api_id}").text "未解锁"
+        $("#kdock-#{kdock.api_id}-name").text '未解锁'
+        $("#kdock-name-#{kdock.api_id}").text '未解锁'
         $("#kdock-#{kdock.api_id}-resttime").text ''
       when 0
-        $("#kdock-#{kdock.api_id}-name").text "未使用"
-        $("#kdock-name-#{kdock.api_id}").text "未使用"
+        $("#kdock-#{kdock.api_id}-name").text '未使用'
+        $("#kdock-name-#{kdock.api_id}").text '未使用'
         $("#kdock-#{kdock.api_id}-resttime").text ''
         $("#kdock-name-#{kdock.api_id}").text ''
         kdockTimer[kdock.api_id] = -1
