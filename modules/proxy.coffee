@@ -42,30 +42,34 @@ serverWithShadowsocks = (req, res) ->
     path:       parsed.path || '/'
     headers:    req.headers
     agent:      new socks.HttpAgent(socksConfig)
-  # Post Data
-  postData = ''
-  req.setEncoding 'utf8'
-  req.addListener 'data', (chunk) ->
-    postData += chunk
-  req.addListener 'end', ->
-    options.postData = req.postData = postData
-    sendSocksProxyRequest options, 0, (result) ->
-      if result.err
-        res.writeHead 500, {'Content-Type': 'text/html'}
-        res.write '<!DOCTYPE html><html><body><h1>Network Error</h1></body></html>'
-        res.end()
-      else
-        buffers = []
-        result.on 'data', (chunk) ->
-          buffers.push chunk
-        result.on 'end', ->
-          data = Buffer.concat buffers
-          result.removeAllListeners 'data'
-          result.removeAllListeners 'end'
-          processor.processData req, data if req.url.indexOf('/kcsapi') != -1
-          res.writeHead result.statusCode, result.headers
-          res.write data
-          res.end()
+
+  # Load File From Cache
+  loadCacheSwfFile req, res, (err) ->
+    if err
+      # Post Data
+      postData = ''
+      req.setEncoding 'utf8'
+      req.addListener 'data', (chunk) ->
+        postData += chunk
+      req.addListener 'end', ->
+        options.postData = req.postData = postData
+        sendSocksProxyRequest options, 0, (result) ->
+          if result.err
+            res.writeHead 500, {'Content-Type': 'text/html'}
+            res.write '<!DOCTYPE html><html><body><h1>Network Error</h1></body></html>'
+            res.end()
+          else
+            buffers = []
+            result.on 'data', (chunk) ->
+              buffers.push chunk
+            result.on 'end', ->
+              data = Buffer.concat buffers
+              result.removeAllListeners 'data'
+              result.removeAllListeners 'end'
+              processor.processData req, data if req.url.indexOf('/kcsapi') != -1
+              res.writeHead result.statusCode, result.headers
+              res.write data
+              res.end()
 
 serverWithSocksProxy = (req, res) ->
   console.log "Get Request #{req.url} using Socks Proxy"
@@ -83,30 +87,34 @@ serverWithSocksProxy = (req, res) ->
     path:       parsed.path || '/'
     headers:    req.headers
     agent:      new socks.HttpAgent(socksConfig)
-  # Post Data
-  postData = ''
-  req.setEncoding 'utf8'
-  req.addListener 'data', (chunk) ->
-    postData += chunk
-  req.addListener 'end', ->
-    options.postData = req.postData = postData
-    sendSocksProxyRequest options, 0, (result) ->
-      if result.err
-        res.writeHead 500, {'Content-Type': 'text/html'}
-        res.write '<!DOCTYPE html><html><body><h1>Network Error</h1></body></html>'
-        res.end()
-      else
-        buffers = []
-        result.on 'data', (chunk) ->
-          buffers.push chunk
-        result.on 'end', ->
-          data = Buffer.concat buffers
-          result.removeAllListeners 'data'
-          result.removeAllListeners 'end'
-          processor.processData req, data if req.url.indexOf('/kcsapi') != -1
-          res.writeHead result.statusCode, result.headers
-          res.write data
-          res.end()
+
+  # Load File From Cache
+  loadCacheSwfFile req, res, (err) ->
+    if err
+      # Post Data
+      postData = ''
+      req.setEncoding 'utf8'
+      req.addListener 'data', (chunk) ->
+        postData += chunk
+      req.addListener 'end', ->
+        options.postData = req.postData = postData
+        sendSocksProxyRequest options, 0, (result) ->
+          if result.err
+            res.writeHead 500, {'Content-Type': 'text/html'}
+            res.write '<!DOCTYPE html><html><body><h1>Network Error</h1></body></html>'
+            res.end()
+          else
+            buffers = []
+            result.on 'data', (chunk) ->
+              buffers.push chunk
+            result.on 'end', ->
+              data = Buffer.concat buffers
+              result.removeAllListeners 'data'
+              result.removeAllListeners 'end'
+              processor.processData req, data if req.url.indexOf('/kcsapi') != -1
+              res.writeHead result.statusCode, result.headers
+              res.write data
+              res.end()
 
 serverWithHttpProxy = (req, res) ->
   console.log "Get Request #{req.url} using HTTP Proxy"
@@ -117,30 +125,34 @@ serverWithHttpProxy = (req, res) ->
     method:   req.method
     path:     req.url
     headers:  req.headers
-  # Post Data
-  postData = ""
-  req.setEncoding 'utf8'
-  req.addListener 'data', (chunk) ->
-    postData += chunk
-  req.addListener 'end', ->
-    options.postData = req.postData = postData
-    sendHttpRequest options, 0, (result) ->
-      if result.err
-        res.writeHead 500, {'Content-Type': 'text/html'}
-        res.write '<!DOCTYPE html><html><body><h1>Network Error</h1></body></html>'
-        res.end()
-      else
-        buffers = []
-        result.on 'data', (chunk) ->
-          buffers.push chunk
-        result.on 'end', ->
-          data = Buffer.concat buffers
-          result.removeAllListeners 'data'
-          result.removeAllListeners 'end'
-          processor.processData req, data if req.url.indexOf('/kcsapi') != -1
-          res.writeHead result.statusCode, result.headers
-          res.write data
-          res.end()
+
+  # Load File From Cache
+  loadCacheSwfFile req, res, (err) ->
+    if err
+      # Post Data
+      postData = ""
+      req.setEncoding 'utf8'
+      req.addListener 'data', (chunk) ->
+        postData += chunk
+      req.addListener 'end', ->
+        options.postData = req.postData = postData
+        sendHttpRequest options, 0, (result) ->
+          if result.err
+            res.writeHead 500, {'Content-Type': 'text/html'}
+            res.write '<!DOCTYPE html><html><body><h1>Network Error</h1></body></html>'
+            res.end()
+          else
+            buffers = []
+            result.on 'data', (chunk) ->
+              buffers.push chunk
+            result.on 'end', ->
+              data = Buffer.concat buffers
+              result.removeAllListeners 'data'
+              result.removeAllListeners 'end'
+              processor.processData req, data if req.url.indexOf('/kcsapi') != -1
+              res.writeHead result.statusCode, result.headers
+              res.write data
+              res.end()
 
 serverWithoutProxy = (req, res) ->
   console.log "Get Request #{req.url}"
@@ -150,30 +162,33 @@ serverWithoutProxy = (req, res) ->
   req.hostname = parsed.hostname || '127.0.0.1'
   req.post = parsed.post || 80
   req.path = parsed.path || '/'
-  # Post Data
-  postData = ""
-  req.setEncoding 'utf8'
-  req.addListener 'data', (chunk) ->
-    postData += chunk
-  req.addListener 'end', ->
-    req.postData = postData
-    sendHttpRequest req, 0, (result) ->
-      if result.err
-        res.writeHead 500, {'Content-Type': 'text/html'}
-        res.write '<!DOCTYPE html><html><body><h1>Network Error</h1></body></html>'
-        res.end()
-      else
-        buffers = []
-        result.on 'data', (chunk) ->
-          buffers.push chunk
-        result.on 'end', ->
-          data = Buffer.concat buffers
-          result.removeAllListeners 'data'
-          result.removeAllListeners 'end'
-          processor.processData req, data if req.url.indexOf('/kcsapi') != -1
-          res.writeHead result.statusCode, result.headers
-          res.write data
-          res.end()
+  # Load File From Cache
+  loadCacheSwfFile req, res, (err) ->
+    if err
+      # Post Data
+      postData = ""
+      req.setEncoding 'utf8'
+      req.addListener 'data', (chunk) ->
+        postData += chunk
+      req.addListener 'end', ->
+        req.postData = postData
+        sendHttpRequest req, 0, (result) ->
+          if result.err
+            res.writeHead 500, {'Content-Type': 'text/html'}
+            res.write '<!DOCTYPE html><html><body><h1>Network Error</h1></body></html>'
+            res.end()
+          else
+            buffers = []
+            result.on 'data', (chunk) ->
+              buffers.push chunk
+            result.on 'end', ->
+              data = Buffer.concat buffers
+              result.removeAllListeners 'data'
+              result.removeAllListeners 'end'
+              processor.processData req, data if req.url.indexOf('/kcsapi') != -1
+              res.writeHead result.statusCode, result.headers
+              res.write data
+              res.end()
 
 sendSocksProxyRequest = (options, counter, callback) ->
   request = http.request options, (result) ->
@@ -228,3 +243,56 @@ sendHttpRequest = (options, counter, callback) ->
     else
       callback {err: true}
   request.end()
+
+# Load File From Cache
+loadCacheSwfFile = (req, res, callback) ->
+  # These two swf files are source code files, not resource files
+  # Caching these files may cause illegal logic error I guess?
+  if req.url.indexOf('/kcs/Core.swf') != -1
+    callback {err: true}
+    return
+  if req.url.indexOf('/kcs/mainD2.swf') != -1
+    callback {err: true}
+    return
+
+  if req.url.indexOf('/kcs/') != -1
+    # Get FilePath
+    filePath = ''
+    beginIndex = req.url.indexOf('/kcs/') + 1
+    endIndex = req.url.indexOf('?')
+    if endIndex != -1
+      filePath = req.url.substr beginIndex, (endIndex - beginIndex)
+    else
+      filePath = req.url.substr beginIndex
+
+    # Get FileSize
+    fs.stat filePath, (err, stat) ->
+      if !err
+        fileSize = stat.size
+        # Read File
+        fs.readFile filePath, (err, data) ->
+          if !err
+              console.log "Load File From Cache: #{filePath}, Size: #{fileSize}"
+              res.writeHead 200, "{
+                                    \"date\":\"Mon, 10 Nov 2014 03:08:22 GMT\",
+                                    \"server\":\"Apache\",
+                                    \"last-modified\":\"Wed, 23 Apr 2014 05:46:42 GMT\",
+                                    \"accept-ranges\":\"bytes\",
+                                    \"content-length\":\"#{fileSize}\",
+                                    \"cache-control\":\"max-age=2592000, public\",
+                                    \"connection\":\"close\",
+                                    \"content-type\":\"application/x-shockwave-flash\"
+                                }"
+              res.write data
+              res.end()
+              callback {err: false}
+          else
+            console.log err
+            callback {err: true}
+      else
+        console.log err
+        callback {err: true}
+  else
+    callback {err: true}
+
+
