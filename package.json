@@ -5,7 +5,6 @@
   "window": {
     "toolbar": false,
     "resizable": false,
-    "frame": false,
     "position": "center",
     "width": 600,
     "height": 725
