@@ -70,6 +70,7 @@ serverWithShadowsocks = (req, res) ->
               res.writeHead result.statusCode, result.headers
               res.write data
               res.end()
+              saveCacheSwfFile req, data
 
 serverWithSocksProxy = (req, res) ->
   console.log "Get Request #{req.url} using Socks Proxy"
@@ -115,6 +116,7 @@ serverWithSocksProxy = (req, res) ->
               res.writeHead result.statusCode, result.headers
               res.write data
               res.end()
+              saveCacheSwfFile req, data
 
 serverWithHttpProxy = (req, res) ->
   console.log "Get Request #{req.url} using HTTP Proxy"
@@ -153,6 +155,7 @@ serverWithHttpProxy = (req, res) ->
               res.writeHead result.statusCode, result.headers
               res.write data
               res.end()
+              saveCacheSwfFile req, data
 
 serverWithoutProxy = (req, res) ->
   console.log "Get Request #{req.url}"
@@ -189,6 +192,7 @@ serverWithoutProxy = (req, res) ->
               res.writeHead result.statusCode, result.headers
               res.write data
               res.end()
+              saveCacheSwfFile req, data
 
 sendSocksProxyRequest = (options, counter, callback) ->
   request = http.request options, (result) ->
@@ -248,22 +252,13 @@ sendHttpRequest = (options, counter, callback) ->
 loadCacheSwfFile = (req, res, callback) ->
   # These two swf files are source code files, not resource files
   # Caching these files may cause illegal logic error I guess?
-  if req.url.indexOf('/kcs/Core.swf') != -1
-    callback {err: true}
-    return
-  if req.url.indexOf('/kcs/mainD2.swf') != -1
-    callback {err: true}
+  if (req.url.indexOf('/kcs/Core.swf') != -1) || (req.url.indexOf('/kcs/mainD2.swf') != -1)
+    callback true
     return
 
   if req.url.indexOf('/kcs/') != -1
     # Get FilePath
-    filePath = ''
-    beginIndex = req.url.indexOf('/kcs/') + 1
-    endIndex = req.url.indexOf('?')
-    if endIndex != -1
-      filePath = req.url.substr beginIndex, (endIndex - beginIndex)
-    else
-      filePath = req.url.substr beginIndex
+    filePath = url.parse(req.url).pathname.substr 1
 
     # Get FileSize
     fs.stat filePath, (err, stat) ->
@@ -272,27 +267,38 @@ loadCacheSwfFile = (req, res, callback) ->
         # Read File
         fs.readFile filePath, (err, data) ->
           if !err
-              console.log "Load File From Cache: #{filePath}, Size: #{fileSize}"
-              res.writeHead 200, "{
-                                    \"date\":\"Mon, 10 Nov 2014 03:08:22 GMT\",
-                                    \"server\":\"Apache\",
-                                    \"last-modified\":\"Wed, 23 Apr 2014 05:46:42 GMT\",
-                                    \"accept-ranges\":\"bytes\",
-                                    \"content-length\":\"#{fileSize}\",
-                                    \"cache-control\":\"max-age=2592000, public\",
-                                    \"connection\":\"close\",
-                                    \"content-type\":\"application/x-shockwave-flash\"
-                                }"
-              res.write data
-              res.end()
-              callback {err: false}
+            console.log "Load File From Cache: #{filePath}, Size: #{fileSize}"
+            res.writeHead 200, "{
+                                  \"date\":\"Mon, 10 Nov 2014 03:08:22 GMT\",
+                                  \"server\":\"Apache\",
+                                  \"last-modified\":\"Wed, 23 Apr 2014 05:46:42 GMT\",
+                                  \"accept-ranges\":\"bytes\",
+                                  \"content-length\":\"#{fileSize}\",
+                                  \"cache-control\":\"max-age=2592000, public\",
+                                  \"connection\":\"close\",
+                                  \"content-type\":\"application/x-shockwave-flash\"
+                              }"
+            res.write data
+            res.end()
+            callback false
           else
             console.log err
-            callback {err: true}
+            callback true
       else
         console.log err
-        callback {err: true}
+        callback true
   else
-    callback {err: true}
+    callback true
 
+# Save File To Cache
+saveCacheSwfFile = (req, data) ->
+  if (req.url.indexOf('/kcs/Core.swf') != -1) || (req.url.indexOf('/kcs/mainD2.swf') != -1)
+    return
 
+  if req.url.indexOf('/kcs/') != -1
+    # Get FilePath
+    filePath = url.parse(req.url).pathname.substr 1
+    # Save File
+    fs.writeFile filePath, data, (err) ->
+      console.log err if err
+      console.log "Save Cache File: #{filePath}" if !err
