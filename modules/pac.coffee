@@ -1,8 +1,10 @@
 fs = require('fs')
+ui = require('./ui')
 config = require('./config').config
 proxy = config.proxy
 
 pacPath = fs.realpathSync(process.execPath + '/..') + '/proxy.pac'
+ui.updatePacPath pacPath
 
 upstream = "DIRECT"
 upstreamIp = ""

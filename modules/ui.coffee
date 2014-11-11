@@ -29,6 +29,9 @@ decks = []
 ndocks = []
 kdocks = []
 
+exports.updatePacPath = (path) ->
+  $('#pac-path').attr 'value', "file://#{path}"
+
 exports.showNotification = showNotification = (body) ->
   notification = new Notification 'Poi',
     body: body
