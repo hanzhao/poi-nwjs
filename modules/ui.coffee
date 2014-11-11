@@ -40,25 +40,23 @@ timer = ->
     missionTimer[i] -= 1 if missionTimer[i] > 0
     if missionTimer[i] >= 0
       $("#mission-timer-#{i}").text util.formatTime missionTimer[i]
-      showNotification "Poi", "#{$("#mission-name-#{i}").text()}远征归来" if missionTimer[i] == 1
+      showNotification "Poi", "#{$("#mission-name-#{i}").text()}远征归来" if missionTimer[i] == 50
     else
       $("#mission-timer-#{i}").text ''
     ndockTimer[i] -= 1 if ndockTimer[i] > 0
     if ndockTimer[i] >= 0
       $("#ndock-timer-#{i}").text util.formatTime ndockTimer[i]
-      #$("#ndock-#{i}-resttime").text formatTime ndockTimer[i]
-      showNotification "Poi", "#{$("#ndock-name-#{i}").text()}修复完成" if missionTimer[i] == 1
+      showNotification "Poi", "#{$("#ndock-name-#{i}").text()}修复完成" if missionTimer[i] == 50
     else
       $("#ndock-timer-#{i}").text ''
-      #$("#ndock-#{i}-resttime").text ''
     kdockTimer[i] -= 1 if kdockTimer[i] > 0
     if kdockTimer[i] >= 0
       $("#kdock-timer-#{i}").text util.formatTime kdockTimer[i]
-      $("#kdock-#{i}-resttime").text util.formatTime kdockTimer[i]
-      showNotification "Poi", "#{$("#kdock-name-#{i}").text()}建造完成" if missionTimer[i] == 1
+      $("#kdock-#{i}-remaining").text util.formatTime kdockTimer[i]
+      showNotification "Poi", "#{$("#kdock-name-#{i}").text()}建造完成" if missionTimer[i] == 50
     else
       $("#kdock-timer-#{i}").text ''
-      $("#kdock-#{i}-resttime").text ''
+      $("#kdock-#{i}-remaining").text ''
 
 exports.initConfig = ->
   # Update tab state
@@ -257,7 +255,6 @@ exports.updateNdocks = (api_ndock) ->
         ndockTimer[ndock.api_id] = -1
       when 1
         ship = ownShips[ndock.api_ship_id]
-        #$("#ndock-#{ndock.api_id}-resttime").text <-upate in function timer
         $("#ndock-name-#{ndock.api_id}").text ships[ship.api_ship_id].api_name
         ndockTimer[ndock.api_id] = Math.floor((ndock.api_complete_time - new Date()) / 1000)
 
@@ -269,29 +266,26 @@ exports.updateKdocks = (api_kdock) ->
       when -1
         $("#kdock-#{kdock.api_id}-name").text '未解锁'
         $("#kdock-name-#{kdock.api_id}").text '未解锁'
-        $("#kdock-#{kdock.api_id}-resttime").text ''
       when 0
         $("#kdock-#{kdock.api_id}-name").text '未使用'
         $("#kdock-name-#{kdock.api_id}").text '未使用'
-        $("#kdock-#{kdock.api_id}-resttime").text ''
-        $("#kdock-name-#{kdock.api_id}").text ''
-        kdockTimer[kdock.api_id] = -1
         $("#kdock-#{kdock.api_id}-material").text ''
+        kdockTimer[kdock.api_id] = -1
       when 1 #大建中
         $("#kdock-#{kdock.api_id}-name").text ships[kdock.api_created_ship_id].api_name
         $("#kdock-name-#{kdock.api_id}").text ships[kdock.api_created_ship_id].api_name
         kdockTimer[kdock.api_id] = Math.floor((kdock.api_complete_time - new Date()) / 1000)
-        materialStr = "油 " + kdock.api_item1 + " 钢 " + kdock.api_item3 + "弹 " + kdock.api_item2 + " 铝 " + kdock.api_item4 + " 资 " + kdock.api_item5
+        materialStr = "油 #{kdock.api_item1} 钢 #{kdock.api_item3} 弹 #{kdock.api_item2} 铝 #{kdock.api_item4} 资 #{kdock.api_item5}"
         $("#kdock-#{kdock.api_id}-material").text materialStr
       when 2 #普建中
         $("#kdock-#{kdock.api_id}-name").text ships[kdock.api_created_ship_id].api_name
         $("#kdock-name-#{kdock.api_id}").text ships[kdock.api_created_ship_id].api_name
         kdockTimer[kdock.api_id] = Math.floor((kdock.api_complete_time - new Date()) / 1000)
-        materialStr = "油 " + kdock.api_item1 + " 钢 " + kdock.api_item3 + "弹 " + kdock.api_item2 + " 铝 " + kdock.api_item4 + " 资 " + kdock.api_item5
+        materialStr = "油 #{kdock.api_item1} 钢 #{kdock.api_item3} 弹 #{kdock.api_item2} 铝 #{kdock.api_item4} 资 #{kdock.api_item5}"
         $("#kdock-#{kdock.api_id}-material").text materialStr
       when 3
         $("#kdock-#{kdock.api_id}-name").text ships[kdock.api_created_ship_id].api_name
         $("#kdock-name-#{kdock.api_id}").text ships[kdock.api_created_ship_id].api_name
         kdockTimer[kdock.api_id] = 0
-        materialStr = "油 " + kdock.api_item1 + " 钢 " + kdock.api_item3 + "弹 " + kdock.api_item2 + " 铝 " + kdock.api_item4 + " 资 " + kdock.api_item5
+        materialStr = "油 #{kdock.api_item1} 钢 #{kdock.api_item3} 弹 #{kdock.api_item2} 铝 #{kdock.api_item4} 资 #{kdock.api_item5}"
         $("#kdock-#{kdock.api_id}-material").text materialStr
