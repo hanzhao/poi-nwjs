@@ -3,14 +3,14 @@ url = require('url')
 fs = require('fs')
 path = require('path')
 
-bRecordAPI = false
+isRecordAPIOpen = false
 
 exports.processData = (req, data) ->
   ui.turnOn()
   data = data.toString()
   ############################
   # Record API Information
-  if (bRecordAPI)
+  if (isRecordAPIOpen)
     filePath = url.parse(req.url).pathname.substr 1
     fileDir = path.dirname filePath
     fs.mkdir fileDir, (err) ->
