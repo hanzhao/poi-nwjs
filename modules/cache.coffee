@@ -28,7 +28,8 @@ exports.loadCacheFile = (req, res, callback) ->
   if req.url.indexOf('/kcs/') != -1
     # Get FilePath
     filePath = url.parse(req.url).pathname
-    requestVersion = url.parse(req.url).query.substr ('VERSION='.length)
+    query = url.parse(req.url).query
+    requestVersion = query.substr ('VERSION='.length)
     cacheInfo = cacheData[filePath]
     if (!cacheInfo?) || (!requestVersion?)
       callback true
@@ -39,7 +40,6 @@ exports.loadCacheFile = (req, res, callback) ->
     if (!cacheSize?) #|| (!cacheVersion?) || (requestVersion != cacheVersion)
       callback true
       return
-    filePath =
     # Get FileSize
     fileAbsolutePath = "#{global.appDataPath}#{filePath}"
     fs.stat fileAbsolutePath, (err, stat) ->
