@@ -39,6 +39,9 @@ exports.processData = (req, data) ->
     when '/api_get_member/kdock'
       ui.updateKdocksData data.api_data
       ui.refreshKdocks()
+    when '/api_req_kousyou/createitem'
+      ui.updateCreateitemData data.api_data
+      ui.refreshCreateitem()
     # when '/api_req_kousyou/getship'
       # ui.updateKdocksDataInGetship data.api_data
       # ui.refreshKdocks

@@ -17,6 +17,7 @@ ndockTimer = [-1, -1, -1, -1, -1]
 kdockTimer = [-1, -1, -1, -1, -1]
 
 user = null
+createitem = null
 ships = []
 stypes = []
 mapareas = []
@@ -182,6 +183,9 @@ exports.updateKdocksData = (api_data) ->
   kdocks = []
   kdocks[kdock.api_id] = kdock for kdock in api_data
 
+exports.updateCreateitemData = (api_data) ->
+  createitem = api_data
+
 ###############################################################################
 
 exports.refreshUser = ->
@@ -294,3 +298,16 @@ exports.refreshKdocks = ->
         kdockTimer[kdock.api_id] = 0
         materialStr = "油 #{kdock.api_item1} 钢 #{kdock.api_item3} 弹 #{kdock.api_item2} 铝 #{kdock.api_item4} 资 #{kdock.api_item5}"
         $("#kdock-#{kdock.api_id}-material").text materialStr
+
+exports.refreshCreateitem = ->
+  switch createitem.api_create_flag
+    when 0 #失败
+      $("#createitem-state").attr "class" , "am-btn am-btn-danger"
+      $("#createitem-state").text "失败"  
+      str =  createitem.api_fdata
+      createitemNum = parseInt(str.substr(str.indexOf(',') + 1) , 10)
+      $("#createitem-name").text slotitems[createitemNum].api_name
+    when 1 #成功
+      $("#createitem-state").attr "class" , "am-btn am-btn-success"
+      $("#createitem-state").text "成功"
+      $("#createitem-name").text slotitems[createitem.api_slot_item.api_slotitem_id].api_name
