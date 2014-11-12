@@ -84,7 +84,11 @@ exports.saveCacheFile = (req, data) ->
   if req.url.indexOf('/kcs/') != -1
     # Get FilePath
     filePath = url.parse(req.url).pathname
-    requestVersion = url.parse(req.url).query.substr ('VERSION='.length)
+    # query = url.parse(req.url).query
+    # requestVersion = 1
+    # if query?
+    #   requestVersion = query.substr ('VERSION='.length)
+
     fileAbsolutePath = "#{global.appDataPath}#{filePath}"
     util.guaranteeFilePath fileAbsolutePath
     # Save File
