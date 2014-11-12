@@ -29,7 +29,9 @@ exports.loadCacheFile = (req, res, callback) ->
     # Get FilePath
     filePath = url.parse(req.url).pathname
     query = url.parse(req.url).query
-    requestVersion = query.substr ('VERSION='.length)
+    requestVersion = 1
+    if query?
+      requestVersion = query.substr ('VERSION='.length)
     cacheInfo = cacheData[filePath]
     if (!cacheInfo?) || (!requestVersion?)
       callback true
