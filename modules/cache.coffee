@@ -26,6 +26,8 @@ exports.loadCacheFile = (req, res, callback) ->
     callback true
     return
   if req.url.indexOf('/kcs/') != -1
+    # fs.appendFile "#{global.appDataPath}/kcs/kcs.log", "#{req.method} #{req.url}\nPostData: #{JSON.stringify req.postData, null, 2}\n\n\n", (err) ->
+    #   console.log err if err?
     # Get FilePath
     filePath = url.parse(req.url).pathname
     query = url.parse(req.url).query
@@ -55,7 +57,7 @@ exports.loadCacheFile = (req, res, callback) ->
         fs.readFile fileAbsolutePath, (err, data) ->
           if !err
             date = new Date().toGMTString()
-            console.log "Load File From Cache: #{filePath}, Size: #{fileSize}, Date: #{date}, Version: #{requestVersion}"
+            # console.log "Load File From Cache: #{filePath}, Size: #{fileSize}, Date: #{date}, Version: #{requestVersion}"
             res.writeHead 200, "{
                                   \"date\":\"#{date}\",
                                   \"server\":\"Apache\",
