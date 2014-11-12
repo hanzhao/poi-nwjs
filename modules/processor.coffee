@@ -17,8 +17,9 @@ exports.processData = (req, data) ->
   # Record API Information
   if isRecordAPIOpen
     filePath = url.parse(req.url).pathname.substr 1
-    util.guaranteeFilePath filePath
+    filePath = "#{global.appDataPath}/#{filePath}"
     d = JSON.stringify data, null, 2
+    util.guaranteeFilePath filePath
     fs.appendFile "#{filePath}.json", "Url: #{req.url}\nMethod: #{req.method}\nPostData: #{req.postData}\nReceiveData: #{d}\n\n\n", (err) ->
       console.log err if err?
   return unless data.api_result == 1
@@ -39,6 +40,9 @@ exports.processData = (req, data) ->
     when '/api_get_member/kdock'
       ui.updateKdocksData data.api_data
       ui.refreshKdocks()
+    when '/api_req_kousyou/createitem'
+      ui.updateCreateitemData data.api_data
+      ui.refreshCreateitem()
     # when '/api_req_kousyou/getship'
       # ui.updateKdocksDataInGetship data.api_data
       # ui.refreshKdocks

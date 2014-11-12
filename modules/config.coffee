@@ -1,8 +1,9 @@
 fs = require('fs')
 
-configPath = fs.realpathSync(process.execPath + '/..') + '/poi-config.json'
+configPath = "#{global.appDataPath}/poi-config.json"
 
 exports.config = defaultConfig =
+  version: '0.0.1'
   proxy:
     useShadowsocks:   true
     shadowsocks:
@@ -35,6 +36,8 @@ saveConfig = ->
 exports.loadConfig = ->
   try
     exports.config = JSON.parse fs.readFileSync configPath
+    if exports.config.version != defaultConfig.version
+      throw "version error"
   catch err
     exports.config = defaultConfig
     saveDefaultConfig()

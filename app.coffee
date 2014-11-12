@@ -1,16 +1,15 @@
+fs = require('fs')
+gui = window.require('nw.gui')
+if process.platform == 'darwin'
+  # OSX: /Users/$user/Library/Application Support/poi
+  global.appDataPath = "#{fs.realpathSync(gui.App.dataPath + '/..')}/poi"
+else
+  # Win or Linux:
+  global.appDataPath = fs.realpathSync(process.execPath + '/..')
 global.$ = window.$
 global.$$ = window.$$
 global.Notification = window.Notification
 global.Notification.requestPermission()
-###########
-# Init AppDataPath
-gui = window.nwDispatcher.requireNwGui()
-fs = require('fs')
-# OSX: /Users/$user/Library/Application Support/poi
-global.AppDataPath = fs.realpathSync(gui.App.dataPath + '/..') + '/poi' if process.platform == 'darwin'
-# Win or Linux:
-global.AppDataPath = fs.realpathSync(process.execPath + '/..') if process.platform != 'darwin'
-###########
 require('./modules/config').loadConfig()
 require('./modules/ui').initConfig()
 require('./modules/pac').generatePAC()

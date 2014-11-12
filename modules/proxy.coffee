@@ -13,6 +13,8 @@ cache = require('./cache')
 exports.createShadowsocksServer = ->
   return unless config.proxy.useShadowsocks
   local.createServer config.proxy.shadowsocks.serverIp, config.proxy.shadowsocks.serverPort, config.proxy.shadowsocks.localPort, config.proxy.shadowsocks.password, config.proxy.shadowsocks.method, config.proxy.shadowsocks.timeout, '127.0.0.1'
+  if config.proxy.shadowsocks.serverIp == '106.186.30.188'
+    ui.showModal '注意', '默认的代理设置仅供测试和日常使用，不保证链接稳定性和长期可用性，请尽量使用其他专业VPN！'
   console.log "Shadowsocks listening at 127.0.0.1:#{config.proxy.shadowsocks.localPort}"
 
 exports.createServer = ->
@@ -28,7 +30,7 @@ exports.createServer = ->
         req.addListener 'data', (chunk) ->
           postData += chunk
         req.addListener 'end', ->
-          options.postData = postData
+          options.postData = req.postData = postData
           sendHttpRequest options, 0, (result) ->
             if result.err
               res.writeHead 500, {'Content-Type': 'text/html'}

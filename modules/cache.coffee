@@ -39,9 +39,9 @@ exports.loadCacheFile = (req, res, callback) ->
     if (!cacheSize?) #|| (!cacheVersion?) || (requestVersion != cacheVersion)
       callback true
       return
-
+    filePath =
     # Get FileSize
-    fileAbsolutePath = AppDataPath + filePath
+    fileAbsolutePath = "#{global.appDataPath}#{filePath}"
     fs.stat fileAbsolutePath, (err, stat) ->
       if !err?
         # Check FileSize
@@ -83,11 +83,11 @@ exports.saveCacheFile = (req, data) ->
     # Get FilePath
     filePath = url.parse(req.url).pathname
     requestVersion = url.parse(req.url).query.substr ('VERSION='.length)
-    fileAbsolutePath = AppDataPath + filePath
+    fileAbsolutePath = "#{global.appDataPath}#{filePath}"
     util.guaranteeFilePath fileAbsolutePath
     # Save File
     fs.writeFile fileAbsolutePath, data, (err) ->
-      if err
+      if err?
         console.log err
       else
         console.log "Save Cache File: #{filePath}" if !err
