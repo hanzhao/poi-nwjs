@@ -20,7 +20,7 @@ html, body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .clear {
   clear: both;
 }
-.am-table > tbody > tr > td {
+.am-table tbody tr td {
   vertical-align: middle;
 }
 .am-progress {
@@ -39,6 +39,18 @@ html, body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .am-pagination {
   margin-top: 0rem;
   margin-bottom: 0.5rem;
+}
+.mg-progress-bar-yellow {
+  background-color: #F3E31C;
+}
+.mg-progress-inline {
+  float: left;
+  width: 48%;
+}
+.mg-progress-split {
+  float: left;
+  width: 4%;
+  height: 1.2rem;
 }
 .mg-unshown {
   display: none;
@@ -100,7 +112,7 @@ html, body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   color: #F37B1D;
 }
 .mg-yellow {
-  color: #C3C31D;
+  color: #F3E31C;
 }
 .mg-panel-sm {
   width: 32.66666666%;
@@ -130,7 +142,7 @@ html, body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   color: #FFF;
 }
 .mg-deck-yellow {
-  background-color: #C3C31D;
+  background-color: #F3E31C;
   color: #FFF;
 }
 .mg-ship-short {

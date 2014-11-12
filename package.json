@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "main": "index.html",
   "window": {
+    "show": false,
     "toolbar": false,
     "resizable": false,
     "position": "center",
@@ -13,5 +14,6 @@
     "iced-coffee-script": "^1.8.0-a",
     "shadowsocks": "^1.5.3",
     "socksv5": "^0.0.4"
-  }
+  },
+  "chromium-args": "--enable-webgl --ignore-gpu-blacklist"
 }

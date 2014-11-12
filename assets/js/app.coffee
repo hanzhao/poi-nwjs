@@ -1,8 +1,11 @@
 gui = require('nw.gui')
+clipboard = gui.Clipboard.get()
 
 currentShowDeck = 0
 
 $ ->
+  # Show the window after all is ready
+  gui.Window.get().show()
   currentTag = 0
   currentShowDeck = 1
   isValidIp = (ip) ->
@@ -100,6 +103,9 @@ $ ->
       $('#socksproxy-port-container').attr 'class', 'am-form-error'
   $('#save-proxy-settings').click ->
     require('./modules/ui').saveConfig()
+  $('#pac-path').click ->
+    clipboard.set $('#pac-path')[0].value, 'text'
+    require('./modules/ui').showModal 'PAC文件路径', '路径已经被复制到系统剪切板'
   $('#about-weibo').click ->
     gui.Shell.openExternal 'http://weibo.com/234325654'
   $('#about-github').click ->
