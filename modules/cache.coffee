@@ -3,7 +3,7 @@ url = require('url')
 util = require('./util')
 
 resVersionPath = 'data/static_res.json'
-resVersionRealPath = AppDataPath + '/' + resVersionPath
+resVersionRealPath = global.appDataPath + '/' + resVersionPath
 
 cacheData = {}
 
