@@ -149,7 +149,7 @@ exports.addAntiCatCounter = ->
 
 ################################################################################
 
-exports.updateGameData = (api_data) ->
+exports.api_start2 = (api_data) ->
   ships = []
   ships[ship.api_id] = ship for ship in api_data.api_mst_ship
   stypes = []
@@ -163,14 +163,14 @@ exports.updateGameData = (api_data) ->
   missions = []
   missions[mission.api_id] = mission for mission in api_data.api_mst_mission
 
-exports.updateUserData = (api_data) ->
+exports.api_get_member_basic = (api_data) ->
   user = api_data
 
-exports.updateSlotitemData = (api_data) ->
+exports.api_get_member_slot_item = (api_data) ->
   ownSlotitems = []
   ownSlotitems[slotitem.api_id] = slotitem for slotitem in api_data
 
-exports.updatePortData = (api_data) ->
+exports.api_port_port = (api_data) ->
   material = []
   materials[material.api_id] = material for material in api_data.api_material
   ownShips = []
@@ -180,12 +180,37 @@ exports.updatePortData = (api_data) ->
   ndocks = []
   ndocks[ndock.api_id] = ndock for ndock in api_data.api_ndock
 
-exports.updateKdocksData = (api_data) ->
+exports.api_get_member_kdock = (api_data) ->
   kdocks = []
   kdocks[kdock.api_id] = kdock for kdock in api_data
 
-exports.updateCreateitemData = (api_data) ->
+exports.api_get_member_ship2 = (data) ->
+  ownShips = []
+  ownShips[ship.api_id] = ship for ship in data.api_data
+  decks = []
+  decks[deck.api_id] = deck for deck in data.api_data_deck
+
+exports.api_req_hokyu_charge = (api_data) ->
+  for ship in api_data.api_ship
+    shipId = ship.api_id
+    for k, v of ship
+      ownShips[shipId][k] = v
+
+exports.api_req_kousyou_createitem = (api_data) ->
   createItem = api_data
+
+exports.api_req_kousyou_getship = (api_data) ->
+  kdocks = []
+  kdocks[kdock.api_id] = kdock for kdock in api_data.api_kdock
+  ownShips[api_data.api_ship.api_id] = api_data.api_ship
+
+exports.api_req_mission_start = (postData, api_data) ->
+  deckId = parseInt postData.api_deck_id
+  missionId = parseInt postData.api_mission_id
+  decks[deckId].api_mission[0] = 1
+  decks[deckId].api_mission[1] = missionId
+  # The complatetime is a typo in game api
+  decks[deckId].api_mission[2] = api_data.api_complatetime
 
 ###############################################################################
 

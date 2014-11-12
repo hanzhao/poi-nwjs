@@ -33,13 +33,13 @@ exports.loadCacheFile = (req, res, callback) ->
     if query?
       requestVersion = query.substr ('VERSION='.length)
     cacheInfo = cacheData[filePath]
-    if (!cacheInfo?) || (!requestVersion?)
+    if !cacheInfo? || !requestVersion?
       callback true
       return
     cacheSize = cacheInfo.file_size
     cacheVersion = cacheInfo.version
     # Check FileVersion
-    if (!cacheSize?) #|| (!cacheVersion?) || (requestVersion != cacheVersion)
+    if !cacheSize? #|| !cacheVersion? || requestVersion != cacheVersion
       callback true
       return
     # Get FileSize
