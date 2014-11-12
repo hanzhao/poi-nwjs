@@ -17,7 +17,7 @@ ndockTimer = [-1, -1, -1, -1, -1]
 kdockTimer = [-1, -1, -1, -1, -1]
 
 user = null
-createitem = null
+createItem = null
 ships = []
 stypes = []
 mapareas = []
@@ -316,14 +316,16 @@ exports.refreshKdocks = ->
         $("#kdock-#{kdock.api_id}-material").text materialStr
 
 exports.refreshCreateitem = ->
-  switch createitem.api_create_flag
+  switch createItem.api_create_flag
     when 0 #失败
-      $("#createitem-state").attr "class" , "am-btn am-btn-danger"
-      $("#createitem-state").text "失败"  
-      str =  createitem.api_fdata
-      createitemNum = parseInt(str.substr(str.indexOf(',') + 1) , 10)
-      $("#createitem-name").text slotitems[createitemNum].api_name
+      $('#createitem-state').attr 'class', 'am-btn am-btn-danger'
+      $('#createitem-state').text '失败'
+      str = createItem.api_fdata
+      createItemId = parseInt str.split(',')[1]
+      $('#createitem-name').text slotitems[createItemId].api_name
+      $('#createitem-state').show()
     when 1 #成功
-      $("#createitem-state").attr "class" , "am-btn am-btn-success"
-      $("#createitem-state").text "成功"
-      $("#createitem-name").text slotitems[createitem.api_slot_item.api_slotitem_id].api_name
+      $('#createitem-state').attr 'class', 'am-btn am-btn-success'
+      $('#createitem-state').text '成功'
+      $('#createitem-name').text slotitems[createItem.api_slot_item.api_slotitem_id].api_name
+      $('#createitem-state').show()
