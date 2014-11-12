@@ -1,3 +1,7 @@
 .last
 *.log
 cache/*
+*.png
+*.swf
+*.mp3
+*.json
