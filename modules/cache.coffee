@@ -1,3 +1,15 @@
+# res_version file update strategy:
+#
+# Every release pacakge has a default res_version file to ensure the cache feature working normally. It's always the newest version at release time.
+#
+# It'll download from the poi's server if there's a new one exist. We should update it regularly.
+#
+# The problem is how we update it:
+# Step.1 Get the list of all resource files. (Use Shimakaze-Go's static_res.json file)
+# Step.2 Get the list of resource files that has changed. (Compare the newest static_res.json with the current version)
+# Step.3 Get the version and filesize info of the changed resource files. (Run the game, print the corresponding request url log)
+# Step.4 Genarate a new res_version file. (Manually modify the old res_version file)
+
 fs = require('fs')
 url = require('url')
 util = require('./util')
