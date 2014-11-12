@@ -185,7 +185,7 @@ exports.updateKdocksData = (api_data) ->
   kdocks[kdock.api_id] = kdock for kdock in api_data
 
 exports.updateCreateitemData = (api_data) ->
-  createitem = api_data
+  createItem = api_data
 
 ###############################################################################
 
