@@ -2,6 +2,22 @@ fs = require('fs')
 url = require('url')
 util = require('./util')
 
+resVersionPath = 'data/static_res.json'
+resVersionRealPath = AppDataPath + '/' + resVersionPath
+
+cacheData = {}
+
+exports.initCache = () ->
+  # TODO: Download from server
+  try
+    data = JSON.parse fs.readFileSync resVersionRealPath
+  catch err
+    console.log err if err
+    data = JSON.parse fs.readFileSync resVersionPath
+    util.copyFile resVersionPath, resVersionRealPath
+  for res in data.list
+    cacheData[res.res_path] = res
+
 # Load File From Cache
 exports.loadCacheFile = (req, res, callback) ->
   # These two swf files are source code files, not resource files
@@ -11,17 +27,33 @@ exports.loadCacheFile = (req, res, callback) ->
     return
   if req.url.indexOf('/kcs/') != -1
     # Get FilePath
-    filePath = url.parse(req.url).pathname.substr 1
-    filePath = "cache/#{filePath}"
+    filePath = url.parse(req.url).pathname
+    requestVersion = url.parse(req.url).query.substr ('VERSION='.length)
+    cacheInfo = cacheData[filePath]
+    if (!cacheInfo?) || (!requestVersion?)
+      callback true
+      return
+    cacheSize = cacheInfo.file_size
+    cacheVersion = cacheInfo.version
+    # Check FileVersion
+    if (!cacheSize?) #|| (!cacheVersion?) || (requestVersion != cacheVersion)
+      callback true
+      return
+
     # Get FileSize
-    fs.stat filePath, (err, stat) ->
+    fileAbsolutePath = AppDataPath + filePath
+    fs.stat fileAbsolutePath, (err, stat) ->
       if !err?
+        # Check FileSize
         fileSize = stat.size
-        # Read File
-        fs.readFile filePath, (err, data) ->
+        if fileSize != cacheSize
+          callback true
+          return
+        # Read FileData
+        fs.readFile fileAbsolutePath, (err, data) ->
           if !err
             date = new Date().toGMTString()
-            console.log "Load File From Cache: #{filePath}, Size: #{fileSize}, Date: #{date}"
+            console.log "Load File From Cache: #{filePath}, Size: #{fileSize}, Date: #{date}, Version: #{requestVersion}"
             res.writeHead 200, "{
                                   \"date\":\"#{date}\",
                                   \"server\":\"Apache\",
@@ -49,11 +81,24 @@ exports.saveCacheFile = (req, data) ->
   return if req.url.indexOf('/kcs/Core.swf') != -1 || req.url.indexOf('/kcs/mainD2.swf') != -1
   if req.url.indexOf('/kcs/') != -1
     # Get FilePath
-    filePath = url.parse(req.url).pathname.substr 1
-    util.guaranteeFilePath filePath
+    filePath = url.parse(req.url).pathname
+    requestVersion = url.parse(req.url).query.substr ('VERSION='.length)
+    fileAbsolutePath = AppDataPath + filePath
+    util.guaranteeFilePath fileAbsolutePath
     # Save File
-    fs.writeFile filePath, data, (err) ->
-      if err?
+    fs.writeFile fileAbsolutePath, data, (err) ->
+      if err
         console.log err
       else
         console.log "Save Cache File: #{filePath}" if !err
+        # fs.stat fileAbsolutePath, (err, stat) ->
+        #   if err
+        #     console.log err
+        #   else
+        #     fileSize = stat.size
+        #     cacheData[filePath] = "{
+        #                             \"res_path\": \"#{filePath}\",
+        #                             \"version\": \"#{requestVersion}\",
+        #                             \"file_size\": \"#{fileSize}\",
+        #                           }\"
+

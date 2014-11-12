@@ -17,8 +17,16 @@ guaranteeDirPath = (dirname) ->
     guaranteeDirPath dir
   fs.mkdirSync dirname
 
-exports.guaranteeFilePath = guranteeFilePath = (filename) ->
+exports.guaranteeFilePath = guaranteeFilePath = (filename) ->
   console.log "Guarantee #{filename}"
   dir = path.dirname filename
   unless fs.existsSync dir
     guaranteeDirPath dir
+
+exports.copyFile = copyFile = (srcFile, destFile) ->
+  console.log "Copy file #{srcFile} to #{destFile}"
+  unless fs.existsSync srcFile
+    return
+  data = fs.readFileSync srcFile
+  guaranteeFilePath destFile
+  fs.writeFileSync destFile, data
