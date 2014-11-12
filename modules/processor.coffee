@@ -17,8 +17,9 @@ exports.processData = (req, data) ->
   # Record API Information
   if isRecordAPIOpen
     filePath = url.parse(req.url).pathname.substr 1
-    util.guaranteeFilePath filePath
+    filePath = "#{global.appDataPath}/#{filePath}"
     d = JSON.stringify data, null, 2
+    util.guaranteeFilePath filePath
     fs.appendFile "#{filePath}.json", "Url: #{req.url}\nMethod: #{req.method}\nPostData: #{req.postData}\nReceiveData: #{d}\n\n\n", (err) ->
       console.log err if err?
   return unless data.api_result == 1

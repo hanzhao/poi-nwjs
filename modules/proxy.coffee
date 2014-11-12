@@ -28,7 +28,7 @@ exports.createServer = ->
         req.addListener 'data', (chunk) ->
           postData += chunk
         req.addListener 'end', ->
-          options.postData = postData
+          options.postData = req.postData = postData
           sendHttpRequest options, 0, (result) ->
             if result.err
               res.writeHead 500, {'Content-Type': 'text/html'}

@@ -12,7 +12,7 @@ exports.loadCacheFile = (req, res, callback) ->
   if req.url.indexOf('/kcs/') != -1
     # Get FilePath
     filePath = url.parse(req.url).pathname.substr 1
-    filePath = "cache/#{filePath}"
+    filePath = "#{global.appDataPath}/cache/#{filePath}"
     # Get FileSize
     fs.stat filePath, (err, stat) ->
       if !err?
@@ -50,8 +50,9 @@ exports.saveCacheFile = (req, data) ->
   if req.url.indexOf('/kcs/') != -1
     # Get FilePath
     filePath = url.parse(req.url).pathname.substr 1
-    util.guaranteeFilePath filePath
+    filePath = "#{global.appDataPath}/cache/#{filePath}"
     # Save File
+    util.guaranteeFilePath filePath
     fs.writeFile filePath, data, (err) ->
       if err?
         console.log err

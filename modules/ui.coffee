@@ -63,6 +63,11 @@ timer = ->
       $("#kdock-timer-#{i}").text ''
       $("#kdock-#{i}-remaining").text ''
 
+exports.showModal = (title, content) ->
+  $('#modal-message-title').text title
+  $('#modal-message-content').text content
+  $$('#modal-message').modal()
+
 exports.initConfig = ->
   # Update tab state
   if proxy.useShadowsocks
@@ -110,13 +115,9 @@ exports.saveConfig = ->
   conf.proxy.socksProxy.socksProxyIp = $('#socksproxy-ip')[0].value
   conf.proxy.socksProxy.socksProxyPort = $('#socksproxy-port')[0].value
   if config.updateConfig conf
-    $('#modal-message-title').text '保存设置'
-    $('#modal-message-content').text '保存成功，重新启动软件后生效。'
-    $$('#modal-message').modal()
+    exports.showModal '保存设置', '保存成功，重新启动软件后生效。'
   else
-    $('#modal-message-title').text '保存设置'
-    $('#modal-message-content').text '保存失败'
-    $$('#modal-message').modal()
+    exports.showModal '保存设置', '保存失败…'
 
 exports.turnOn = ->
   if !state
@@ -215,10 +216,25 @@ exports.refreshDecks = ->
     for shipId, i in deck.api_ship
       if shipId != -1
         ship = ownShips[shipId]
+        shipData = ships[ship.api_ship_id]
         totalLv += ship.api_lv
-        $("#ship-#{deck.api_id}#{i + 1}-type").text stypes[ships[ship.api_ship_id].api_stype].api_name
+        $("#ship-#{deck.api_id}#{i + 1}-type").text stypes[shipData.api_stype].api_name
         $("#ship-#{deck.api_id}#{i + 1}-exp").text "Next: #{ship.api_exp[1]}"
-        $("#ship-#{deck.api_id}#{i + 1}-hp").text "HP: #{ship.api_nowhp} / #{ship.api_maxhp}"
+
+        fuelPercent = ship.api_fuel * 100 / shipData.api_fuel_max
+        currentState = 'am-progress-bar-success'
+        currentState = 'mg-progress-bar-yellow' if fuelPercent < 75
+        currentState = 'am-progress-bar-warning' if fuelPercent < 50
+        currentState = 'am-progress-bar-danger' if fuelPercent < 25
+        fuelChargeHtml = "<div class=\"am-progress am-progress-striped am-progress-sm mg-progress-inline\"><div class=\"am-progress-bar #{currentState}\" style=\"width: #{fuelPercent}%\"></div></div>"
+        bullPercent = ship.api_bull * 100 / shipData.api_bull_max
+        currentState = 'am-progress-bar-success'
+        currentState = 'mg-progress-bar-yellow' if bullPercent < 75
+        currentState = 'am-progress-bar-warning' if bullPercent < 50
+        currentState = 'am-progress-bar-danger' if bullPercent < 25
+        bullChargeHtml = "<div class=\"am-progress am-progress-striped am-progress-sm mg-progress-inline\"><div class=\"am-progress-bar #{currentState}\" style=\"width: #{bullPercent}%\"></div></div>"
+        $("#ship-#{deck.api_id}#{i + 1}-charge").html "#{fuelChargeHtml}<div class=\"mg-progress-split\"></div>#{bullChargeHtml}<div class=\"clear\"></div>"
+
         $("#ship-#{deck.api_id}#{i + 1}-cond").text "Cond. #{ship.api_cond}"
         if ship.api_cond < 20
           $("#ship-#{deck.api_id}#{i + 1}-cond").attr 'class', 'mg-red'
@@ -235,17 +251,17 @@ exports.refreshDecks = ->
         # HP Line
         hpPercent = ship.api_nowhp * 100 / ship.api_maxhp
         currentState = 'am-progress-bar-success'
-        currentState = 'am-progress-bar-secondary' if hpPercent < 75
+        currentState = 'mg-progress-bar-yellow' if hpPercent < 75
         currentState = 'am-progress-bar-warning' if hpPercent < 50
         currentState = 'am-progress-bar-danger' if hpPercent < 25
-        $("#ship-#{deck.api_id}#{i + 1}-hpline").html "<div class=\"am-progress am-progress-striped\"><div class=\"am-progress-bar #{currentState}\" style=\"width: #{hpPercent}%\"></div></div>"
+        $("#ship-#{deck.api_id}#{i + 1}-hpline").html "<div class=\"am-progress am-progress-striped\"><div class=\"am-progress-bar #{currentState}\" style=\"width: #{hpPercent}%\">HP: #{ship.api_nowhp} / #{ship.api_maxhp}</div></div>"
 
         # Equipment
         # $("#ship-#{deck.api_id}#{i + 1}-equip")
       else
         $("#ship-#{deck.api_id}#{i + 1}-type").text ''
         $("#ship-#{deck.api_id}#{i + 1}-exp").text ''
-        $("#ship-#{deck.api_id}#{i + 1}-hp").text ''
+        $("#ship-#{deck.api_id}#{i + 1}-charge").html ''
         $("#ship-#{deck.api_id}#{i + 1}-cond").text ''
         $("#ship-#{deck.api_id}#{i + 1}-cond").attr 'class', ''
 
