@@ -1,6 +1,6 @@
 fs = require('fs')
 
-configPath = fs.realpathSync(process.execPath + '/..') + '/poi-config.json'
+configPath = "#{global.appDataPath}/poi-config.json"
 
 exports.config = defaultConfig =
   proxy:
