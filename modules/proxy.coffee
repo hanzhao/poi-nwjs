@@ -9,6 +9,7 @@ processor = require('./processor')
 ui = require('./ui')
 util = require('./util')
 cache = require('./cache')
+storage = require('./storage')
 
 exports.createShadowsocksServer = ->
   return unless config.proxy.useShadowsocks
@@ -22,33 +23,41 @@ exports.createServer = ->
     parsed = url.parse req.url
     options = getOptions req, parsed
     # Load File From Cache
-    cache.loadCacheFile req, res, (err) ->
-      if err
-        # Post Data
-        postData = ''
-        req.setEncoding 'utf8'
-        req.addListener 'data', (chunk) ->
-          postData += chunk
-        req.addListener 'end', ->
-          options.postData = req.postData = postData
-          sendHttpRequest options, 0, (result) ->
-            if result.err
-              res.writeHead 500, {'Content-Type': 'text/html'}
-              res.write '<!DOCTYPE html><html><body><h1>Network Error</h1></body></html>'
-              res.end()
-            else
-              buffers = []
-              result.on 'data', (chunk) ->
-                buffers.push chunk
-              result.on 'end', ->
-                data = Buffer.concat buffers
-                result.removeAllListeners 'data'
-                result.removeAllListeners 'end'
-                res.writeHead result.statusCode, result.headers
-                res.write data
-                res.end()
-                processor.processData req, data if req.url.indexOf('/kcsapi') != -1
-                cache.saveCacheFile req, data if req.url.indexOf('/kcs/') != -1
+    getCache = false
+    if config.cache.useStorage && req.method == 'GET' && util.isCacheUrl req.url
+      await storage.loadStorageFile req, res, defer getCache
+    return if getCache
+    # Local Cache?
+    # if config.cache.useCache && util.isCacheUrl req.url
+    #   await cache.loadCacheFile req, res, defer getCache
+    # return if getCache
+    # Post Data
+    postData = ''
+    req.setEncoding 'utf8'
+    req.addListener 'data', (chunk) ->
+      postData += chunk
+    req.addListener 'end', ->
+      options.postData = req.postData = postData
+      sendHttpRequest options, 0, (result) ->
+        if result.err
+          res.writeHead 500,
+            'Content-Type': 'text/html'
+          res.write '<!DOCTYPE html><html><body><h1>Network Error</h1></body></html>'
+          res.end()
+        else
+          buffers = []
+          result.on 'data', (chunk) ->
+            buffers.push chunk
+          result.on 'end', ->
+            data = Buffer.concat buffers
+            result.removeAllListeners 'data'
+            result.removeAllListeners 'end'
+            res.writeHead result.statusCode, result.headers
+            res.write data
+            res.end()
+            processor.processData req, data if req.url.indexOf('/kcsapi') != -1
+            storage.saveStorageFile req, data if config.cache.useStorage && req.method == 'GET' && result.statusCode == 200 && util.isCacheUrl req.url
+            # cache.saveCacheFile req, data if req.url.indexOf('/kcs/') != -1
   server.listen config.poi.listenPort
   console.log "Proxy listening at 127.0.0.1:#{config.poi.listenPort}"
 
@@ -127,4 +136,3 @@ sendHttpRequest = (options, counter, callback) ->
     else
       callback {err: true}
   request.end()
-

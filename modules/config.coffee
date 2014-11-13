@@ -3,7 +3,7 @@ fs = require('fs')
 configPath = "#{global.appDataPath}/poi-config.json"
 
 exports.config = defaultConfig =
-  version: '0.0.1'
+  version: '0.0.1-d'
   proxy:
     useShadowsocks:   true
     shadowsocks:
@@ -23,6 +23,9 @@ exports.config = defaultConfig =
       socksProxyPort:   8099
   poi:
     listenPort:       8787
+  cache:
+    useStorage:       true
+    useCache:         false
   antiCat:
     retryDelay:       10000
     retryTime:        500
