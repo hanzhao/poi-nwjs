@@ -28,7 +28,7 @@ exports.processData = (req, data) ->
   position = url.parse(req.url).pathname.replace '/kcsapi', ''
   switch position
     when '/api_start2'
-      ui.api_start2 data.api_data
+      ui.api_start2 data
     when '/api_get_member/basic'
       ui.api_get_member_basic data.api_data
       ui.refreshUser()

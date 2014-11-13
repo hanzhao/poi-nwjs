@@ -1,6 +1,7 @@
 config = require('./config')
 proxy = config.config.proxy
 util = require('./util')
+fs = require('fs')
 
 $ = global.$
 $$ = global.$$
@@ -149,7 +150,19 @@ exports.addAntiCatCounter = ->
 
 ################################################################################
 
-exports.api_start2 = (api_data) ->
+api_start2_filePath = 'data/api_start2.json'
+api_start2_realPath = "#{global.appDataPath}/#{api_start2_filePath}"
+
+exports.api_start2_loadDefault = () ->
+  data = []
+  try
+    data = JSON.parse fs.readFileSync api_start2_realPath
+  catch err
+    data = JSON.parse fs.readFileSync api_start2_filePath
+  api_start2 data
+
+exports.api_start2 = api_start2 = (data) ->
+  api_data = data.api_data
   ships = []
   ships[ship.api_id] = ship for ship in api_data.api_mst_ship
   stypes = []
@@ -162,6 +175,9 @@ exports.api_start2 = (api_data) ->
   maps[map.api_id] = map for map in api_data.api_mst_mapinfo
   missions = []
   missions[mission.api_id] = mission for mission in api_data.api_mst_mission
+  util.guaranteeFilePath api_start2_realPath
+  fs.writeFile api_start2_realPath, data, (err) ->
+    console.log err if err?
 
 exports.api_get_member_basic = (api_data) ->
   user = api_data

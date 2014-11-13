@@ -11,7 +11,9 @@ global.$$ = window.$$
 global.Notification = window.Notification
 global.Notification.requestPermission()
 require('./modules/config').loadConfig()
-require('./modules/ui').initConfig()
+ui = require('./modules/ui')
+ui.initConfig()
+ui.api_start2_loadDefault()
 require('./modules/pac').generatePAC()
 require('./modules/cache').initCache()
 proxy = require('./modules/proxy')
