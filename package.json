@@ -11,9 +11,10 @@
     "height": 725
   },
   "dependencies": {
-    "iced-coffee-script": "^1.8.0-a",
+    "coffee-script": "^1.8.0",
     "shadowsocks": "^1.5.3",
-    "socksv5": "^0.0.4"
+    "socksv5": "^0.0.4",
+    "ipv6": "^3.1.1"
   },
   "chromium-args": "--enable-webgl --ignore-gpu-blacklist"
 }

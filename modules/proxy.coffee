@@ -25,7 +25,7 @@ exports.createServer = ->
     # Load File From Cache
     getCache = false
     if config.cache.useStorage && req.method == 'GET' && util.isCacheUrl req.url
-      await storage.loadStorageFile req, res, defer getCache
+      getCache = storage.loadStorageFile req, res
     return if getCache
     # Local Cache?
     # if config.cache.useCache && util.isCacheUrl req.url

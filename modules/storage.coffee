@@ -5,12 +5,10 @@ querystring = require('querystring')
 database = window.localStorage
 storagePath = "#{global.appDataPath}/storage"
 
-exports.loadStorageFile = (req, res, callback) ->
+exports.loadStorageFile = (req, res) ->
   parsed = url.parse req.url
   filePath = "#{storagePath}#{parsed.pathname}"
-  unless fs.existsSync(parsed.pathname) && querystring.parse(parsed.query).VERSION == database.getItem(filePath)
-    callback false
-    return
+  return false unless fs.existsSync(parsed.pathname) && querystring.parse(parsed.query).VERSION == database.getItem(filePath)
   console.log "Hit Storage! #{filePath}"
   data = fs.readFileSync filePath
   res.writeHead 200,
@@ -18,7 +16,7 @@ exports.loadStorageFile = (req, res, callback) ->
     'Content-Length': data.length
   res.write data
   res.end()
-  callback true
+  return true
 
 exports.saveStorageFile = (req, data) ->
   parsed = url.parse req.url

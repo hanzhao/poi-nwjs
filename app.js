@@ -1,2 +1,2 @@
-require('iced-coffee-script/register');
+require('coffee-script/register');
 require('./app.coffee');

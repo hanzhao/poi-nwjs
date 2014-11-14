@@ -3,7 +3,11 @@ ui = require('./ui')
 config = require('./config').config
 proxy = config.proxy
 
-pacPath = "#{global.appDataPath}/proxy.pac"
+pacPath = null
+if process.platform != 'win32' && process.platform != 'win64'
+  pacPath = "#{global.appDataPath}/proxy.pac"
+else
+  pacPath = "#{global.appDataPath}\\proxy.pac"
 ui.updatePacPath pacPath
 
 upstream = "DIRECT"
