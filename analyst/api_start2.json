@@ -1,0 +1,321 @@
+//Url: http://$host/kcsapi/api_start2
+//Method: POST
+//PostData:
+//{
+//  "api_token": "",
+//  "api_verno": "1"
+//}
+//ReceiveData:
+{
+  "api_result": 1,
+  "api_result_msg": "成功",
+  "api_data": {
+    "api_mst_ship": [                         // ship list
+      {
+        "api_id": 1,                          // ship unique id
+        "api_sortno": 31,                     // ship 図鑑 id
+        "api_name": "睦月",                    // ship name
+        "api_yomi": "むつき",                  // ship katakana name
+        "api_stype": 2,                       // ship type
+        "api_afterlv": 20,                    // ship next remodel level
+        "api_aftershipid": "254",             // ship next remodel api_id
+        "api_taik": [
+          13,                                 // ship initial/max 耐久
+          24                                  // useless
+        ],
+        "api_souk": [
+          5,                                  // ship initial 装甲
+          18                                  // ship max 装甲
+        ],
+        "api_houg": [
+          6,                                  // ship initial 火力
+          29                                  // ship max 火力
+        ],
+        "api_raig": [
+          18,                                 // ship initial 雷装
+          59                                  // ship max 雷装
+        ],
+        "api_tyku": [
+          7,                                  // ship initial 対空
+          29                                  // ship max 対空
+        ],
+        "api_luck": [
+          12,                                 // ship initial 運
+          49                                  // ship max 運
+        ],
+        "api_soku": 10,                       // 速力: 5 = 低速, 10 = 高速
+        "api_leng": 1,                        // 射程: 1 = 短, 2 = 中, 3 = 長, 4 = 超長
+        "api_slot_num": 2,                    // available slot number
+        "api_maxeq": [                        // every slot's 搭載
+          0,                                  // slot 1
+          0,                                  // slot 2
+          0,                                  // slot 3
+          0,                                  // slot 4
+          0                                   // slot 5
+        ],
+        "api_buildtime": 18,                  // ship build time
+        "api_broken": [                       // resource from 解体
+          1,                                  // 燃料
+          1,                                  // 弾薬
+          4,                                  // 鋼鉄
+          0                                   // ボーキサイト
+        ],
+        "api_powup": [                        // power up value used for 近代化改修
+          1,                                  // 火力
+          1,                                  // 雷装
+          0,                                  // 対空
+          0                                   // 装甲
+        ],
+        "api_backs": 3,                       // background image when getting a ship. Value: 1 - 8
+        "api_getmes": "睦月です。<br>はりきって、まいりましょー！",    // msg when getting a ship
+        "api_afterfuel": 100,                 // 改造 cost 燃料
+        "api_afterbull": 100,                 // 改造 cost 弾薬
+        "api_fuel_max": 15,                   // max cost 燃料
+        "api_bull_max": 15,                   // max cost 弾薬
+        "api_voicef": 0                       // 1 or 3 if the ship has extra voice clips, normally 0?
+      }
+    ],
+    "api_mst_shipgraph": [                    // ship graph list
+      {
+        "api_id": 1,                          // ship unique id
+        "api_sortno": 31,                     // ship 図鑑 id
+        "api_filename": "snohitatusbk",       // ship resource filename
+        "api_version": "1"                    // ship resource file version
+        // rest omitted
+      }
+    ],
+    "api_mst_slotitem_equiptype": [           // equip type list
+      {
+        "api_id": 1,                          // equip type unique id
+        "api_name": "小口径主砲",              // equip type name
+        "api_show_flg": 1                     // unknown
+      }
+    ],
+    "api_mst_stype": [                        // ship type list
+      {
+        "api_id": 1,                          // ship type unique id
+        "api_sortno": 1,                      // unknown, the same as api_id
+        "api_name": "海防艦",                  // ship type name
+        "api_scnt": 1,                        // unknown
+        "api_kcnt": 2,                        // unknown
+        "api_equip_type": {                   // equip type that can equip on
+          "1": 0,                             // 0 = no, 1 = yes
+          "2": 0
+          // rest omiited
+        }
+      },
+    ],
+    "api_mst_slotitem": [                     // equip list
+      {
+        "api_id": 1,                          // equip unique id
+        "api_sortno": 1,                      // equip 図鑑 id
+        "api_name": "12cm単装砲",              // equip name
+        "api_type": [                         // equip type
+          1,                                  // unknown
+          1,                                  // main type, see wiki
+          1,                                  // ref to equip type unique id
+          1                                   // unknown
+        ],
+        "api_taik": 0,                        // 耐久
+        "api_souk": 0,                        // 装甲
+        "api_houg": 1,                        // 火力
+        "api_raig": 0,                        // 雷装
+        "api_soku": 0,                        // 速力
+        "api_baku": 0,                        // 爆装
+        "api_tyku": 1,                        // 対空
+        "api_tais": 0,                        // 対潜
+        "api_atap": 0,                        // unknown
+        "api_houm": 0,                        // 命中
+        "api_raim": 0,                        // 雷撃命中(艦載機)
+        "api_houk": 0,                        // 回避
+        "api_raik": 0,                        // unknown(雷撃回避?)
+        "api_bakk": 0,                        // unknown
+        "api_saku": 0,                        // 索敵
+        "api_sakb": 0,                        // unknown
+        "api_luck": 0,                        // 運
+        "api_leng": 1,                        // 射程
+        "api_rare": 0,                        // レア
+        "api_broken": [                       // resource from 廃棄
+          0,                                  // 燃料
+          1,                                  // 弾薬
+          1,                                  // 鋼鉄
+          0                                   // ボーキサイト
+        ],
+        "api_info": "旧型の小型砲です。<br>旧型駆逐艦に標準的主砲として搭載されました。<br>装填・操砲も人力ですが、シンプルな構造で経済性も高く、駆逐艦や海防艦等の主砲として、長く使われました。<br>対空射撃には不向きです。",             // equip info
+        "api_usebull": "0"                    // unknown
+      }
+    ],
+    "api_mst_slotitemgraph": [                // equip graph list
+      {
+        "api_id": 1,                          // ref to equip unique id
+        "api_sortno": 1,                      // equip 図鑑 id
+        "api_filename": "1",                  // equip resource filename
+        "api_version": "1"                    // equip resource file version
+      }
+    ],
+    "api_mst_furniture": [                    // furniture list
+      {
+        "api_id": 1,                          // furniture unique id
+        "api_type": 0,                        // furniture type
+        "api_no": 0,                          // furniture index in its type
+        "api_title": "鎮守府の床",             // furniture name
+        "api_description": "鎮守府の艦隊司令官室。その通常仕様の床板です。",     // furniture description
+        "api_rarity": 0,                      // furniture rarity
+        "api_price": 0,                       // furniture price
+        "api_saleflg": 0,                     // furniture is on sale or not
+        "api_season": 0                       // unknown
+      }
+    ],
+    "api_mst_furnituregraph": [               // furniture graph list
+      {
+        "api_id": 6,                          // ref to furniture unique id
+        "api_type": 0,                        // ref to furniture type
+        "api_no": 5,                          // ref to furniture index in its type
+        "api_filename": "006",                // furniture resource filename
+        "api_version": "1"                    // furniture resource file version
+      }
+    ],
+    "api_mst_useitem": [                      // use item list
+      {
+        "api_id": 1,                          // use item unique id
+        "api_usetype": 1,                     // useless
+        "api_category": 1,                    // useless
+        "api_name": "高速修復材",              // use item name
+        "api_description": [                  // use item description
+          "入渠時間を短縮できる。",
+          ""
+        ],
+        "api_price": 0                        // useless
+      }
+    ],
+    "api_mst_payitem": [                      // pay item list
+      {
+        "api_id": 1,                          // pay item unique id
+        "api_type": 0,                        // useless
+        "api_name": "燃料パック200",           // pay item name
+        "api_description": "補給のお供！燃料パック<br>(燃料を200回復させます)",       // pay item description
+        "api_item": [                         // pay item content
+          200,                                // 燃料
+          0,                                  // 弾薬
+          0,                                  // 鋼材
+          0,                                  // ボーキサイト
+          0,                                  // 高速建造材
+          0,                                  // 高速修復材
+          0,                                  // 開発資材
+          0                                   // 改修資材
+        ],
+        "api_price": 100                      // pay item price
+      }
+    ],
+    "api_mst_item_shop": {                    // sale item in shop
+      "api_cabinet_1": [                      // shop 1
+      ],
+      "api_cabinet_2": [                      // shop 2
+      ]
+    },
+    "api_mst_maparea": [                      // map area list
+      {
+        "api_id": 1,                          // map area unique id
+        "api_name": "鎮守府海域",              // map area name
+        "api_type": 0                         // map area type: 0 = normal, 1 = event
+      }
+    ],
+    "api_mst_mapinfo": [                      // map info list
+      {
+        "api_id": 11,                         // map unique id
+        "api_maparea_id": 1,                  // ref to map area unique id
+        "api_no": 1,                          // map index
+        "api_name": "鎮守府正面海域",           // map name
+        "api_level": 1,                       // map level
+        "api_opetext": "近海警備",             // map operation text
+        "api_infotext": "鎮守府正面近海の<br>警備に出動せよ！",   // map info text
+        "api_item": [                         // unknown
+          0,
+          0,
+          0,
+          0
+        ],
+        "api_max_maphp": null,                // map max hp (in event map)
+        "api_required_defeat_count": null,    // map required defeat count (in normal map)
+        "api_sally_flag": [                   // unknown
+          1,
+          0
+        ]
+      }
+    ],
+    "api_mst_mapbgm": [                       // map bgm list
+      {
+        "api_id": 11,                         // ref to map unique id
+        "api_maparea_id": 1,                  // ref to map area unique id
+        "api_no": 1,                          // ref to map index
+        "api_map_bgm": [                      // bgm (not boss)
+          1,                                  // bgm in daytime
+          2                                   // bgm at night
+        ],
+        "api_boss_bgm": [                     // bgm (boss)
+          2,                                  // bgm in daytime
+          2                                   // bgm at night
+        ]
+      }
+    ],
+    "api_mst_mapcell": [                      // map cell list
+      {
+        "api_map_no": 11,                     // ref to map unique id
+        "api_maparea_id": 1,                  // ref to map area unique id
+        "api_mapinfo_no": 1,                  // ref to map index
+        "api_id": 1,                          // map cell unique id
+        "api_no": 0,                          // map cell index
+        "api_color_no": 0                     // map cell type: 0 = start, 1 = ???, 2 = resource, 3 = lost resource, 4 = enemy(include ignore), 5 = boss
+      }
+    ],
+    "api_mst_mission": [                      // mission list
+      {
+        "api_id": 1,                          // mission unique id
+        "api_maparea_id": 1,                  // ref to map area id
+        "api_name": "練習航海",                // mission name
+        "api_details": "鎮守府近海を航海し、艦隊の練度を高めよう！",     // mission detail
+        "api_time": 15,                       // mission time
+        "api_difficulty": 1,                  // mission difficulty
+        "api_use_fuel": 0.3,                  // mission cost 燃料
+        "api_use_bull": 0,                    // mission cost 弾薬
+        "api_win_item1": [                    // reward item 1
+          0,                                  // ref to use item unique id
+          0                                   // reward count
+        ],
+        "api_win_item2": [                    // reward item 2
+          0,                                  // ref to use item unique id
+          0                                   // reward count
+        ],
+        "api_return_flag": 1                  // 0 = support mission, 1 = normal mission
+      }
+    ],
+    "api_mst_const": {                        // const list
+      "api_boko_max_ships": {                 // max ship count
+        "api_string_value": "",
+        "api_int_value": 220
+      },
+      "api_dpflag_quest": {                   // unknown
+        "api_string_value": "",
+        "api_int_value": 1
+      }
+    },
+    "api_mst_shipupgrade": [                  // ship that need 設計図
+      {
+        "api_id": 273,                        // ref to ship unique id
+        "api_original_ship_id": 71,           // ship id before upgrade
+        "api_upgrade_type": 1,                // unknown
+        "api_upgrade_level": 1,               // ship upgrade level
+        "api_drawing_count": 0,               // need 設計図 count
+        "api_sortno": 373                     // useless
+      }
+    ],
+    "api_mst_bgm": [                          // 母港 bgm
+      {
+        "api_id": 101,                        // bgm unique id
+        "api_name": "母港"                     // bgm name
+      }
+    ]
+  }
+}
+
+
