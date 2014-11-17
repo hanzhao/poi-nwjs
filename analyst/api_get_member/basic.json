@@ -1,0 +1,55 @@
+// Url: http://$host/kcsapi/api_get_member/basic
+// Method: POST
+// PostData: {
+//   "api_token": "",
+//   "api_verno": "1"
+// }
+// ReceiveData:
+{
+  "api_result": 1,
+  "api_result_msg": "成功",
+  "api_data": {
+    "api_member_id": "10080144",                // admiral unique id
+    "api_nickname": "長門有希",                  // admiral nickname
+    "api_nickname_id": "118250901",             // useless
+    "api_active_flag": 1,                       // useless
+    "api_starttime": 1415958693853,             // Unix timestamp for when the user’s current session started?
+    "api_level": 109,                           // admiral level
+    "api_rank": 1,                              // 1 = 元帅 ?
+    "api_experience": 5843230,                  // admiral experience
+    "api_fleetname": null,                      // name of first fleet?
+    "api_comment": "401 get！",                 // signature
+    "api_comment_id": "128526094",              // useless
+    "api_max_chara": 210,                       // max ship count
+    "api_max_slotitem": 937,                    // max equi count
+    "api_max_kagu": 0,                          // useless
+    "api_playtime": 0,                          // useless
+    "api_tutorial": 0,                          // whether is tutorial step?
+    "api_furniture": [                          // currently active furniture
+      6,
+      67,
+      211,
+      221,
+      213,
+      216
+    ],
+    "api_count_deck": 4,                        // max count of fleets
+    "api_count_kdock": 2,                       // max count of creating docks
+    "api_count_ndock": 4,                       // max count of repairing docks
+    "api_fcoin": 109000,                        // current furniture coins
+    "api_st_win": 25909,                        // win count
+    "api_st_lose": 1030,                        // lose count
+    "api_ms_count": 8314,                       // mission total count
+    "api_ms_success": 8241,                     // mission success count
+    "api_pt_win": 2464,                         // pvp win count
+    "api_pt_lose": 115,                         // pvp lose count
+    "api_pt_challenged": 0,                     // unknown
+    "api_pt_challenged_win": 0,                 // unknown
+    "api_firstflag": 1,                         // unknown
+    "api_tutorial_progress": 100,               // percent progress of tutorial
+    "api_pvp": [                                // unknown
+      0,
+      0
+    ]
+  }
+}
