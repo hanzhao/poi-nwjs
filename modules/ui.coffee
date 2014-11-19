@@ -8,6 +8,8 @@ $$ = global.$$
 Notification = global.Notification
 
 materialsName = ['', '油', '弹', '钢', '铝', '高速建造', '高速修复', '开发资材', '改修资材']
+rankName = ['', '元帥', '大将', '中将', '少将', '大佐', '中佐', '新米中佐', '少佐', '中堅少佐', '新米少佐']
+exp = [0, 0, 100, 300, 600, 1000, 1500, 2100, 2800, 3600, 4500, 5500, 6600, 7800, 9100, 10500, 12000, 13600, 15300, 17100, 19000, 21000, 23100, 25300, 27600, 30000, 32500, 35100, 37800, 40600, 43500, 46500, 49600, 52800, 56100, 59500, 63000, 66600, 70300, 74100, 78000, 82000, 86100, 90300, 94600, 99000, 103500, 108100, 112800, 117600, 122500, 127500, 132700, 138100, 143700, 149500, 155500, 161700, 168100, 174700, 181500, 188500, 195800, 203400, 211300, 219500, 228000, 236800, 245900, 255300, 265000, 275000, 285400, 296200, 307400, 319000, 331000, 343400, 356200, 369400, 383000, 397000, 411500, 426500, 442000, 458000, 474500, 491500, 509000, 527000, 545500, 564500, 584500, 606500, 631500, 661500, 701500, 761500, 851500, 1000000, 1000000, 1010000, 1011000, 1013000, 1016000, 1020000, 1025000, 1031000, 1038000, 1046000, 1055000, 1065000, 1077000, 1091000, 1107000, 1125000, 1145000, 1168000, 1194000, 1223000, 1255000, 1290000, 1329000, 1372000, 1419000, 1470000, 1525000, 1584000, 1647000, 1714000, 1785000, 1860000, 1940000, 2025000, 2115000, 2210000, 2310000, 2415000, 2525000, 2640000, 2760000, 2887000, 3021000, 3162000, 3310000, 3465000, 3628000, 3799000, 3978000, 4165000, 4360000, 4360000]
 
 state = false
 
@@ -68,6 +70,12 @@ exports.showModal = (title, content) ->
   $('#modal-message-title').text title
   $('#modal-message-content').text content
   $$('#modal-message').modal()
+
+exports.showModalHtml = (title, content) ->
+  $('#modal-message-title').html title
+  $('#modal-message-content').html content
+  $$('#modal-message').modal()
+
 
 exports.initConfig = ->
   # Update tab state
@@ -195,6 +203,7 @@ exports.api_port_port = (api_data) ->
   decks[deck.api_id] = deck for deck in api_data.api_deck_port
   ndocks = []
   ndocks[ndock.api_id] = ndock for ndock in api_data.api_ndock
+  user = api_data.api_basic
 
 exports.api_get_member_kdock = (api_data) ->
   kdocks = []
@@ -205,6 +214,12 @@ exports.api_get_member_ship2 = (data) ->
   ownShips[ship.api_id] = ship for ship in data.api_data
   decks = []
   decks[deck.api_id] = deck for deck in data.api_data_deck
+
+exports.api_get_member_ship3 = (api_data) ->
+  ownShips = []
+  ownShips[ship.api_id] = ship for ship in api_data.api_ship_data
+  decks = []
+  decks[deck.api_id] = deck for deck in api_data.api_deck_data
 
 exports.api_req_hokyu_charge = (api_data) ->
   for ship in api_data.api_ship
@@ -231,10 +246,19 @@ exports.api_req_mission_start = (postData, api_data) ->
 ###############################################################################
 
 exports.refreshUser = ->
-  html = "<li>Lv. #{user.api_level} #{user.api_nickname}</li>"
-  $('#user-panel-content').html html
-
-exports.refreshMaterials = ->
+  text = "Lv. #{user.api_level} #{user.api_nickname} [#{rankName[user.api_rank]}]"
+  $('#user-panel-title').text text
+  shipCount = 0
+  for ship in ownShips
+    shipCount += 1 if ship
+  text = "舰娘: #{shipCount} / #{user.api_max_chara}"
+  $('#chara-info').text text
+  slotitemCount = 0
+  for slotitem in slotitems
+    continue unless slotitem
+    slotitemCount += 1
+  text = "装备: #{slotitemCount} / #{user.api_max_slotitem}"
+  $('#equip-info').text text
   for material in materials
     continue unless material
     $("#material-#{material.api_id}").text "#{materialsName[material.api_id]}: #{material.api_value}"
@@ -264,16 +288,16 @@ exports.refreshDecks = ->
 
         fuelPercent = ship.api_fuel * 100 / shipData.api_fuel_max
         currentState = 'am-progress-bar-success'
-        currentState = 'mg-progress-bar-yellow' if fuelPercent < 75
-        currentState = 'am-progress-bar-warning' if fuelPercent < 50
-        currentState = 'am-progress-bar-danger' if fuelPercent < 25
-        fuelChargeHtml = "<div class=\"am-progress am-progress-striped am-progress-sm mg-progress-inline\"><div class=\"am-progress-bar #{currentState}\" style=\"width: #{fuelPercent}%\"></div></div>"
+        currentState = 'mg-progress-bar-yellow' if fuelPercent < 100
+        currentState = 'am-progress-bar-warning' if fuelPercent < 75
+        currentState = 'am-progress-bar-danger' if fuelPercent < 50
+        fuelChargeHtml = "<div class=\"am-progress am-progress-sm mg-progress-inline\"><div class=\"am-progress-bar #{currentState}\" style=\"width: #{fuelPercent}%\"></div></div>"
         bullPercent = ship.api_bull * 100 / shipData.api_bull_max
         currentState = 'am-progress-bar-success'
         currentState = 'mg-progress-bar-yellow' if bullPercent < 75
         currentState = 'am-progress-bar-warning' if bullPercent < 50
         currentState = 'am-progress-bar-danger' if bullPercent < 25
-        bullChargeHtml = "<div class=\"am-progress am-progress-striped am-progress-sm mg-progress-inline\"><div class=\"am-progress-bar #{currentState}\" style=\"width: #{bullPercent}%\"></div></div>"
+        bullChargeHtml = "<div class=\"am-progress am-progress-sm mg-progress-inline\"><div class=\"am-progress-bar #{currentState}\" style=\"width: #{bullPercent}%\"></div></div>"
         $("#ship-#{deck.api_id}#{i + 1}-charge").html "#{fuelChargeHtml}<div class=\"mg-progress-split\"></div>#{bullChargeHtml}<div class=\"clear\"></div>"
 
         $("#ship-#{deck.api_id}#{i + 1}-cond").text "Cond. #{ship.api_cond}"
@@ -370,3 +394,33 @@ exports.refreshCreateitem = ->
       $('#createitem-state').text '成功'
       $('#createitem-name').text slotitems[createItem.api_slot_item.api_slotitem_id].api_name
       $('#createitem-state').show()
+
+exports.refreshExperience = ->
+  list = []
+  for ship in ownShips
+    list.push ship if ship
+  list.sort (a, b) ->
+    return b.api_exp[0] - a.api_exp[0]
+  html = '<option value=",,">下拉列表选择舰娘</option>'
+  for ship in list
+    nextLv = 150
+    if ships[ship.api_ship_id].api_afterlv != 0
+      nextLv = Math.min nextLv, ships[ship.api_ship_id].api_afterlv
+    if ship.api_lv < 99
+      nextLv = 99
+    html += "<option value=\"#{ship.api_lv},#{ship.api_exp[1]},#{nextLv}\">Lv. #{ship.api_lv} - #{ships[ship.api_ship_id].api_name}</option>"
+  $('#exp-ship').html html
+
+exports.calcExperience = ->
+  nowExp = exp[parseInt($('#exp-lv').val()) + 1] - parseInt($('#exp-next').val())
+  goalExp = exp[parseInt $('#exp-goal').val()]
+  deltaExp = 0
+  if goalExp > nowExp
+    deltaExp = goalExp - nowExp
+  mapExp = parseInt($('#exp-map').val()) * parseFloat($('#exp-result').val())
+  html = "<ul style=\"text-align: left;\"><li>达到等级需要经验: #{deltaExp}</li>"
+  html += "<li>基本: #{mapExp} 需#{(deltaExp / mapExp).toFixed(0)}场</li>"
+  html += "<li>旗舰: #{mapExp * 1.5} 需#{(deltaExp / mapExp / 1.5).toFixed(0)}场</li>"
+  html += "<li>MVP: #{mapExp * 2.0} 需#{(deltaExp / mapExp / 2.0).toFixed(0)}场</li>"
+  html += "<li>旗舰MVP: #{mapExp * 3.0} 需#{(deltaExp / mapExp / 3.0).toFixed(0)}场</li></ul>"
+  exports.showModalHtml '经验计算', html

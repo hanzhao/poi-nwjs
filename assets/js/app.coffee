@@ -60,6 +60,13 @@ $ ->
       $('#sec-factory').hide()
       $('#sec-calc').hide()
       $('#sec-settings').fadeIn()
+  $('#exp-ship').change ->
+    val = $(this).val().split(',')
+    $('#exp-lv').val val[0]
+    $('#exp-next').val val[1]
+    $('#exp-goal').val val[2]
+  $('#exp-submit').click ->
+    require('./modules/ui').calcExperience()
   $('#proxy-tabs').find('a').on 'opened:tabs:amui', (e) ->
     switch $$(this).text()[0]
       when 'S'
