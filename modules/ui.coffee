@@ -39,6 +39,7 @@ exports.updatePacPath = (path) ->
 
 exports.showNotification = showNotification = (body) ->
   notification = new Notification 'Poi',
+    icon: 'icon.png'
     body: body
   notification.onclick = ->
     notification.close()
