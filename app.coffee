@@ -10,6 +10,45 @@ global.$ = window.$
 global.$$ = window.$$
 global.Notification = window.Notification
 global.Notification.requestPermission()
+
+# Tray
+tray = new gui.Tray icon: 'icon.png'
+menu = new gui.Menu()
+tray.on 'click', ->
+  gui.Window.get().show()
+show = new gui.MenuItem
+  type: 'normal'
+  label: '显示'
+  click: ->
+    gui.Window.get().show()
+hide = new gui.MenuItem
+  type: 'normal'
+  label: '隐藏'
+  click: ->
+    gui.Window.get().hide()
+quit = new gui.MenuItem
+  type: 'normal'
+  label: '退出'
+  click: ->
+    gui.Window.get().close true
+menu.append show
+menu.append hide
+menu.append quit
+tray.menu = menu
+window.tray = tray
+
+# Minimize
+win = gui.Window.get()
+win.on 'minimize', ->
+  this.hide()
+
+# Close
+win.on 'close', (quit) ->
+  if process.platform == 'darwin' and not quit
+    this.hide()
+  else
+    this.close true
+
 require('./modules/config').loadConfig()
 ui = require('./modules/ui')
 ui.initConfig()

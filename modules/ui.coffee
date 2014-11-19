@@ -132,7 +132,7 @@ exports.turnOn = ->
   if !state
     state = true
     $('#state-panel-content').text '正常运行中'
-    $('#state-panel').hide()
+    $('#poi-panel').hide()
     $('#user-panel').fadeIn()
     $('#resource-panel').fadeIn()
     $('#mission-panel').fadeIn()
@@ -151,7 +151,7 @@ exports.turnOff = ->
     $('#ndocks-panel').hide()
     $('#kdocks-panel').hide()
     $('#anticat-panel').hide()
-    $('#state-panel').fadeIn()
+    $('#poi-panel').fadeIn()
 
 exports.addAntiCatCounter = ->
   $('#anticat-panel-content').text "一共抵御了#{antiCatCounter += 1}次猫神的袭击……"
@@ -261,7 +261,7 @@ exports.refreshUser = ->
   $('#equip-info').text text
   for material in materials
     continue unless material
-    $("#material-#{material.api_id}").text "#{materialsName[material.api_id]}: #{material.api_value}"
+    $("#material-#{material.api_id}").html "<img src=\"./assets/images/material/#{material.api_id}.png\" style=\"height: 30px; margin-right: 20px; margin-top: 10px;\">#{material.api_value}"
 
 exports.refreshDecks = ->
   for deck in decks
@@ -322,7 +322,20 @@ exports.refreshDecks = ->
         $("#ship-#{deck.api_id}#{i + 1}-hpline").html "<div class=\"am-progress am-progress-striped\"><div class=\"am-progress-bar #{currentState}\" style=\"width: #{hpPercent}%\">HP: #{ship.api_nowhp} / #{ship.api_maxhp}</div></div>"
 
         # Equipment
-        # $("#ship-#{deck.api_id}#{i + 1}-equip")
+        html = '<ul class="sm-block-grid-4">'
+        for slotId, slotPos in ship.api_slot
+          break if slotPos == 4
+          cur = '<li></li>'
+          if slotId != -1
+            slot = ownSlotitems[slotId]
+            if slot?
+              slotData = slotitems[slot.api_slotitem_id]
+              cur = "<li><div class=\"mg-ico-container\"><img src=\"./assets/images/slotitem/#{slotData.api_type[3]}.png\" title=\"#{slotData.api_name}\"></img></div></li>"
+            else
+              cur = '<li><div class="\"mg-ico-container\"><img src="./assets/images/slotitem/0.png" title="？？？"></img></div></li>'
+          html += cur
+        html += '</ul>'
+        $("#ship-#{deck.api_id}#{i + 1}-equip").html html
       else
         $("#ship-#{deck.api_id}#{i + 1}-type").text ''
         $("#ship-#{deck.api_id}#{i + 1}-exp").text ''
@@ -333,6 +346,7 @@ exports.refreshDecks = ->
         $("#ship-#{deck.api_id}#{i + 1}-name").text ''
         $("#ship-#{deck.api_id}#{i + 1}-lv").text ''
         $("#ship-#{deck.api_id}#{i + 1}-hpline").html ''
+        $("#ship-#{deck.api_id}#{i + 1}-equip").html ''
     $("#deck-#{deck.api_id}-info").text "总计Lv. #{totalLv}"
 
 exports.refreshNdocks = ->

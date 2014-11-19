@@ -32,7 +32,21 @@
     </div>
     <div id="sections" class="am-g">
       <div id="sec-main" class="mg-section" style="display: block;">
-        <div id="state-panel" class="am-panel am-panel-primary" style="display: block;">
+        <div id="poi-panel" class="am-panel am-panel-secondary">
+          <div id="poi-panel-title" class="am-panel-hd">Poi</div>
+          <div id="poi-panel-content" class="am-panel-bd mg-logo-container" style="padding: 0px; height: 623px;">
+            <div>
+              <div data-am-scrollspy="{animation: 'slide-right', delay: 300}">
+                <img src="./assets/images/poi.png">
+              </div>
+              <div class="mg-btn-container">
+                <a href="#" class="am-btn am-btn-primary am-btn-lg" role="button" style="margin: 0px 0px 20px 20px;" data-am-scrollspy="{animation: 'scale-up', delay: 700}">查看帮助</a>
+                <a href="#" class="am-btn am-btn-success am-btn-lg" role="button" style="margin: 0px 0px 20px 20px;" data-am-scrollspy="{animation: 'slide-left', delay: 1000}">提交建议</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="state-panel" class="am-panel am-panel-primary" style="display: none;">
           <div id="state-panel-title" class="am-panel-hd">运行状态</div>
           <div id="state-panel-content" class="am-panel-bd">没有检测到流量</div>
         </div>
@@ -45,12 +59,12 @@
             </ul>
             <ul class="sm-block-grid-4">
               <li id="material-1"></li>
-              <li id="material-2"></li>
               <li id="material-3"></li>
-              <li id="material-4"></li>
               <li id="material-5"></li>
-              <li id="material-6"></li>
               <li id="material-7"></li>
+              <li id="material-2"></li>
+              <li id="material-4"></li>
+              <li id="material-6"></li>
               <li id="material-8"></li>
             </ul>
           </div>
@@ -58,7 +72,7 @@
         <div id="mission-panel" class="am-panel am-panel-warning mg-panel-sm" style="display: none;">
           <div id="mission-panel-title" class="am-panel-hd">远征</div>
           <div id="mission-panel-content" class="am-panel-bd mg-clear-padding">
-            <table class="am-table am-table-striped am-table-hover mg-vertical-center mg-clear-margin mg-font-sm">
+            <table class="am-table am-table-striped  mg-vertical-center mg-clear-margin mg-font-sm">
               <tbody>
               <tr class="mg-table-long">
                 <td id="mission-name-1"></td>
@@ -83,7 +97,7 @@
         <div id="ndocks-panel" class="am-panel am-panel-success mg-panel-sm mg-panel-mid" style="display: none;">
           <div id="ndocks-panel-title" class="am-panel-hd">入渠</div>
           <div id="ndocks-panel-content" class="am-panel-bd mg-clear-padding">
-            <table class="am-table am-table-striped am-table-hover mg-vertical-center mg-clear-margin mg-font-sm">
+            <table class="am-table am-table-striped  mg-vertical-center mg-clear-margin mg-font-sm">
               <tbody>
               <tr class="mg-table-long">
                 <td id="ndock-name-1"></td>
@@ -108,7 +122,7 @@
         <div id="kdocks-panel" class="am-panel am-panel-danger mg-panel-sm" style="display: none;">
           <div id="kdocks-panel-title" class="am-panel-hd">建造</div>
           <div id="kdocks-panel-content" class="am-panel-bd mg-clear-padding">
-            <table class="am-table am-table-striped am-table-hover mg-vertical-center mg-clear-margin mg-font-sm">
+            <table class="am-table am-table-striped  mg-vertical-center mg-clear-margin mg-font-sm">
               <tbody>
               <tr class="mg-table-long">
                 <td id="kdock-name-1"></td>
@@ -143,13 +157,13 @@
             <li class="mg-pagination-center"><span id="deckname-1">第1舰队</span></li>
             <li class="am-pagination-next"><a href="#" onclick="showDeck(2);">&raquo;</a></li>
           </ul>
-          <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
+          <table class="am-table am-table-bd am-table-bdrs am-table-striped mg-vertical-center">
             <tbody>
             <tr class="mg-ship-short">
-              <td id="ship-11-type"></td>
-              <td id="ship-11-exp"></td>
-              <td id="ship-11-charge"></td>
-              <td id="ship-11-cond"></td>
+              <td id="ship-11-type" width="25%"></td>
+              <td id="ship-11-exp" width="20%"></td>
+              <td id="ship-11-charge" width="25%"></td>
+              <td id="ship-11-cond" width="30%"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-11-name"></td>
@@ -228,13 +242,13 @@
             <li class="mg-pagination-center"><span id="deckname-2">第2舰队</span></li>
             <li class="am-pagination-next"><a href="#" onclick="showDeck(3);">&raquo;</a></li>
           </ul>
-          <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
+          <table class="am-table am-table-bd am-table-bdrs am-table-striped mg-vertical-center">
             <tbody>
             <tr class="mg-ship-short">
-              <td id="ship-21-type"></td>
-              <td id="ship-21-exp"></td>
-              <td id="ship-21-charge"></td>
-              <td id="ship-21-cond"></td>
+              <td id="ship-21-type" width="25%"></td>
+              <td id="ship-21-exp" width="20%"></td>
+              <td id="ship-21-charge" width="25%"></td>
+              <td id="ship-21-cond" width="30%"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-21-name"></td>
@@ -313,13 +327,13 @@
             <li class="mg-pagination-center"><span id="deckname-3">第3舰队</span></li>
             <li class="am-pagination-next"><a href="#" onclick="showDeck(4);">&raquo;</a></li>
           </ul>
-          <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
+          <table class="am-table am-table-bd am-table-bdrs am-table-striped mg-vertical-center">
             <tbody>
             <tr class="mg-ship-short">
-              <td id="ship-31-type"></td>
-              <td id="ship-31-exp"></td>
-              <td id="ship-31-charge"></td>
-              <td id="ship-31-cond"></td>
+              <td id="ship-31-type" width="25%"></td>
+              <td id="ship-31-exp" width="20%"></td>
+              <td id="ship-31-charge" width="25%"></td>
+              <td id="ship-31-cond" width="30%"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-31-name"></td>
@@ -398,13 +412,13 @@
             <li class="mg-pagination-center"><span id="deckname-4">第4舰队</span></li>
             <li class="am-pagination-next am-disabled"><a href="#">&raquo;</a></li>
           </ul>
-          <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
+          <table class="am-table am-table-bd am-table-bdrs am-table-striped mg-vertical-center">
             <tbody>
             <tr class="mg-ship-short">
-              <td id="ship-41-type"></td>
-              <td id="ship-41-exp"></td>
-              <td id="ship-41-charge"></td>
-              <td id="ship-41-cond"></td>
+              <td id="ship-41-type" width="25%"></td>
+              <td id="ship-41-exp" width="20%"></td>
+              <td id="ship-41-charge" width="25%"></td>
+              <td id="ship-41-cond" width="30%"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-41-name"></td>
@@ -482,7 +496,7 @@
         <div id="kdocks" class="am-panel am-panel-danger"style="display: block;">
           <div id="kdocks-title" class="am-panel-hd">建造</div>
           <div id="kdocks-content" class="am-panel-bd mg-clear-padding">
-            <table class="mg-clear-margin am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
+            <table class="mg-clear-margin am-table am-table-bd am-table-bdrs am-table-striped  mg-vertical-center">
               <tbody>
               <tr class="mg-kdocks-long">
                 <td id="kdock-1-name"></td>
@@ -512,7 +526,7 @@
         <div id="createitem" class="am-panel am-panel-warning" style="display: block;">
           <div id="createitem-title" class="am-panel-hd">开发</div>
           <div id="createitem-content" class="am-panel-bd mg-clear-padding">
-            <table class="mg-clear-margin am-table am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
+            <table class="mg-clear-margin am-table am-table-bdrs am-table-striped  mg-vertical-center">
               <tbody>
                 <tr class="mg-table-long">
                   <td id="createitem-name" class="mg-text-center" width="90%"></td>

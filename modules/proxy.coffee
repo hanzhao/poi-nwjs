@@ -14,8 +14,8 @@ storage = require('./storage')
 exports.createShadowsocksServer = ->
   return unless config.proxy.useShadowsocks
   local.createServer config.proxy.shadowsocks.serverIp, config.proxy.shadowsocks.serverPort, config.proxy.shadowsocks.localPort, config.proxy.shadowsocks.password, config.proxy.shadowsocks.method, config.proxy.shadowsocks.timeout, '127.0.0.1'
-  if config.proxy.shadowsocks.serverIp == '106.186.30.188'
-    ui.showModal '注意', '默认的代理设置仅供测试和日常使用，不保证实际使用体验，请尽量使用其他专业VPN！'
+  # if config.proxy.shadowsocks.serverIp == '106.186.30.188'
+  #   ui.showModal '注意', '默认的代理设置仅供测试和日常使用，不保证实际使用体验，请尽量使用其他专业VPN！'
   console.log "Shadowsocks listening at 127.0.0.1:#{config.proxy.shadowsocks.localPort}"
 
 exports.createServer = ->

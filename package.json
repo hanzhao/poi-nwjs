@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "main": "index.html",
   "window": {
+    "icon": "icon.png",
     "show": false,
     "toolbar": false,
     "resizable": false,
