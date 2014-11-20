@@ -464,7 +464,7 @@ exports.refreshKdocks = ->
         $("#kdock-#{kdock.api_id}-name").text ships[kdock.api_created_ship_id].api_name
         $("#kdock-name-#{kdock.api_id}").text ships[kdock.api_created_ship_id].api_name
         kdockTimer[kdock.api_id] = 0
-        materialStr = "#{getMaterialImgTag(1)} #{kdock.api_item1} #{getMaterialImgTag(2)} #{kdock.api_item2} #{getMaterialImgTag(3)} #{kdock.api_item3} #{getMaterialImgTag(4)} #{kdock.api_item4} #{getMaterialImgTag(5)} #{kdock.api_item5}"
+        materialStr = "#{getMaterialImgTag(1)} #{kdock.api_item1} #{getMaterialImgTag(2)} #{kdock.api_item2} #{getMaterialImgTag(3)} #{kdock.api_item3} #{getMaterialImgTag(4)} #{kdock.api_item4} #{getMaterialImgTag(7)} #{kdock.api_item5}"
         $("#kdock-#{kdock.api_id}-material").html materialStr
 
 exports.refreshCreateitem = ->

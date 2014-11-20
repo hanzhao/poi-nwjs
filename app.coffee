@@ -43,7 +43,7 @@ quit = new gui.MenuItem
     win.close true
 menu.append show
 menu.append hide
-menu.append debug
+# menu.append debug
 menu.append quit
 tray.menu = menu
 window.tray = tray
