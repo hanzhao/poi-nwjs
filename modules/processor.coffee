@@ -60,6 +60,9 @@ exports.processData = (req, data) ->
     when '/api_req_kousyou/getship'
       ui.api_req_kousyou_getship data.api_data
       ui.refreshKdocks()
+    when '/api_req_kaisou/slotset'
+      ui.api_req_kaisou_slotset req.postData, data.api_data
+      ui.refreshDecks()
     when '/api_req_mission/start'
       ui.api_req_mission_start req.postData, data.api_data
       ui.refreshDecks()

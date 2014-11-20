@@ -9,7 +9,7 @@ exports.loadStorageFile = (req, res) ->
   parsed = url.parse req.url
   filePath = "#{storagePath}#{parsed.pathname}"
   return false unless fs.existsSync(parsed.pathname) && querystring.parse(parsed.query).VERSION == database.getItem(filePath)
-  console.log "Hit Storage! #{filePath}"
+  util.log "读取游戏缓存 #{filePath}"
   data = fs.readFileSync filePath
   res.writeHead 200,
     'Content-Type': mime.lookup file
@@ -21,7 +21,7 @@ exports.loadStorageFile = (req, res) ->
 exports.saveStorageFile = (req, data) ->
   parsed = url.parse req.url
   filePath = "#{storagePath}#{parsed.pathname}"
-  console.log "Save Storage! #{filePath}"
+  util.log "保存游戏缓存 #{filePath}"
   util.guaranteeFilePath filePath
   fs.writeFileSync filePath, data
   database.setItem filePath, querystring.parse(parsed.query).VERSION

@@ -139,7 +139,7 @@ exports.turnOn = ->
     $('#mission-panel').fadeIn()
     $('#ndocks-panel').fadeIn()
     $('#kdocks-panel').fadeIn()
-    $('#anticat-panel').fadeIn()
+    $('#log-panel').fadeIn()
     setInterval timer, 1000
 
 exports.turnOff = ->
@@ -151,11 +151,17 @@ exports.turnOff = ->
     $('#mission-panel').hide()
     $('#ndocks-panel').hide()
     $('#kdocks-panel').hide()
-    $('#anticat-panel').hide()
+    $('#log-panel').hide()
     $('#poi-panel').fadeIn()
 
 exports.addAntiCatCounter = ->
   $('#anticat-panel-content').text "一共抵御了#{antiCatCounter += 1}次猫神的袭击……"
+
+getMaterialImgTag = (id) ->
+  return "<img src=\"./assets/images/material/#{id}.png\" title=\"#{materialsName[id]}\" style=\"height: 30px; margin-right: 1px;\">"
+
+getMaterialImgTag2 = (id) ->
+  return "<img src=\"./assets/images/material/#{id}.png\" title=\"#{materialsName[id]}\" style=\"height: 30px; margin-right: 20px;\">"
 
 ################################################################################
 
@@ -185,7 +191,7 @@ exports.api_start2 = api_start2 = (data) ->
   missions = []
   missions[mission.api_id] = mission for mission in api_data.api_mst_mission
   util.guaranteeFilePath api_start2_realPath
-  fs.writeFile api_start2_realPath, data, (err) ->
+  fs.writeFile api_start2_realPath, JSON.stringify(data), (err) ->
     console.log err if err?
 
 exports.api_get_member_basic = (api_data) ->
@@ -230,11 +236,18 @@ exports.api_req_hokyu_charge = (api_data) ->
 
 exports.api_req_kousyou_createitem = (api_data) ->
   createItem = api_data
+  ownSlotitems[api_data.api_slot_item.api_id] = api_data.api_slot_item
 
 exports.api_req_kousyou_getship = (api_data) ->
   kdocks = []
   kdocks[kdock.api_id] = kdock for kdock in api_data.api_kdock
   ownShips[api_data.api_ship.api_id] = api_data.api_ship
+
+exports.api_req_kaisou_slotset = (postData, api_data) ->
+  shipId = parseInt postData.api_id
+  itemId = parseInt postData.api_item_id
+  idx = parseInt postData.api_slot_idx
+  ownShips[shipId].api_slot[idx] = itemId
 
 exports.api_req_mission_start = (postData, api_data) ->
   deckId = parseInt postData.api_deck_id
@@ -262,12 +275,19 @@ exports.refreshUser = ->
   $('#equip-info').text text
   for material in materials
     continue unless material
-    $("#material-#{material.api_id}").html "<img src=\"./assets/images/material/#{material.api_id}.png\" style=\"height: 30px; margin-right: 20px; margin-top: 10px;\">#{material.api_value}"
+    $("#material-#{material.api_id}").html "#{getMaterialImgTag2 material.api_id} #{material.api_value}"
 
 exports.refreshDecks = ->
   for deck in decks
     continue unless deck?
+    # Level
     totalLv = 0
+    # Ship
+    totalShip = 0
+    # Saku
+    totalSaku = 0
+    # Tyku
+    totalTyku = 0
     # Deckname
     $("#deckname-#{deck.api_id}").text deck.api_name
     $("#mission-name-#{deck.api_id}").text deck.api_name
@@ -282,8 +302,12 @@ exports.refreshDecks = ->
     for shipId, i in deck.api_ship
       if shipId != -1
         ship = ownShips[shipId]
+        basicSaku = 0
+        extraSaku = 0
+        extraTyku = 0
+        if ship.api_sakuteki[0]
+          basicSaku += ship.api_sakuteki[0]
         shipData = ships[ship.api_ship_id]
-        totalLv += ship.api_lv
         $("#ship-#{deck.api_id}#{i + 1}-type").text stypes[shipData.api_stype].api_name
         $("#ship-#{deck.api_id}#{i + 1}-exp").text "Next: #{ship.api_exp[1]}"
 
@@ -331,12 +355,24 @@ exports.refreshDecks = ->
             slot = ownSlotitems[slotId]
             if slot?
               slotData = slotitems[slot.api_slotitem_id]
+              if slotData.api_type[3] == 12 || slotData.api_type[3] == 13
+                extraSaku += slotData.api_saku * 2
+              else if slotData.api_type[3] >= 9 && slotData.api_type[3] <= 11
+                extraSaku += slotData.api_saku
+              else if slotData.api_saku
+                basicSaku += slotData.api_saku
+              if ship.api_onslot[slotPos] > 0 && slotData.api_type[3] >= 6 && slotData.api_type[3] <= 9 && slotData.api_tyku > 0
+                extraTyku += slotData.api_tyku * Math.floor(Math.sqrt(ship.api_onslot[slotPos]))
               cur = "<li><div class=\"mg-ico-container\"><img src=\"./assets/images/slotitem/#{slotData.api_type[3]}.png\" title=\"#{slotData.api_name}\"></img></div></li>"
             else
               cur = '<li><div class="\"mg-ico-container\"><img src="./assets/images/slotitem/0.png" title="？？？"></img></div></li>'
           html += cur
         html += '</ul>'
         $("#ship-#{deck.api_id}#{i + 1}-equip").html html
+        totalShip += 1
+        totalLv += ship.api_lv
+        totalSaku += Math.floor(Math.sqrt(basicSaku)) + extraSaku
+        totalTyku += extraTyku
       else
         $("#ship-#{deck.api_id}#{i + 1}-type").text ''
         $("#ship-#{deck.api_id}#{i + 1}-exp").text ''
@@ -348,52 +384,88 @@ exports.refreshDecks = ->
         $("#ship-#{deck.api_id}#{i + 1}-lv").text ''
         $("#ship-#{deck.api_id}#{i + 1}-hpline").html ''
         $("#ship-#{deck.api_id}#{i + 1}-equip").html ''
-    $("#deck-#{deck.api_id}-info").text "总计Lv. #{totalLv}"
+    html = "<span class=\"mg-text-split\">总计Lv. #{totalLv}</span>"
+    html += "<span class=\"mg-text-split\">平均Lv. #{(totalLv / totalShip).toFixed(0)}</span>"
+    html += "<span class=\"mg-text-split\">制空: #{totalTyku}</span>"
+    html += "<span class=\"mg-text-split\">索敌: #{totalSaku}</span>"
+    $("#deck-#{deck.api_id}-info").html html
 
 exports.refreshNdocks = ->
   for ndock in ndocks
     continue unless ndock
     switch ndock.api_state
       when -1
-        $("#ndock-name-#{ndock.api_id}").text '未解锁'
+        $("#ndock-name-#{ndock.api_id}").css 'background-color', 'rgba(221, 81, 76, 0.05)'
+        $("#ndock-timer-#{ndock.api_id}").css 'background-color', 'rgba(221, 81, 76, 0.05)'
       when 0
-        $("#ndock-name-#{ndock.api_id}").text '未使用'
+        $("#ndock-name-#{ndock.api_id}").attr 'style', ''
+        $("#ndock-timer-#{ndock.api_id}").attr 'style', ''
+        $("#ndock-name-#{ndock.api_id}").text ''
         ndockTimer[ndock.api_id] = -1
       when 1
         ship = ownShips[ndock.api_ship_id]
+        $("#ndock-name-#{ndock.api_id}").attr 'style', ''
+        $("#ndock-timer-#{ndock.api_id}").attr 'style', ''
         $("#ndock-name-#{ndock.api_id}").text ships[ship.api_ship_id].api_name
         ndockTimer[ndock.api_id] = Math.floor((ndock.api_complete_time - new Date()) / 1000)
 
 exports.refreshKdocks = ->
+  clearKdock = (id) ->
+    $("#kdock-name-#{id}").attr 'style', ''
+    $("#kdock-timer-#{id}").attr 'style', ''
+    $("#kdock-#{id}-name").attr 'style', ''
+    $("#kdock-#{id}-remaining").attr 'style', ''
+    $("#kdock-#{id}-material").attr 'style', ''
+    $("#kdock-#{id}-name").text ''
+    $("#kdock-name-#{id}").text ''
+    $("#kdock-#{id}-material").html ''
   for kdock in kdocks
     continue unless kdock
     switch kdock.api_state
       when -1
-        $("#kdock-#{kdock.api_id}-name").text '未解锁'
-        $("#kdock-name-#{kdock.api_id}").text '未解锁'
+        clearKdock kdock.api_id
+        # Main page
+        $("#kdock-name-#{kdock.api_id}").css 'background-color', 'rgba(221, 81, 76, 0.05)'
+        $("#kdock-timer-#{kdock.api_id}").css 'background-color', 'rgba(221, 81, 76, 0.05)'
+        # Factory page
+        $("#kdock-#{kdock.api_id}-name").css 'background-color', 'rgba(221, 81, 76, 0.05)'
+        $("#kdock-#{kdock.api_id}-remaining").css 'background-color', 'rgba(221, 81, 76, 0.05)'
+        $("#kdock-#{kdock.api_id}-material").css 'background-color', 'rgba(221, 81, 76, 0.05)'
       when 0
-        $("#kdock-#{kdock.api_id}-name").text '未使用'
-        $("#kdock-name-#{kdock.api_id}").text '未使用'
-        $("#kdock-#{kdock.api_id}-material").text ''
+        clearKdock kdock.api_id
         kdockTimer[kdock.api_id] = -1
       when 1 #大建中
+        clearKdock kdock.api_id
+        $("#kdock-name-#{kdock.api_id}").css 'color', '#DD514C'
+        $("#kdock-timer-#{kdock.api_id}").css 'color', '#DD514C'
+        $("#kdock-#{kdock.api_id}-name").css 'color', '#DD514C'
+        $("#kdock-#{kdock.api_id}-remaining").css 'color', '#DD514C'
+        $("#kdock-#{kdock.api_id}-material").css 'color', '#DD514C'
         $("#kdock-#{kdock.api_id}-name").text ships[kdock.api_created_ship_id].api_name
         $("#kdock-name-#{kdock.api_id}").text ships[kdock.api_created_ship_id].api_name
         kdockTimer[kdock.api_id] = Math.floor((kdock.api_complete_time - new Date()) / 1000)
-        materialStr = "油 #{kdock.api_item1} 钢 #{kdock.api_item3} 弹 #{kdock.api_item2} 铝 #{kdock.api_item4} 资 #{kdock.api_item5}"
-        $("#kdock-#{kdock.api_id}-material").text materialStr
+        materialStr = "#{getMaterialImgTag(1)} #{kdock.api_item1} #{getMaterialImgTag(2)} #{kdock.api_item2} #{getMaterialImgTag(3)} #{kdock.api_item3} #{getMaterialImgTag(4)} #{kdock.api_item4} #{getMaterialImgTag(7)} #{kdock.api_item5}"
+        $("#kdock-#{kdock.api_id}-material").html materialStr
       when 2 #普建中
+        clearKdock kdock.api_id
+        # 大建
+        if kdock.api_item1 > 999 || kdock.api_item2 > 999 || kdock.api_item3 > 999 || kdock.api_item4 > 999
+          $("#kdock-name-#{kdock.api_id}").css 'color', '#DD514C'
+          $("#kdock-timer-#{kdock.api_id}").css 'color', '#DD514C'
+          $("#kdock-#{kdock.api_id}-name").css 'color', '#DD514C'
+          $("#kdock-#{kdock.api_id}-remaining").css 'color', '#DD514C'
+          $("#kdock-#{kdock.api_id}-material").css 'color', '#DD514C'
         $("#kdock-#{kdock.api_id}-name").text ships[kdock.api_created_ship_id].api_name
         $("#kdock-name-#{kdock.api_id}").text ships[kdock.api_created_ship_id].api_name
         kdockTimer[kdock.api_id] = Math.floor((kdock.api_complete_time - new Date()) / 1000)
-        materialStr = "油 #{kdock.api_item1} 钢 #{kdock.api_item3} 弹 #{kdock.api_item2} 铝 #{kdock.api_item4} 资 #{kdock.api_item5}"
-        $("#kdock-#{kdock.api_id}-material").text materialStr
+        materialStr = "#{getMaterialImgTag(1)} #{kdock.api_item1} #{getMaterialImgTag(2)} #{kdock.api_item2} #{getMaterialImgTag(3)} #{kdock.api_item3} #{getMaterialImgTag(4)} #{kdock.api_item4} #{getMaterialImgTag(7)} #{kdock.api_item5}"
+        $("#kdock-#{kdock.api_id}-material").html materialStr
       when 3
         $("#kdock-#{kdock.api_id}-name").text ships[kdock.api_created_ship_id].api_name
         $("#kdock-name-#{kdock.api_id}").text ships[kdock.api_created_ship_id].api_name
         kdockTimer[kdock.api_id] = 0
-        materialStr = "油 #{kdock.api_item1} 钢 #{kdock.api_item3} 弹 #{kdock.api_item2} 铝 #{kdock.api_item4} 资 #{kdock.api_item5}"
-        $("#kdock-#{kdock.api_id}-material").text materialStr
+        materialStr = "#{getMaterialImgTag(1)} #{kdock.api_item1} #{getMaterialImgTag(2)} #{kdock.api_item2} #{getMaterialImgTag(3)} #{kdock.api_item3} #{getMaterialImgTag(4)} #{kdock.api_item4} #{getMaterialImgTag(5)} #{kdock.api_item5}"
+        $("#kdock-#{kdock.api_id}-material").html materialStr
 
 exports.refreshCreateitem = ->
   switch createItem.api_create_flag
@@ -419,10 +491,10 @@ exports.refreshExperience = ->
   html = '<option value=",,">下拉列表选择舰娘</option>'
   for ship in list
     nextLv = 150
-    if ships[ship.api_ship_id].api_afterlv != 0
-      nextLv = Math.min nextLv, ships[ship.api_ship_id].api_afterlv
     if ship.api_lv < 99
       nextLv = 99
+    if ships[ship.api_ship_id].api_afterlv != 0
+      nextLv = Math.min nextLv, ships[ship.api_ship_id].api_afterlv
     html += "<option value=\"#{ship.api_lv},#{ship.api_exp[1]},#{nextLv}\">Lv. #{ship.api_lv} - #{ships[ship.api_ship_id].api_name}</option>"
   $('#exp-ship').html html
 

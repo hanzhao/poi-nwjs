@@ -32,23 +32,23 @@
     </div>
     <div id="sections" class="am-g">
       <div id="sec-main" class="mg-section" style="display: block;">
-        <div id="poi-panel" class="am-panel am-panel-secondary">
-          <div id="poi-panel-title" class="am-panel-hd">Poi</div>
+        <div id="poi-panel" class="am-panel am-panel-secondary" style="display: block;">
+          <div id="poi-panel-title" class="am-panel-hd">没有检测到游戏流量</div>
           <div id="poi-panel-content" class="am-panel-bd mg-logo-container" style="padding: 0px; height: 623px;">
             <div>
               <div data-am-scrollspy="{animation: 'slide-right', delay: 300}">
                 <img src="./assets/images/poi.png">
               </div>
               <div class="mg-btn-container">
-                <a href="#" class="am-btn am-btn-primary am-btn-lg" role="button" style="margin: 0px 0px 20px 20px;" data-am-scrollspy="{animation: 'scale-up', delay: 700}">查看帮助</a>
-                <a href="#" class="am-btn am-btn-success am-btn-lg" role="button" style="margin: 0px 0px 20px 20px;" data-am-scrollspy="{animation: 'slide-left', delay: 1000}">提交建议</a>
+                <a href="#" id="open-guide" class="am-btn am-btn-primary am-btn-lg" role="button" style="margin: 0px 0px 20px 20px;" data-am-scrollspy="{animation: 'scale-up', delay: 700}">查看帮助</a>
+                <a href="#" id="open-advice" class="am-btn am-btn-success am-btn-lg" role="button" style="margin: 0px 0px 20px 20px;" data-am-scrollspy="{animation: 'slide-left', delay: 1000}">提交建议</a>
               </div>
             </div>
           </div>
         </div>
         <div id="state-panel" class="am-panel am-panel-primary" style="display: none;">
           <div id="state-panel-title" class="am-panel-hd">运行状态</div>
-          <div id="state-panel-content" class="am-panel-bd">没有检测到流量</div>
+          <div id="state-panel-content" class="am-panel-bd">没有检测到流量，请参考<a id="view-guide" href="#">使用说明</a>进行配置。</div>
         </div>
         <div id="user-panel" class="am-panel am-panel-primary" style="display: none;">
           <div id="user-panel-title" class="am-panel-hd">提督</div>
@@ -145,9 +145,13 @@
           </div>
         </div>
         <div class="clear"></div>
-        <div id="anticat-panel" class="am-panel am-panel-danger" style="display: none;">
-          <div id="anticat-panel-title" class="am-panel-hd">防猫计数</div>
-          <div id="anticat-panel-content" class="am-panel-bd">一共抵御了0次猫神的袭击……</div>
+        <div id="log-panel" class="am-panel am-panel-secondary" style="display: none;">
+          <div id="log-panel-title" class="am-panel-hd">运行日志</div>
+          <div id="log-panel-contents" class="am-panel-bd">
+            <div id="anticat-panel-content">一共抵御了0次猫神的袭击……</div>
+            <div>连接信息: </div>
+            <div id="log-panel-content" style="height: 58px;">空</div>
+          </div>
         </div>
       </div>
       <div id="sec-ship" class="mg-section" style="display: none;">
@@ -499,9 +503,9 @@
             <table class="mg-clear-margin am-table am-table-bd am-table-bdrs am-table-striped  mg-vertical-center">
               <tbody>
               <tr class="mg-kdocks-long">
-                <td id="kdock-1-name"></td>
-                <td id="kdock-1-material"></td>
-                <td id="kdock-1-remaining"></td>
+                <td id="kdock-1-name" width="20%"></td>
+                <td id="kdock-1-material" width="65%"></td>
+                <td id="kdock-1-remaining" width="15%"></td>
               </tr>
               <tr class="mg-kdocks-long">
                 <td id="kdock-2-name"></td>
@@ -615,7 +619,7 @@
       </div>
       <div id="sec-settings" class="mg-section" style="display: none;">
         <div class="am-panel-group" id="panel-group-settings">
-          <div class="am-panel am-panel-primary">
+          <div class="am-panel am-panel-warning">
             <div class="am-panel-hd" data-am-collapse="{parent: '#panel-group-settings', target: '#panel-proxy'}">
               <span class="am-panel-title">代理设置</span>
             </div>

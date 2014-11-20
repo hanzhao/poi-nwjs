@@ -28,3 +28,7 @@ exports.copyFile = copyFile = (srcFile, destFile) ->
 
 exports.isCacheUrl = (url) ->
   return url.indexOf('/kcs/') != -1 && url.indexOf('Core.swf') == -1 && url.indexOf('mainD2.swf') == -1
+
+exports.log = (text) ->
+  console.log text
+  global.$('#log-panel-content').text text

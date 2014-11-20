@@ -16,7 +16,7 @@ exports.createShadowsocksServer = ->
   local.createServer config.proxy.shadowsocks.serverIp, config.proxy.shadowsocks.serverPort, config.proxy.shadowsocks.localPort, config.proxy.shadowsocks.password, config.proxy.shadowsocks.method, config.proxy.shadowsocks.timeout, '127.0.0.1'
   # if config.proxy.shadowsocks.serverIp == '106.186.30.188'
   #   ui.showModal '注意', '默认的代理设置仅供测试和日常使用，不保证实际使用体验，请尽量使用其他专业VPN！'
-  console.log "Shadowsocks listening at 127.0.0.1:#{config.proxy.shadowsocks.localPort}"
+  util.log "Shadowsocks @ 127.0.0.1:#{config.proxy.shadowsocks.localPort}"
 
 exports.createServer = ->
   server = http.createServer (req, res) ->
@@ -59,12 +59,12 @@ exports.createServer = ->
             storage.saveStorageFile req, data if config.cache.useStorage && req.method == 'GET' && result.statusCode == 200 && util.isCacheUrl req.url
             # cache.saveCacheFile req, data if req.url.indexOf('/kcs/') != -1
   server.listen config.poi.listenPort
-  console.log "Proxy listening at 127.0.0.1:#{config.poi.listenPort}"
+  util.log "Poi Proxy @ 127.0.0.1:#{config.poi.listenPort}"
 
 getOptions = (req, parsed) ->
   options = null
   if config.proxy.useShadowsocks
-    console.log "Get Request #{req.url} using Shadowsocks"
+    util.log "正在使用Shadowsocks代理访问 #{req.url}"
     socksConfig =
       proxyHost:  '127.0.0.1'
       proxyPort:  config.proxy.shadowsocks.localPort
@@ -78,7 +78,7 @@ getOptions = (req, parsed) ->
       headers:    req.headers
       agent:      new socks.HttpAgent(socksConfig)
   else if config.proxy.useSocksProxy
-    console.log "Get Request #{req.url} using Socks Proxy"
+    util.log "正在使用Socks5代理访问 #{req.url}"
     socksConfig =
       proxyHost:  config.proxy.socksProxy.socksProxyIp
       proxyPort:  config.proxy.socksProxy.socksProxyPort
@@ -92,7 +92,7 @@ getOptions = (req, parsed) ->
       headers:    req.headers
       agent:      new socks.HttpAgent(socksConfig)
   else if config.proxy.useHttpProxy
-    console.log "Get Request #{req.url} using HTTP Proxy"
+    util.log "正在使用HTTP代理访问 #{req.url}"
     options =
       host:     config.proxy.httpProxy.httpProxyIP
       port:     config.proxy.httpProxy.httpProxyPort
@@ -100,7 +100,7 @@ getOptions = (req, parsed) ->
       path:     req.url
       headers:  req.headers
   else
-    console.log "Get Request #{req.url}"
+    util.log "正在使用全局默认连接方式访问 #{req.url}"
     options =
       host: parsed.host || '127.0.0.1'
       hostname: parsed.hostname || '127.0.0.1'
@@ -113,7 +113,7 @@ getOptions = (req, parsed) ->
 sendHttpRequest = (options, counter, callback) ->
   request = http.request options, (result) ->
     if (options.path.indexOf('/kcsapi/') != -1 || options.path.indexOf('/kcs/') != -1) && (result.statusCode == 500 || result.statusCode == 502 || result.statusCode == 503)
-      console.log "Code #{result.statusCode}, retried for the #{counter} time."
+      util.log "HTTP #{result.statusCode} 正在进行第#{counter}次重试"
       if counter != config.antiCat.retryTime
         ui.addAntiCatCounter()
         setTimeout ->
@@ -127,7 +127,7 @@ sendHttpRequest = (options, counter, callback) ->
     request.write options.postData
   request.on 'error', (e) ->
     return unless options.path.indexOf('/kcsapi/') != -1 || options.path.indexOf('/kcs/') != -1
-    console.log "#{e}, retried for the #{counter} time."
+    util.log "错误 #{e} 正在进行第#{counter}次重试"
     if counter != config.antiCat.retryTime
       ui.addAntiCatCounter()
       setTimeout ->

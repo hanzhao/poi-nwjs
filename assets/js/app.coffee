@@ -65,6 +65,12 @@ $ ->
     $('#exp-lv').val val[0]
     $('#exp-next').val val[1]
     $('#exp-goal').val val[2]
+  $('#open-guide').click ->
+    gui.Shell.openExternal 'http://poi.0u0.moe/guide'
+  $('#open-advice').click ->
+    gui.Shell.openExternal 'http://poi.0u0.moe/advice'
+  $('#view-guide').click ->
+    gui.Shell.openExternal 'http://poi.0u0.moe/guide'
   $('#exp-submit').click ->
     require('./modules/ui').calcExperience()
   $('#proxy-tabs').find('a').on 'opened:tabs:amui', (e) ->

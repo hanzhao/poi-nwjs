@@ -73,6 +73,7 @@ pacString = [
   '  "www.google.cn":      true,',
   '  "mail.google.com":    true,',
   '  "image.google.com":   true,',
+  '  "ajax.googleapis.com":true,',
   '  "twitter.com":        true,',
   '  "www.twitter.com":    true',
   '};',
