@@ -236,7 +236,8 @@ exports.api_req_hokyu_charge = (api_data) ->
 
 exports.api_req_kousyou_createitem = (api_data) ->
   createItem = api_data
-  ownSlotitems[api_data.api_slot_item.api_id] = api_data.api_slot_item
+  if api_data.api_create_flag == 1
+    ownSlotitems[api_data.api_slot_item.api_id] = api_data.api_slot_item
 
 exports.api_req_kousyou_getship = (api_data) ->
   kdocks = []
