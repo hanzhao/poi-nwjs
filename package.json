@@ -1,6 +1,6 @@
 {
   "name": "poi",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "index.html",
   "window": {
     "icon": "icon.png",
@@ -15,7 +15,8 @@
     "coffee-script": "^1.8.0",
     "shadowsocks": "^1.5.3",
     "socksv5": "^0.0.4",
-    "ipv6": "^3.1.1"
+    "ipv6": "^3.1.1",
+    "iconv-lite": "^0.4.5"
   },
   "chromium-args": "--enable-webgl --ignore-gpu-blacklist"
 }

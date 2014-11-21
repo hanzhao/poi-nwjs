@@ -52,12 +52,22 @@ exports.createServer = ->
             data = Buffer.concat buffers
             result.removeAllListeners 'data'
             result.removeAllListeners 'end'
-            res.writeHead result.statusCode, result.headers
-            res.write data
-            res.end()
-            processor.processData req, data if req.url.indexOf('/kcsapi') != -1
-            storage.saveStorageFile req, data if config.cache.useStorage && req.method == 'GET' && result.statusCode == 200 && util.isCacheUrl req.url
-            # cache.saveCacheFile req, data if req.url.indexOf('/kcs/') != -1
+            if req.url == "http://www.dmm.com/netgame/social/-/gadgets/=/app_id=854854/"
+              util.modifyPage data, result.headers['content-encoding'].indexOf('gzip') != -1, (modifyResult) ->
+                console.log result.headers['content-length']
+                console.log modifyResult.length
+                result.headers['content-length'] = modifyResult.length
+                res.writeHead result.statusCode, result.headers
+                console.log modifyResult
+                res.write modifyResult
+                res.end()
+            else
+              res.writeHead result.statusCode, result.headers
+              res.write data
+              res.end()
+              processor.processData req, data if req.url.indexOf('/kcsapi') != -1
+              storage.saveStorageFile req, data if config.cache.useStorage && req.method == 'GET' && result.statusCode == 200 && util.isCacheUrl req.url
+              # cache.saveCacheFile req, data if req.url.indexOf('/kcs/') != -1
   server.listen config.poi.listenPort
   util.log "Poi Proxy @ 127.0.0.1:#{config.poi.listenPort}"
 

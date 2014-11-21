@@ -80,6 +80,8 @@ pacString = [
   "var poiProxy = \"PROXY 127.0.0.1:#{config.poi.listenPort}\";",
   "var upstreamProxy = \"#{upstreamString}\";",
   'function FindProxyForURL(url, host) {',
+  '  if (url == "http://www.dmm.com/netgame/social/-/gadgets/=/app_id=854854/")',
+  '    return poiProxy',
   '  if (processHost[host])',
   '    return poiProxy;',
   '  if (proxyHost[host])',
