@@ -65,8 +65,11 @@ exports.createServer = ->
               res.writeHead result.statusCode, result.headers
               res.write data
               res.end()
-              processor.processData req, data if req.url.indexOf('/kcsapi') != -1
-              storage.saveStorageFile req, data if config.cache.useStorage && req.method == 'GET' && result.statusCode == 200 && util.isCacheUrl req.url
+              try
+                processor.processData req, data if req.url.indexOf('/kcsapi') != -1
+                storage.saveStorageFile req, data if config.cache.useStorage && req.method == 'GET' && result.statusCode == 200 && util.isCacheUrl req.url
+              catch err
+                util.log err
               # cache.saveCacheFile req, data if req.url.indexOf('/kcs/') != -1
   server.listen config.poi.listenPort
   util.log "Poi Proxy @ 127.0.0.1:#{config.poi.listenPort}"
