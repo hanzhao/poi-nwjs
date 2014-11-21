@@ -320,9 +320,9 @@ exports.refreshDecks = ->
         fuelChargeHtml = "<div class=\"am-progress am-progress-sm mg-progress-inline\"><div class=\"am-progress-bar #{currentState}\" style=\"width: #{fuelPercent}%\"></div></div>"
         bullPercent = ship.api_bull * 100 / shipData.api_bull_max
         currentState = 'am-progress-bar-success'
-        currentState = 'mg-progress-bar-yellow' if bullPercent < 75
-        currentState = 'am-progress-bar-warning' if bullPercent < 50
-        currentState = 'am-progress-bar-danger' if bullPercent < 25
+        currentState = 'mg-progress-bar-yellow' if bullPercent < 100
+        currentState = 'am-progress-bar-warning' if bullPercent < 75
+        currentState = 'am-progress-bar-danger' if bullPercent < 50
         bullChargeHtml = "<div class=\"am-progress am-progress-sm mg-progress-inline\"><div class=\"am-progress-bar #{currentState}\" style=\"width: #{bullPercent}%\"></div></div>"
         $("#ship-#{deck.api_id}#{i + 1}-charge").html "#{fuelChargeHtml}<div class=\"mg-progress-split\"></div>#{bullChargeHtml}<div class=\"clear\"></div>"
 

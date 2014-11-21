@@ -16,8 +16,13 @@ global.win = win = gui.Window.get()
 win.setAlwaysOnTop true
 
 # Tray
-tray = new gui.Tray
-  icon: 'icon.png'
+tray = null
+if process.platform != 'darwin'
+  tray = new gui.Tray
+    icon: 'icon.png'
+else
+  tray = new gui.Tray
+    icon: 'icon_16x16.png'
 menu = new gui.Menu()
 tray.on 'click', ->
   win.show()
