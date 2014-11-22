@@ -494,7 +494,7 @@ exports.refreshExperience = ->
     nextLv = 150
     if ship.api_lv < 99
       nextLv = 99
-    if ships[ship.api_ship_id].api_afterlv != 0
+    if ships[ship.api_ship_id].api_afterlv != 0 && ships[ship.api_ship_id].api_afterlv > ship.api_lv
       nextLv = Math.min nextLv, ships[ship.api_ship_id].api_afterlv
     html += "<option value=\"#{ship.api_lv},#{ship.api_exp[1]},#{nextLv}\">Lv. #{ship.api_lv} - #{ships[ship.api_ship_id].api_name}</option>"
   $('#exp-ship').html html
