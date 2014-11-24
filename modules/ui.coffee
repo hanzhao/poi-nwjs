@@ -363,7 +363,7 @@ exports.refreshDecks = ->
               else if slotData.api_saku
                 basicSaku += slotData.api_saku
               if ship.api_onslot[slotPos] > 0 && slotData.api_type[3] >= 6 && slotData.api_type[3] <= 9 && slotData.api_tyku > 0
-                extraTyku += slotData.api_tyku * Math.floor(Math.sqrt(ship.api_onslot[slotPos]))
+                extraTyku += Math.floor(slotData.api_tyku * (Math.sqrt(ship.api_onslot[slotPos])))
               cur = "<li><div class=\"mg-ico-container\"><img src=\"./assets/images/slotitem/#{slotData.api_type[3]}.png\" title=\"#{slotData.api_name}\"></img></div></li>"
             else
               cur = '<li><div class="\"mg-ico-container\"><img src="./assets/images/slotitem/0.png" title="？？？"></img></div></li>'
