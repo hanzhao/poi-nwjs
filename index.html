@@ -25,38 +25,54 @@
           <button type="button" id="btn-main" class="am-btn am-btn-primary">概览</button>
           <button type="button" id="btn-ship" class="am-btn am-btn-success">舰队</button>
           <button type="button" id="btn-factory" class="am-btn am-btn-danger">工厂</button>
-          <button type="button" id="btn-calc" class="am-btn am-btn-secondary">经验</button>
+          <button type="button" id="btn-calc" class="am-btn am-btn-secondary">其他</button>
           <button type="button" id="btn-settings" class="am-btn am-btn-warning">设置</button>
         <div>
       </center>
     </div>
     <div id="sections" class="am-g">
       <div id="sec-main" class="mg-section" style="display: block;">
-        <div id="state-panel" class="am-panel am-panel-primary" style="display: block;">
+        <div id="poi-panel" class="am-panel am-panel-secondary" style="display: block;">
+          <div id="poi-panel-title" class="am-panel-hd">没有检测到游戏流量</div>
+          <div id="poi-panel-content" class="am-panel-bd mg-logo-container" style="padding: 0px; height: 623px;">
+            <div>
+              <div data-am-scrollspy="{animation: 'slide-right', delay: 300}">
+                <img src="./assets/images/poi.png">
+              </div>
+              <div class="mg-btn-container">
+                <a href="#" id="open-guide" class="am-btn am-btn-primary am-btn-lg" role="button" style="margin: 0px 0px 20px 20px;" data-am-scrollspy="{animation: 'scale-up', delay: 700}">查看帮助</a>
+                <a href="#" id="open-advice" class="am-btn am-btn-success am-btn-lg" role="button" style="margin: 0px 0px 20px 20px;" data-am-scrollspy="{animation: 'slide-left', delay: 1000}">提交建议</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="state-panel" class="am-panel am-panel-primary" style="display: none;">
           <div id="state-panel-title" class="am-panel-hd">运行状态</div>
-          <div id="state-panel-content" class="am-panel-bd">没有检测到流量</div>
+          <div id="state-panel-content" class="am-panel-bd">没有检测到流量，请参考<a id="view-guide" href="#">使用说明</a>进行配置。</div>
         </div>
         <div id="user-panel" class="am-panel am-panel-primary" style="display: none;">
           <div id="user-panel-title" class="am-panel-hd">提督</div>
-          <div id="user-panel-content" class="am-panel-bd"></div>
-        </div>
-        <div id="resource-panel" class="am-panel am-panel-secondary" style="display: none;">
-          <div id="resource-panel-title" class="am-panel-hd">资源</div>
-          <div id="resource-panel-content" class="am-panel-bd" style="height: 80px;">
-            <div id="material-1" class="col-sm-3"></div>
-            <div id="material-2" class="col-sm-3"></div>
-            <div id="material-3" class="col-sm-3"></div>
-            <div id="material-4" class="col-sm-3"></div>
-            <div id="material-5" class="col-sm-3"></div>
-            <div id="material-6" class="col-sm-3"></div>
-            <div id="material-7" class="col-sm-3"></div>
-            <div id="material-8" class="col-sm-3"></div>
+          <div id="user-panel-content" class="am-panel-bd">
+            <ul class="sm-block-grid-2">
+              <li id="chara-info"></li>
+              <li id="equip-info"></li>
+            </ul>
+            <ul class="sm-block-grid-4">
+              <li id="material-1"></li>
+              <li id="material-3"></li>
+              <li id="material-5"></li>
+              <li id="material-7"></li>
+              <li id="material-2"></li>
+              <li id="material-4"></li>
+              <li id="material-6"></li>
+              <li id="material-8"></li>
+            </ul>
           </div>
         </div>
         <div id="mission-panel" class="am-panel am-panel-warning mg-panel-sm" style="display: none;">
           <div id="mission-panel-title" class="am-panel-hd">远征</div>
           <div id="mission-panel-content" class="am-panel-bd mg-clear-padding">
-            <table class="am-table am-table-striped am-table-hover mg-vertical-center mg-clear-margin mg-font-sm">
+            <table class="am-table am-table-striped  mg-vertical-center mg-clear-margin mg-font-sm">
               <tbody>
               <tr class="mg-table-long">
                 <td id="mission-name-1"></td>
@@ -81,7 +97,7 @@
         <div id="ndocks-panel" class="am-panel am-panel-success mg-panel-sm mg-panel-mid" style="display: none;">
           <div id="ndocks-panel-title" class="am-panel-hd">入渠</div>
           <div id="ndocks-panel-content" class="am-panel-bd mg-clear-padding">
-            <table class="am-table am-table-striped am-table-hover mg-vertical-center mg-clear-margin mg-font-sm">
+            <table class="am-table am-table-striped  mg-vertical-center mg-clear-margin mg-font-sm">
               <tbody>
               <tr class="mg-table-long">
                 <td id="ndock-name-1"></td>
@@ -106,7 +122,7 @@
         <div id="kdocks-panel" class="am-panel am-panel-danger mg-panel-sm" style="display: none;">
           <div id="kdocks-panel-title" class="am-panel-hd">建造</div>
           <div id="kdocks-panel-content" class="am-panel-bd mg-clear-padding">
-            <table class="am-table am-table-striped am-table-hover mg-vertical-center mg-clear-margin mg-font-sm">
+            <table class="am-table am-table-striped  mg-vertical-center mg-clear-margin mg-font-sm">
               <tbody>
               <tr class="mg-table-long">
                 <td id="kdock-name-1"></td>
@@ -129,9 +145,13 @@
           </div>
         </div>
         <div class="clear"></div>
-        <div id="anticat-panel" class="am-panel am-panel-danger" style="display: none;">
-          <div id="anticat-panel-title" class="am-panel-hd">防猫计数</div>
-          <div id="anticat-panel-content" class="am-panel-bd">一共抵御了0次猫神的袭击……</div>
+        <div id="log-panel" class="am-panel am-panel-secondary" style="display: none;">
+          <div id="log-panel-title" class="am-panel-hd">运行日志</div>
+          <div id="log-panel-contents" class="am-panel-bd">
+            <div id="anticat-panel-content">一共抵御了0次猫神的袭击……</div>
+            <div>连接信息: </div>
+            <div id="log-panel-content" style="height: 58px;">空</div>
+          </div>
         </div>
       </div>
       <div id="sec-ship" class="mg-section" style="display: none;">
@@ -141,13 +161,13 @@
             <li class="mg-pagination-center"><span id="deckname-1">第1舰队</span></li>
             <li class="am-pagination-next"><a href="#" onclick="showDeck(2);">&raquo;</a></li>
           </ul>
-          <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
+          <table class="am-table am-table-bd am-table-bdrs am-table-striped mg-vertical-center">
             <tbody>
             <tr class="mg-ship-short">
-              <td id="ship-11-type"></td>
-              <td id="ship-11-exp"></td>
-              <td id="ship-11-charge"></td>
-              <td id="ship-11-cond"></td>
+              <td id="ship-11-type" width="25%"></td>
+              <td id="ship-11-exp" width="20%"></td>
+              <td id="ship-11-charge" width="25%"></td>
+              <td id="ship-11-cond" width="30%"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-11-name"></td>
@@ -226,13 +246,13 @@
             <li class="mg-pagination-center"><span id="deckname-2">第2舰队</span></li>
             <li class="am-pagination-next"><a href="#" onclick="showDeck(3);">&raquo;</a></li>
           </ul>
-          <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
+          <table class="am-table am-table-bd am-table-bdrs am-table-striped mg-vertical-center">
             <tbody>
             <tr class="mg-ship-short">
-              <td id="ship-21-type"></td>
-              <td id="ship-21-exp"></td>
-              <td id="ship-21-charge"></td>
-              <td id="ship-21-cond"></td>
+              <td id="ship-21-type" width="25%"></td>
+              <td id="ship-21-exp" width="20%"></td>
+              <td id="ship-21-charge" width="25%"></td>
+              <td id="ship-21-cond" width="30%"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-21-name"></td>
@@ -311,13 +331,13 @@
             <li class="mg-pagination-center"><span id="deckname-3">第3舰队</span></li>
             <li class="am-pagination-next"><a href="#" onclick="showDeck(4);">&raquo;</a></li>
           </ul>
-          <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
+          <table class="am-table am-table-bd am-table-bdrs am-table-striped mg-vertical-center">
             <tbody>
             <tr class="mg-ship-short">
-              <td id="ship-31-type"></td>
-              <td id="ship-31-exp"></td>
-              <td id="ship-31-charge"></td>
-              <td id="ship-31-cond"></td>
+              <td id="ship-31-type" width="25%"></td>
+              <td id="ship-31-exp" width="20%"></td>
+              <td id="ship-31-charge" width="25%"></td>
+              <td id="ship-31-cond" width="30%"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-31-name"></td>
@@ -396,13 +416,13 @@
             <li class="mg-pagination-center"><span id="deckname-4">第4舰队</span></li>
             <li class="am-pagination-next am-disabled"><a href="#">&raquo;</a></li>
           </ul>
-          <table class="am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
+          <table class="am-table am-table-bd am-table-bdrs am-table-striped mg-vertical-center">
             <tbody>
             <tr class="mg-ship-short">
-              <td id="ship-41-type"></td>
-              <td id="ship-41-exp"></td>
-              <td id="ship-41-charge"></td>
-              <td id="ship-41-cond"></td>
+              <td id="ship-41-type" width="25%"></td>
+              <td id="ship-41-exp" width="20%"></td>
+              <td id="ship-41-charge" width="25%"></td>
+              <td id="ship-41-cond" width="30%"></td>
             </tr>
             <tr class="mg-ship-long">
               <td id="ship-41-name"></td>
@@ -480,12 +500,12 @@
         <div id="kdocks" class="am-panel am-panel-danger"style="display: block;">
           <div id="kdocks-title" class="am-panel-hd">建造</div>
           <div id="kdocks-content" class="am-panel-bd mg-clear-padding">
-            <table class="mg-clear-margin am-table am-table-bd am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
+            <table class="mg-clear-margin am-table am-table-bd am-table-bdrs am-table-striped  mg-vertical-center">
               <tbody>
               <tr class="mg-kdocks-long">
-                <td id="kdock-1-name"></td>
-                <td id="kdock-1-material"></td>
-                <td id="kdock-1-remaining"></td>
+                <td id="kdock-1-name" width="20%"></td>
+                <td id="kdock-1-material" width="65%"></td>
+                <td id="kdock-1-remaining" width="15%"></td>
               </tr>
               <tr class="mg-kdocks-long">
                 <td id="kdock-2-name"></td>
@@ -507,10 +527,10 @@
           </div>
         </div>
 
-        <div id="createitem" class="am-panel am-panel-warning"style="display: block;">
+        <div id="createitem" class="am-panel am-panel-warning" style="display: block;">
           <div id="createitem-title" class="am-panel-hd">开发</div>
           <div id="createitem-content" class="am-panel-bd mg-clear-padding">
-            <table class="mg-clear-margin am-table am-table-bdrs am-table-striped am-table-hover mg-vertical-center">
+            <table class="mg-clear-margin am-table am-table-bdrs am-table-striped  mg-vertical-center">
               <tbody>
                 <tr class="mg-table-long">
                   <td id="createitem-name" class="mg-text-center" width="90%"></td>
@@ -523,11 +543,83 @@
 
       </div>
       <div id="sec-calc" class="mg-section" style="display: none;">
-        <p>Calc</p>
+        <div id="exp-calc-panel" class="am-panel am-panel-success">
+          <div id="exp-calc-title" class="am-panel-hd">经验值计算</div>
+          <div id="exp-calc-content" class="am-panel-bd">
+            <form class="am-form am-form-horizontal">
+              <div class="am-form-group">
+                <label for="exp-ship">舰娘</label>
+                <select id="exp-ship">
+                  <option value=",,">无数据</option>
+                </select>
+              </div>
+              <ul class="sm-block-grid-2">
+                <li style="padding-right: 5px">
+                <label for="exp-map">海域</label>
+                <select id="exp-map">
+                  <option value="30">1-1 鎮守府正面海域</option>
+                  <option value="50">1-2 南西諸島沖</option>
+                  <option value="80">1-3 製油所地帯沿岸</option>
+                  <option value="100">1-4 南西諸島防衛線</option>
+                  <option value="150">1-5 [Extra] 鎮守府近海</option>
+                  <option value="120">2-1 カムラン半島</option>
+                  <option value="150">2-2 バシー島沖</option>
+                  <option value="200">2-3 東部オリョール海</option>
+                  <option value="300">2-4 沖ノ島海域</option>
+                  <option value="250">2-5 [Extra] 沖ノ島沖</option>
+                  <option value="310">3-1 モーレイ海</option>
+                  <option value="320">3-2 キス島沖</option>
+                  <option value="330">3-3 アルフォンシーノ方面</option>
+                  <option value="350">3-4 北方海域全域</option>
+                  <option value="400">3-5 [Extra] 北方AL海域</option>
+                  <option value="310">4-1 ジャム島攻略作戦</option>
+                  <option value="320">4-2 カレー洋制圧戦</option>
+                  <option value="330">4-3 リランカ島空襲</option>
+                  <option value="340">4-4 カスガダマ沖海戦</option>
+                  <option value="360">5-1 南方海域前面</option>
+                  <option value="380">5-2 珊瑚諸島沖</option>
+                  <option value="400">5-3 サブ島沖海域</option>
+                  <option value="420">5-4 サーモン海域</option>
+                  <option value="450">5-5 [Extra] サーモン海域北方</option>
+                  <option value="380">6-1 中部海域哨戒線</option>
+                  <option value="420">6-2 MS諸島沖</option>
+                </select>
+                </li>
+                <li style="padding-left: 5px">
+                <label for="exp-result">评价</label>
+                <select id="exp-result">
+                  <option value="1.2">勝利S</option>
+                  <option value="1.0">勝利A</option>
+                  <option value="1.0">戦術的勝利B</option>
+                  <option value="0.8">戦術的敗北C</option>
+                  <option value="0.7">敗北D</option>
+                </select>
+                </li>
+              </ul>
+              <div class="am-form-group">
+                <label>等级信息</label>
+                <ul class="sm-block-grid-3">
+                  <li style="padding-right: 5px;">
+                  <input type="text" id="exp-lv" placeholder="目前等级" autocomplete="off">
+                  </li>
+                  <li style="padding-left: 5px; padding-right: 5px;">
+                  <input type="text" id="exp-next" placeholder="距离下一级" autocomplete="off">
+                  </li>
+                  <li style="padding-left: 5px;">
+                  <input type="text" id="exp-goal" placeholder="目标等级" autocomplete="off">
+                  </li>
+                </ul>
+              </div>
+              <div class="am-form-group">
+                <a id="exp-submit" class="am-btn am-btn-primary am-btn-block" style="margin-top: 15px;" href="#" role="button">开始计算</a>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
       <div id="sec-settings" class="mg-section" style="display: none;">
         <div class="am-panel-group" id="panel-group-settings">
-          <div class="am-panel am-panel-primary">
+          <div class="am-panel am-panel-warning">
             <div class="am-panel-hd" data-am-collapse="{parent: '#panel-group-settings', target: '#panel-proxy'}">
               <span class="am-panel-title">代理设置</span>
             </div>

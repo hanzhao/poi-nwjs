@@ -40,7 +40,7 @@ exports.loadConfig = ->
   try
     exports.config = JSON.parse fs.readFileSync configPath
     if exports.config.version != defaultConfig.version
-      throw "version error"
+      throw { err: "version error" }
   catch err
     exports.config = defaultConfig
     saveDefaultConfig()

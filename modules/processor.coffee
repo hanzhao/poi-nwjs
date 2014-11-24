@@ -35,13 +35,19 @@ exports.processData = (req, data) ->
     when '/api_get_member/ship2'
       ui.api_get_member_ship2 data
       ui.refreshDecks()
+      ui.refreshExperience()
+    when '/api_get_member/ship3'
+      ui.api_get_member_ship3 data.api_data
+      ui.refreshDecks()
+      ui.refreshExperience()
     when '/api_get_member/slot_item'
       ui.api_get_member_slot_item data.api_data
     when '/api_port/port'
       ui.api_port_port data.api_data
-      ui.refreshMaterials()
+      ui.refreshUser()
       ui.refreshDecks()
       ui.refreshNdocks()
+      ui.refreshExperience()
     when '/api_get_member/kdock'
       ui.api_get_member_kdock data.api_data
       ui.refreshKdocks()
@@ -54,6 +60,9 @@ exports.processData = (req, data) ->
     when '/api_req_kousyou/getship'
       ui.api_req_kousyou_getship data.api_data
       ui.refreshKdocks()
+    when '/api_req_kaisou/slotset'
+      ui.api_req_kaisou_slotset req.postData, data.api_data
+      ui.refreshDecks()
     when '/api_req_mission/start'
       ui.api_req_mission_start req.postData, data.api_data
       ui.refreshDecks()
