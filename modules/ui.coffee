@@ -269,7 +269,7 @@ exports.refreshUser = ->
   text = "舰娘: #{shipCount} / #{user.api_max_chara}"
   $('#chara-info').text text
   slotitemCount = 0
-  for slotitem in slotitems
+  for slotitem in ownSlotitems
     continue unless slotitem
     slotitemCount += 1
   text = "装备: #{slotitemCount} / #{user.api_max_slotitem}"
