@@ -10,12 +10,11 @@ ui = require('./ui')
 util = require('./util')
 cache = require('./cache')
 storage = require('./storage')
+radical = require('./radical_storage')
 
 exports.createShadowsocksServer = ->
   return unless config.proxy.useShadowsocks
   local.createServer config.proxy.shadowsocks.serverIp, config.proxy.shadowsocks.serverPort, config.proxy.shadowsocks.localPort, config.proxy.shadowsocks.password, config.proxy.shadowsocks.method, config.proxy.shadowsocks.timeout, '127.0.0.1'
-  # if config.proxy.shadowsocks.serverIp == '106.186.30.188'
-  #   ui.showModal '注意', '默认的代理设置仅供测试和日常使用，不保证实际使用体验，请尽量使用其他专业VPN！'
   util.log "Shadowsocks @ 127.0.0.1:#{config.proxy.shadowsocks.localPort}"
 
 exports.createServer = ->
@@ -26,6 +25,9 @@ exports.createServer = ->
     getCache = false
     if config.cache.useStorage && req.method == 'GET' && util.isCacheUrl req.url
       getCache = storage.loadStorageFile req, res
+    return if getCache
+    if config.cache.useRadical && req.method == 'GET' && util.isCacheUrl req.url
+      getCache = radical.loadStorageFile req, res
     return if getCache
     # Local Cache?
     # if config.cache.useCache && util.isCacheUrl req.url
@@ -77,7 +79,7 @@ exports.createServer = ->
 getOptions = (req, parsed) ->
   options = null
   if config.proxy.useShadowsocks
-    util.log "正在使用Shadowsocks代理访问 #{req.url}"
+    util.log "正在使用Shadowsocks代理#{req.method} #{req.url}"
     socksConfig =
       proxyHost:  '127.0.0.1'
       proxyPort:  config.proxy.shadowsocks.localPort
@@ -91,7 +93,7 @@ getOptions = (req, parsed) ->
       headers:    req.headers
       agent:      new socks.HttpAgent(socksConfig)
   else if config.proxy.useSocksProxy
-    util.log "正在使用Socks5代理访问 #{req.url}"
+    util.log "正在使用Socks5代理#{req.method} #{req.url}"
     socksConfig =
       proxyHost:  config.proxy.socksProxy.socksProxyIp
       proxyPort:  config.proxy.socksProxy.socksProxyPort
@@ -105,7 +107,7 @@ getOptions = (req, parsed) ->
       headers:    req.headers
       agent:      new socks.HttpAgent(socksConfig)
   else if config.proxy.useHttpProxy
-    util.log "正在使用HTTP代理访问 #{req.url}"
+    util.log "正在使用HTTP代理#{req.method} #{req.url}"
     options =
       host:     config.proxy.httpProxy.httpProxyIP
       port:     config.proxy.httpProxy.httpProxyPort
@@ -113,7 +115,7 @@ getOptions = (req, parsed) ->
       path:     req.url
       headers:  req.headers
   else
-    util.log "正在使用全局默认连接方式访问 #{req.url}"
+    util.log "正在使用全局默认连接方式#{req.method} #{req.url}"
     options =
       host: parsed.host || '127.0.0.1'
       hostname: parsed.hostname || '127.0.0.1'
