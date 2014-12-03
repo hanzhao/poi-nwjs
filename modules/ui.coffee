@@ -507,8 +507,8 @@ exports.calcExperience = ->
     deltaExp = goalExp - nowExp
   mapExp = parseInt($('#exp-map').val()) * parseFloat($('#exp-result').val())
   html = "<ul style=\"text-align: left;\"><li>达到等级需要经验: #{deltaExp}</li>"
-  html += "<li>基本: #{mapExp} 需#{(deltaExp / mapExp).toFixed(0)}场</li>"
-  html += "<li>旗舰: #{mapExp * 1.5} 需#{(deltaExp / mapExp / 1.5).toFixed(0)}场</li>"
-  html += "<li>MVP: #{mapExp * 2.0} 需#{(deltaExp / mapExp / 2.0).toFixed(0)}场</li>"
-  html += "<li>旗舰MVP: #{mapExp * 3.0} 需#{(deltaExp / mapExp / 3.0).toFixed(0)}场</li></ul>"
+  html += "<li>基本: #{mapExp} 需#{Math.ceil((deltaExp / mapExp))}场</li>"
+  html += "<li>旗舰: #{mapExp * 1.5} 需#{Math.ceil((deltaExp / mapExp / 1.5))}场</li>"
+  html += "<li>MVP: #{mapExp * 2.0} 需#{Math.ceil((deltaExp / mapExp / 2.0))}场</li>"
+  html += "<li>旗舰MVP: #{mapExp * 3.0} 需#{Math.ceil((deltaExp / mapExp / 3.0))}场</li></ul>"
   exports.showModalHtml '经验计算', html
