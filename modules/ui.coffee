@@ -16,8 +16,11 @@ state = false
 antiCatCounter = 0
 
 missionTimer = [-1, -1, -1, -1, -1]
+missionNoticed = [false, false, false, false, false]
 ndockTimer = [-1, -1, -1, -1, -1]
+ndockNoticed = [false, false, false, false, false]
 kdockTimer = [-1, -1, -1, -1, -1]
+kdockNoticed = [false, false, false, false, false]
 
 user = null
 createItem = null
@@ -49,20 +52,26 @@ timer = ->
     missionTimer[i] -= 1 if missionTimer[i] > 0
     if missionTimer[i] >= 0
       $("#mission-timer-#{i}").text util.formatTime missionTimer[i]
-      showNotification "#{$("#mission-name-#{i}").text()}远征归来" if missionTimer[i] == 50
+      if missionTimer[i] <= 45 && !missionNoticed[i]
+        showNotification "#{$("#mission-name-#{i}").text()}远征归来"
+        missionNoticed[i] = true
     else
       $("#mission-timer-#{i}").text ''
     ndockTimer[i] -= 1 if ndockTimer[i] > 0
     if ndockTimer[i] >= 0
       $("#ndock-timer-#{i}").text util.formatTime ndockTimer[i]
-      showNotification "#{$("#ndock-name-#{i}").text()}修复完成" if missionTimer[i] == 50
+      if ndockTimer[i] <= 45 && !ndockNoticed[i]
+        showNotification "#{$("#ndock-name-#{i}").text()}修复完成"
+        ndockNoticed[i] = true
     else
       $("#ndock-timer-#{i}").text ''
     kdockTimer[i] -= 1 if kdockTimer[i] > 0
     if kdockTimer[i] >= 0
       $("#kdock-timer-#{i}").text util.formatTime kdockTimer[i]
       $("#kdock-#{i}-remaining").text util.formatTime kdockTimer[i]
-      showNotification "#{$("#kdock-name-#{i}").text()}建造完成" if missionTimer[i] == 50
+      if kdockTimer[i] <= 45 && !kdockNoticed[i]
+        showNotification "#{$("#kdock-name-#{i}").text()}建造完成"
+        kdockNoticed[i] = true
     else
       $("#kdock-timer-#{i}").text ''
       $("#kdock-#{i}-remaining").text ''
@@ -298,8 +307,10 @@ exports.refreshDecks = ->
         missionTimer[deck.api_id] = -1
       when 1
         missionTimer[deck.api_id] = Math.floor((deck.api_mission[2] - new Date()) / 1000)
+        missionNoticed[deck.api_id] = false
       when 2
         missionTimer[deck.api_id] = 0
+        missionNoticed[deck.api_id] = false
     for shipId, i in deck.api_ship
       if shipId != -1
         ship = ownShips[shipId]
@@ -409,6 +420,7 @@ exports.refreshNdocks = ->
         $("#ndock-timer-#{ndock.api_id}").attr 'style', ''
         $("#ndock-name-#{ndock.api_id}").text ships[ship.api_ship_id].api_name
         ndockTimer[ndock.api_id] = Math.floor((ndock.api_complete_time - new Date()) / 1000)
+        ndockNoticed[ndock.api_id] = false
 
 exports.refreshKdocks = ->
   clearKdock = (id) ->
@@ -445,6 +457,7 @@ exports.refreshKdocks = ->
         $("#kdock-#{kdock.api_id}-name").text ships[kdock.api_created_ship_id].api_name
         $("#kdock-name-#{kdock.api_id}").text ships[kdock.api_created_ship_id].api_name
         kdockTimer[kdock.api_id] = Math.floor((kdock.api_complete_time - new Date()) / 1000)
+        kdockNoticed[kdock.api_id] = false
         materialStr = "#{getMaterialImgTag(1)} #{kdock.api_item1} #{getMaterialImgTag(2)} #{kdock.api_item2} #{getMaterialImgTag(3)} #{kdock.api_item3} #{getMaterialImgTag(4)} #{kdock.api_item4} #{getMaterialImgTag(7)} #{kdock.api_item5}"
         $("#kdock-#{kdock.api_id}-material").html materialStr
       when 2 #普建中
@@ -459,6 +472,7 @@ exports.refreshKdocks = ->
         $("#kdock-#{kdock.api_id}-name").text ships[kdock.api_created_ship_id].api_name
         $("#kdock-name-#{kdock.api_id}").text ships[kdock.api_created_ship_id].api_name
         kdockTimer[kdock.api_id] = Math.floor((kdock.api_complete_time - new Date()) / 1000)
+        kdockNoticed[kdock.api_id] = false
         materialStr = "#{getMaterialImgTag(1)} #{kdock.api_item1} #{getMaterialImgTag(2)} #{kdock.api_item2} #{getMaterialImgTag(3)} #{kdock.api_item3} #{getMaterialImgTag(4)} #{kdock.api_item4} #{getMaterialImgTag(7)} #{kdock.api_item5}"
         $("#kdock-#{kdock.api_id}-material").html materialStr
       when 3
