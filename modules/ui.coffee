@@ -4,7 +4,6 @@ util = require('./util')
 fs = require('fs')
 
 $ = global.$
-$$ = global.$$
 Notification = global.Notification
 
 materialsName = ['', '油', '弹', '钢', '铝', '高速建造', '高速修复', '开发资材', '改修资材']
@@ -79,12 +78,12 @@ timer = ->
 exports.showModal = (title, content) ->
   $('#modal-message-title').text title
   $('#modal-message-content').text content
-  $$('#modal-message').modal()
+  $('#modal-message').modal()
 
 exports.showModalHtml = (title, content) ->
   $('#modal-message-title').html title
   $('#modal-message-content').html content
-  $$('#modal-message').modal()
+  $('#modal-message').modal()
 
 
 exports.initConfig = ->
@@ -359,7 +358,7 @@ exports.refreshDecks = ->
         $("#ship-#{deck.api_id}#{i + 1}-hpline").html "<div class=\"am-progress am-progress-striped\"><div class=\"am-progress-bar #{currentState}\" style=\"width: #{hpPercent}%\">HP: #{ship.api_nowhp} / #{ship.api_maxhp}</div></div>"
 
         # Equipment
-        html = '<ul class="sm-block-grid-4">'
+        html = '<ul class="am-avg-sm-4">'
         for slotId, slotPos in ship.api_slot
           break if slotPos == 4
           cur = '<li></li>'

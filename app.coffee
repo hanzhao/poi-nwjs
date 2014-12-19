@@ -7,7 +7,6 @@ else
   # Win or Linux:
   global.appDataPath = fs.realpathSync(process.execPath + '/..')
 global.$ = window.$
-global.$$ = window.$$
 global.Notification = window.Notification
 global.Notification.requestPermission()
 global.win = win = gui.Window.get()
@@ -48,7 +47,7 @@ quit = new gui.MenuItem
     win.close true
 menu.append show
 menu.append hide
-# menu.append debug
+menu.append debug
 menu.append quit
 tray.menu = menu
 window.tray = tray

@@ -8,6 +8,8 @@ $ ->
   gui.Window.get().show()
   currentTag = 0
   currentShowDeck = 1
+  $('#proxy-tabs').tabs
+    noSwipe: 1
   isValidIp = (ip) ->
     match  = ip.match /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/
     if match && 0 <= match[1] && match[1] < 256 && 0 <= match[2] && match[2] < 256 && 0 <= match[3] && match[3] < 256 && 0 <= match[4] && match[4] < 256
@@ -73,10 +75,10 @@ $ ->
     gui.Shell.openExternal 'http://poi.0u0.moe/guide'
   $('#exp-submit').click ->
     require('./modules/ui').calcExperience()
-  $('#proxy-tabs').find('a').on 'opened:tabs:amui', (e) ->
-    switch $$(this).text()[0]
+  $('#proxy-tabs').find('a').on 'opened.tabs.amui', (e) ->
+    switch $(this).text()[0]
       when 'S'
-        if $$(this).text()[1] == 'h'
+        if $(this).text()[1] == 'h'
           $('#current-proxy').text 'shadowsocks'
         else
           $('#current-proxy').text 'socks'

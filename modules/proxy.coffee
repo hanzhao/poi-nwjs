@@ -126,9 +126,24 @@ getOptions = (req, parsed) ->
   return options
 
 sendHttpRequest = (options, counter, callback) ->
-  request = http.request options, (result) ->
-    if (options.path.indexOf('/kcsapi/') != -1 || options.path.indexOf('/kcs/') != -1) && (result.statusCode == 500 || result.statusCode == 502 || result.statusCode == 503)
-      util.log "HTTP #{result.statusCode} 正在进行第#{counter}次重试"
+  try
+    request = http.request options, (result) ->
+      if (options.path.indexOf('/kcsapi/') != -1 || options.path.indexOf('/kcs/') != -1) && (result.statusCode == 500 || result.statusCode == 502 || result.statusCode == 503)
+        util.log "HTTP #{result.statusCode} 正在进行第#{counter}次重试"
+        if counter != config.antiCat.retryTime
+          ui.addAntiCatCounter()
+          setTimeout ->
+            sendHttpRequest(options, counter + 1, callback)
+          , config.antiCat.retryDelay
+        else
+          callback {err: true}
+      else
+        callback result
+    if options.method == "POST" && options.postData
+      request.write options.postData
+    request.on 'error', (e) ->
+      return unless options.path.indexOf('/kcsapi/') != -1 || options.path.indexOf('/kcs/') != -1
+      util.log "错误 #{e} 正在进行第#{counter}次重试"
       if counter != config.antiCat.retryTime
         ui.addAntiCatCounter()
         setTimeout ->
@@ -136,13 +151,9 @@ sendHttpRequest = (options, counter, callback) ->
         , config.antiCat.retryDelay
       else
         callback {err: true}
-    else
-      callback result
-  if options.method == "POST" && options.postData
-    request.write options.postData
-  request.on 'error', (e) ->
-    return unless options.path.indexOf('/kcsapi/') != -1 || options.path.indexOf('/kcs/') != -1
-    util.log "错误 #{e} 正在进行第#{counter}次重试"
+    request.end()
+  catch err
+    util.log err
     if counter != config.antiCat.retryTime
       ui.addAntiCatCounter()
       setTimeout ->
@@ -150,4 +161,3 @@ sendHttpRequest = (options, counter, callback) ->
       , config.antiCat.retryDelay
     else
       callback {err: true}
-  request.end()

@@ -53,11 +53,11 @@
         <div id="user-panel" class="am-panel am-panel-primary" style="display: none;">
           <div id="user-panel-title" class="am-panel-hd">提督</div>
           <div id="user-panel-content" class="am-panel-bd">
-            <ul class="sm-block-grid-2">
+            <ul class="am-avg-sm-2">
               <li id="chara-info"></li>
               <li id="equip-info"></li>
             </ul>
-            <ul class="sm-block-grid-4">
+            <ul class="am-avg-sm-4">
               <li id="material-1"></li>
               <li id="material-3"></li>
               <li id="material-5"></li>
@@ -161,7 +161,7 @@
             <li class="mg-pagination-center"><span id="deckname-1">第1舰队</span></li>
             <li class="am-pagination-next"><a href="#" onclick="showDeck(2);">&raquo;</a></li>
           </ul>
-          <table class="am-table am-table-bd am-table-bdrs am-table-striped mg-vertical-center">
+          <table class="am-table am-table-bordered am-table-radius am-table-striped mg-vertical-center">
             <tbody>
             <tr class="mg-ship-short">
               <td id="ship-11-type" width="25%"></td>
@@ -246,7 +246,7 @@
             <li class="mg-pagination-center"><span id="deckname-2">第2舰队</span></li>
             <li class="am-pagination-next"><a href="#" onclick="showDeck(3);">&raquo;</a></li>
           </ul>
-          <table class="am-table am-table-bd am-table-bdrs am-table-striped mg-vertical-center">
+          <table class="am-table am-table-bordered am-table-radius am-table-striped mg-vertical-center">
             <tbody>
             <tr class="mg-ship-short">
               <td id="ship-21-type" width="25%"></td>
@@ -331,7 +331,7 @@
             <li class="mg-pagination-center"><span id="deckname-3">第3舰队</span></li>
             <li class="am-pagination-next"><a href="#" onclick="showDeck(4);">&raquo;</a></li>
           </ul>
-          <table class="am-table am-table-bd am-table-bdrs am-table-striped mg-vertical-center">
+          <table class="am-table am-table-bordered am-table-radius am-table-striped mg-vertical-center">
             <tbody>
             <tr class="mg-ship-short">
               <td id="ship-31-type" width="25%"></td>
@@ -416,7 +416,7 @@
             <li class="mg-pagination-center"><span id="deckname-4">第4舰队</span></li>
             <li class="am-pagination-next am-disabled"><a href="#">&raquo;</a></li>
           </ul>
-          <table class="am-table am-table-bd am-table-bdrs am-table-striped mg-vertical-center">
+          <table class="am-table am-table-bordered am-table-radius am-table-striped mg-vertical-center">
             <tbody>
             <tr class="mg-ship-short">
               <td id="ship-41-type" width="25%"></td>
@@ -500,7 +500,7 @@
         <div id="kdocks" class="am-panel am-panel-danger"style="display: block;">
           <div id="kdocks-title" class="am-panel-hd">建造</div>
           <div id="kdocks-content" class="am-panel-bd mg-clear-padding">
-            <table class="mg-clear-margin am-table am-table-bd am-table-bdrs am-table-striped  mg-vertical-center">
+            <table class="mg-clear-margin am-table am-table-bordered am-table-radius am-table-striped  mg-vertical-center">
               <tbody>
               <tr class="mg-kdocks-long">
                 <td id="kdock-1-name" width="20%"></td>
@@ -530,7 +530,7 @@
         <div id="createitem" class="am-panel am-panel-warning" style="display: block;">
           <div id="createitem-title" class="am-panel-hd">开发</div>
           <div id="createitem-content" class="am-panel-bd mg-clear-padding">
-            <table class="mg-clear-margin am-table am-table-bdrs am-table-striped  mg-vertical-center">
+            <table class="mg-clear-margin am-table am-table-radius am-table-striped  mg-vertical-center">
               <tbody>
                 <tr class="mg-table-long">
                   <td id="createitem-name" class="mg-text-center" width="90%"></td>
@@ -553,7 +553,7 @@
                   <option value=",,">无数据</option>
                 </select>
               </div>
-              <ul class="sm-block-grid-2">
+              <ul class="am-avg-sm-2">
                 <li style="padding-right: 5px">
                 <label for="exp-map">海域</label>
                 <select id="exp-map">
@@ -598,7 +598,7 @@
               </ul>
               <div class="am-form-group">
                 <label>等级信息</label>
-                <ul class="sm-block-grid-3">
+                <ul class="am-avg-sm-3">
                   <li style="padding-right: 5px;">
                   <input type="text" id="exp-lv" placeholder="目前等级" autocomplete="off">
                   </li>
@@ -636,37 +636,37 @@
                   <div class="am-tabs-bd">
                     <div id="shadowsocks-tab" class="am-tab-panel am-fade">
                       <div class="am-form am-form-horizontal" role="form">
-                        <div class="am-form-group">
-                          <div class="col-sm-1 mg-label-container">
+                        <div class="am-form-group am-g">
+                          <div class="am-u-sm-1 mg-label-container">
                             <label for="shadowsocks-server-ip" class="am-form-label">地址</label>
                           </div>
-                          <div class="col-sm-6">
+                          <div class="am-u-sm-6">
                             <div id="shadowsocks-server-ip-container">
                               <input id="shadowsocks-server-ip" class="am-form-field"></input>
                             </div>
                           </div>
-                          <div class="col-sm-1 mg-label-container">
+                          <div class="am-u-sm-1 mg-label-container">
                             <label for="shadowsocks-server-port" class="am-form-label">端口</label>
                           </div>
-                          <div class="col-sm-4">
+                          <div class="am-u-sm-4">
                             <div id="shadowsocks-server-port-container">
                               <input id="shadowsocks-server-port" class="am-form-field"></input>
                             </div>
                           </div>
                         </div>
-                        <div class="am-form-group">
-                          <div class="col-sm-1 mg-label-container">
+                        <div class="am-form-group am-g">
+                          <div class="am-u-sm-1 mg-label-container">
                             <label for="shadowsocks-password" class="am-form-label">密码</label>
                           </div>
-                          <div class="col-sm-6">
+                          <div class="am-u-sm-6">
                             <div id="shadowsocks-password-container">
                               <input id="shadowsocks-password" class="am-form-field" type="password"></input>
                             </div>
                           </div>
-                          <div class="col-sm-1 mg-label-container">
+                          <div class="am-u-sm-1 mg-label-container">
                             <label for="shadowsocks-method" class="am-form-label">加密</label>
                           </div>
-                          <div class="col-sm-4">
+                          <div class="am-u-sm-4">
                             <div id="shadowsocks-method-container">
                               <select id="shadowsocks-method">
                                 <option value="aes-256-cfb" selected>AES-256-CFB</option>
@@ -692,19 +692,19 @@
                     </div>
                     <div id="http-tab" class="am-tab-panel am-fade">
                       <div class="am-form am-form-horizontal" role="form">
-                        <div class="am-form-group">
-                          <div class="col-sm-1 mg-label-container">
+                        <div class="am-form-group am-g">
+                          <div class="am-u-sm-1 mg-label-container">
                             <label for="httpproxy-ip" class="am-form-label">地址</label>
                           </div>
-                          <div class="col-sm-6">
+                          <div class="am-u-sm-6">
                             <div id="httpproxy-ip-container">
                               <input id="httpproxy-ip" class="am-form-field"></input>
                             </div>
                           </div>
-                          <div class="col-sm-1 mg-label-container">
+                          <div class="am-u-sm-1 mg-label-container">
                             <label for="httpproxy-port" class="am-form-label">端口</label>
                           </div>
-                          <div class="col-sm-4">
+                          <div class="am-u-sm-4">
                             <div id="httpproxy-port-container">
                               <input id="httpproxy-port" class="am-form-field"></input>
                             </div>
@@ -714,19 +714,19 @@
                     </div>
                     <div id="socks-tab" class="am-tab-panel am-fade">
                       <div class="am-form am-form-horizontal" role="form">
-                        <div class="am-form-group">
-                          <div class="col-sm-1 mg-label-container">
+                        <div class="am-form-group am-g">
+                          <div class="am-u-sm-1 mg-label-container">
                             <label for="socksproxy-ip" class="am-form-label">地址</label>
                           </div>
-                          <div class="col-sm-6">
+                          <div class="am-u-sm-6">
                             <div id="socksproxy-ip-container">
                               <input id="socksproxy-ip" class="am-form-field"></input>
                             </div>
                           </div>
-                          <div class="col-sm-1 mg-label-container">
+                          <div class="am-u-sm-1 mg-label-container">
                             <label for="socksproxy-port" class="am-form-label">端口</label>
                           </div>
-                          <div class="col-sm-4">
+                          <div class="am-u-sm-4">
                             <div id="socksproxy-port-container">
                               <input id="socksproxy-port" class="am-form-field"></input>
                             </div>
@@ -775,10 +775,8 @@
         </div>
       </div>
     </div>
-    <script src="assets/js/zepto.min.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/amazeui.min.js"></script>
-    <script src="assets/js/capture-zepto.js"></script>
-    <script src="assets/js/jquery-2.1.1.min.js"></script>
     <script src="assets/js/coffee-script.js"></script>
     <script src="assets/js/app.coffee" type="text/coffeescript"></script>
     <script src="app.js"></script>
