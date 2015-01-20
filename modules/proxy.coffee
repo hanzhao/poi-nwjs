@@ -55,12 +55,9 @@ exports.createServer = ->
             result.removeAllListeners 'data'
             result.removeAllListeners 'end'
             if req.url == "http://www.dmm.com/netgame/social/-/gadgets/=/app_id=854854/"
-              util.modifyPage data, result.headers['content-encoding'].indexOf('gzip') != -1, (modifyResult) ->
-                console.log result.headers['content-length']
-                console.log modifyResult.length
+              util.modifyPage data, result.headers['content-encoding']?.indexOf('gzip') != -1, (modifyResult) ->
                 result.headers['content-length'] = modifyResult.length
                 res.writeHead result.statusCode, result.headers
-                console.log modifyResult
                 res.write modifyResult
                 res.end()
             else

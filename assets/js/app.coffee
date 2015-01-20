@@ -122,7 +122,7 @@ $ ->
     clipboard.set $('#pac-path')[0].value, 'text'
     require('./modules/ui').showModal 'PAC文件路径', '路径已经被复制到系统剪切板'
   $('#about-weibo').click ->
-    gui.Shell.openExternal 'http://weibo.com/234325654'
+    gui.Shell.openExternal 'http://weibo.com/maginya'
   $('#about-github').click ->
     gui.Shell.openExternal 'https://github.com/magimagi/poi'
   $('#about-license').click ->
