@@ -66,3 +66,6 @@ exports.processData = (req, data) ->
     when '/api_req_mission/start'
       ui.api_req_mission_start req.postData, data.api_data
       ui.refreshDecks()
+    when '/api_req_hensei/change'
+      ui.api_req_hensei_change req.postData, data.api_data
+      ui.refreshDecks()

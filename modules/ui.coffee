@@ -266,6 +266,24 @@ exports.api_req_mission_start = (postData, api_data) ->
   # The complatetime is a typo in game api
   decks[deckId].api_mission[2] = api_data.api_complatetime
 
+exports.api_req_hensei_change = (postData, api_data) ->
+  deckId = parseInt postData.api_id
+  shipIdx = parseInt postData.api_ship_idx
+  shipId = parseInt postData.api_ship_id
+  if shipId != -1
+    cur = decks[deckId].api_ship[shipIdx]
+    for deck, i in decks
+      continue if !deck?
+      for ship, j in deck.api_ship
+        if ship == shipId
+          decks[i].api_ship[j] = cur
+    decks[deckId].api_ship[shipIdx] = shipId
+  else
+    for i in [shipIdx..4]
+      decks[deckId].api_ship[i] = decks[deckId].api_ship[i + 1]
+    decks[5] = -1
+
+
 ###############################################################################
 
 exports.refreshUser = ->

@@ -55,10 +55,15 @@ exports.createServer = ->
             result.removeAllListeners 'data'
             result.removeAllListeners 'end'
             if req.url == "http://www.dmm.com/netgame/social/-/gadgets/=/app_id=854854/"
-              util.modifyPage data, result.headers['content-encoding']?.indexOf('gzip') != -1, (modifyResult) ->
-                result.headers['content-length'] = modifyResult.length
+              try
+                util.modifyPage data, result.headers['content-encoding']?.indexOf('gzip') != -1, (modifyResult) ->
+                  result.headers['content-length'] = modifyResult.length
+                  res.writeHead result.statusCode, result.headers
+                  res.write modifyResult
+                  res.end()
+              catch err
                 res.writeHead result.statusCode, result.headers
-                res.write modifyResult
+                res.write data
                 res.end()
             else
               res.writeHead result.statusCode, result.headers
