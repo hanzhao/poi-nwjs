@@ -124,9 +124,9 @@ $ ->
   $('#about-weibo').click ->
     gui.Shell.openExternal 'http://weibo.com/maginya'
   $('#about-github').click ->
-    gui.Shell.openExternal 'https://github.com/magimagi/poi'
+    gui.Shell.openExternal 'https://github.com/nyagi/poi'
   $('#about-license').click ->
-    gui.Shell.openExternal 'https://github.com/magimagi/poi/blob/master/LICENSE'
+    gui.Shell.openExternal 'https://github.com/nyagi/poi/blob/master/LICENSE'
   $('#about-nw').click ->
     gui.Shell.openExternal 'https://github.com/rogerwang/node-webkit'
 
