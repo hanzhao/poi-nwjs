@@ -1,0 +1,189 @@
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 300;
+  src: url("../fonts/ubuntu-light.woff") format('woff');
+}
+html, body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: "Ubuntu", "Monaco", "WenQuanYi Micro Hei", "Microsoft YaHei" !important;
+}
+::-webkit-scrollbar {
+  width: 0px;
+}
+.fixed-top {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  z-index: 1030;
+}
+.clear {
+  clear: both;
+}
+.am-table tbody tr td {
+  vertical-align: middle;
+}
+.am-progress {
+  margin-bottom: auto;
+}
+.am-form-label {
+  font-size: 15px;
+}
+.am-tabs-bd .am-tab-panel {
+  padding-bottom: 10px;
+}
+.am-form-group {
+  margin-top: 0.7rem;
+  margin-bottom: 0.7rem;
+}
+.am-pagination {
+  margin-top: 0rem;
+  margin-bottom: 0.5rem;
+}
+.mg-text-center {
+  text-align: center;
+}
+.mg-text-split {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.mg-progress-bar-yellow {
+  background-color: #F3E31C;
+}
+.mg-progress-inline {
+  float: left;
+  width: 48%;
+}
+.mg-progress-split {
+  float: left;
+  width: 4%;
+  height: 1.2rem;
+}
+.mg-unshown {
+  display: none;
+}
+.mg-section {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.mg-btn-container {
+  margin-top: -120px;
+  width: 80px;
+}
+.mg-logo-container {
+  background: none repeat scroll 0% 0% rgba(59, 180, 242, 0.15);
+}
+.mg-ico-container {
+  height: 36px;
+  display: table-cell;
+  vertical-align: middle;
+}
+.mg-button-container {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+.mg-text-container {
+  height: 30px;
+  background: none repeat scroll 0% 0% #0F9AE0;
+  text-align: center;
+  color: #FFF;
+  width: 100%;
+  vertical-align: middle;
+  border: 1px solid #CCC;
+  border-radius: 2px;
+  font-size: 16px;
+}
+.mg-pagination-center {
+  width: 70%;
+}
+.mg-vertical-center {
+  vertical-align: middle;
+}
+.mg-table-long {
+  height: 60px;
+}
+.mg-label-container {
+  text-align: right;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.mg-deck-locked {
+  background-color: #DD514C;
+  color: #FFF;
+}
+.mg-clear-padding {
+  padding: 0rem;
+}
+.mg-clear-margin {
+  margin: 0rem;
+}
+.mg-green {
+  color: #5EB95E;
+}
+.mg-blue {
+  color: #0E90D2;
+}
+.mg-red {
+  color: #DD514C;
+}
+.mg-orange {
+  color: #F37B1D;
+}
+.mg-yellow {
+  color: #F3E31C;
+}
+.mg-panel-sm {
+  width: 32.66666666%;
+  float: left;
+}
+.mg-font-sm {
+  font-size: 14px;
+}
+.mg-panel-mid {
+  margin-left: 1%;
+  margin-right: 1%;
+}
+.mg-deck-green {
+  background-color: #5EB95E;
+  color: #FFF;
+}
+.mg-deck-blue {
+  background-color: #0E90D2;
+  color: #FFF;
+}
+.mg-deck-red {
+  background-color: #DD514C;
+  color: #FFF;
+}
+.mg-deck-orange {
+  background-color: #F37B1D;
+  color: #FFF;
+}
+.mg-deck-yellow {
+  background-color: #F3E31C;
+  color: #FFF;
+}
+.mg-ship-short {
+  height: 35px;
+  font-size: 13px;
+}
+.mg-ship-long {
+  height: 60px;
+}
+.mg-ndocks-short {
+  height: 35px;
+  font-size: 13px;
+}
+.mg-ndocks-long {
+  height: 60px;
+}
+.mg-kdocks-short {
+  height: 35px;
+  font-size: 13px;
+}
+.mg-kdocks-long {
+  height: 60px;
+}
+li[id^="material-"] {
+  margin-top: 10px;
+}
