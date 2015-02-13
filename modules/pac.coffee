@@ -8,7 +8,7 @@ if process.platform != 'win32' && process.platform != 'win64'
   pacPath = "#{global.appDataPath}/proxy.pac"
 else
   pacPath = "#{global.appDataPath}\\proxy.pac"
-ui.updatePacPath pacPath
+require('./settingsUi').updatePacPath pacPath
 
 upstream = "DIRECT"
 upstreamIp = ""

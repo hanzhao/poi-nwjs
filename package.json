@@ -1,6 +1,6 @@
 {
-  "name": "poi",
-  "version": "0.0.2",
+  "name": "poi_beta0.0.4",
+  "version": "0.0.4",
   "main": "index.html",
   "window": {
     "icon": "icon.png",
