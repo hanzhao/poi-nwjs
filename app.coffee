@@ -10,7 +10,7 @@ global.$ = window.$
 global.Notification = window.Notification
 global.Notification.requestPermission()
 global.win = win = gui.Window.get()
-global.settingsWin = settingsWin = 
+global.settingsWin = settingsWin =
   gui.Window.open "settings.html",
     "show": false
     "position": "center"
@@ -66,12 +66,12 @@ quit = new gui.MenuItem
   click: ->
     settingsWin.close true
     win.close true
-    
+
 menu.append show
 menu.append hide
 menu.append settings
-menu.append debug
-menu.append debug2
+# menu.append debug
+# menu.append debug2
 menu.append quit
 tray.menu = menu
 window.tray = tray
