@@ -3,12 +3,12 @@ fs = require('fs')
 configPath = "#{global.appDataPath}/poi-config.json"
 
 exports.config = defaultConfig =
-  version: '0.0.2'
+  version: '0.0.3'
   proxy:
     useShadowsocks:   true
     shadowsocks:
       serverIp:       '106.186.30.188'
-      serverPort:     3388
+      serverPort:     3118
       localPort:      8788
       method:         'aes-256-cfb'
       password:       'MagicaSocks'
