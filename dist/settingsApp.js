@@ -1,0 +1,1 @@
+(function(){console.log("in settingsApp.coffee, loaded");global.settingsWin.on("loaded",function(){require("./modules/settingsUi").initConfig();require("./assets/js/settingsApp").init();require("./modules/pac").generatePAC();return console.log("loaded, 1")})}).call(this);

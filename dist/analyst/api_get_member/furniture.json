@@ -1,0 +1,20 @@
+// Url: http://$host/kcsapi/api_get_member/furniture
+// Method: POST
+// PostData: {
+//   "api_token": "",
+//   "api_verno": "1"
+// }
+// ReceiveData:
+{
+  "api_result": 1,
+  "api_result_msg": "成功",
+  "api_data": [
+    {
+      "api_member_id": 10080144,                // ref to admiral unique id
+      "api_id": 1,                              // item id
+      "api_furniture_type": 0,                  // ref to furniture type
+      "api_furniture_no": 0,                    // ref to furniture index
+      "api_furniture_id": 1                     // ref to furniture unique id
+    }
+  ]
+}

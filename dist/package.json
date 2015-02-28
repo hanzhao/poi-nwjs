@@ -1,6 +1,6 @@
 {
   "name": "poi",
-  "version": "0.0.2c",
+  "version": "0.0.4",
   "main": "index.html",
   "window": {
     "icon": "icon.png",
@@ -12,12 +12,12 @@
     "height": 725
   },
   "dependencies": {
-    "coffee-script": "latest",
-    "shadowsocks": "latest",
-    "socksv5": "latest",
-    "ipv6": "latest",
-    "iconv-lite": "latest",
-    "mime": "latest"
+    "coffee-script": "^1.8.0",
+    "shadowsocks": "^1.5.3",
+    "socksv5": "^0.0.4",
+    "ipv6": "^3.1.1",
+    "iconv-lite": "^0.4.5",
+    "mime": "^1.2.11"
   },
   "chromium-args": "--enable-webgl --ignore-gpu-blacklist"
 }

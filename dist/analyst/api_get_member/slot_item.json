@@ -1,0 +1,19 @@
+// Url: http://$host/kcsapi/api_get_member/slot_item
+// Method: POST
+// PostData: {
+//   "api_token": "",
+//   "api_verno": "1"
+// }
+// ReceiveData:
+{
+  "api_result": 1,
+  "api_result_msg": "成功",
+  "api_data": [
+    {
+      "api_id": 1,                      // slot item unique id
+      "api_slotitem_id": 42,            // ref to equip unique id
+      "api_locked": 0,                  // whether is locked
+      "api_level": 0                    // slot item level
+    }
+  ]
+}
