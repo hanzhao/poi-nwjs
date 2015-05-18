@@ -84,7 +84,7 @@ pacString = [
   "var upstreamProxy = \"#{upstreamString}\";",
   'function FindProxyForURL(url, host) {',
   '  if (url == "http://www.dmm.com/netgame/social/-/gadgets/=/app_id=854854/")',
-  '    return poiProxy',
+  '    return poiProxy;',
   '  if (processHost[host])',
   '    return poiProxy;',
   '  if (proxyHost[host])',

@@ -172,6 +172,10 @@ exports.api_get_member_kdock = (api_data) ->
   kdocks = []
   kdocks[kdock.api_id] = kdock for kdock in api_data
 
+exports.api_get_member_ship_deck = (data) ->
+  decks[deck.api_id] = deck for deck in data.api_deck_data
+  ownShips[ship.api_id] = ship for ship in data.api_ship_data
+
 exports.api_get_member_ship2 = (data) ->
   ownShips = []
   ownShips[ship.api_id] = ship for ship in data.api_data

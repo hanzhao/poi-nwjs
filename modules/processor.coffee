@@ -32,6 +32,10 @@ exports.processData = (req, data) ->
     when '/api_get_member/basic'
       ui.api_get_member_basic data.api_data
       ui.refreshUser()
+    when '/api_get_member/ship_deck'
+      ui.api_get_member_ship_deck data.api_data
+      ui.refreshDecks()
+      ui.refreshExperience()
     when '/api_get_member/ship2'
       ui.api_get_member_ship2 data
       ui.refreshDecks()
