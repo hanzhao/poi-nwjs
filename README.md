@@ -1,4 +1,6 @@
 poi
+
+停止维护，转向 https://github.com/yudachi/poi
 ===========
 
 只是一个舰队Collection辅助工具。
@@ -9,7 +11,6 @@ poi
 
 下载地址：[这儿](http://0u0.moe/poi)
 
-文档地址：[这儿](http://magica.moe/2014/11/20/poi/)
 
 ## 简介
 
