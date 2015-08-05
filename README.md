@@ -1,8 +1,7 @@
 poi
 ===========
 
-停止维护，转向 https://github.com/poooi/poi
-===========
+**停止维护，转向 https://github.com/poooi/poi**
 
 只是一个舰队Collection辅助工具。
 
